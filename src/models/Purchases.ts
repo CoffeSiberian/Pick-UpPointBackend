@@ -23,6 +23,24 @@ export default class Purchases extends Model<PurchasesTypes> {
     @Column({ type: DataType.INTEGER, allowNull: false })
     declare total: number;
 
+    @Column({ type: DataType.DATE, allowNull: false })
+    declare date: Date;
+
+    @Column({ type: DataType.STRING(128), allowNull: false })
+    declare status: string;
+
+    @Column({ type: DataType.STRING(128), allowNull: true })
+    declare payment_method: string;
+
+    @Column({ type: DataType.STRING(128), allowNull: true })
+    declare payment_id: string;
+
+    @Column({ type: DataType.BOOLEAN, allowNull: false })
+    declare payment_successful: boolean;
+
+    @Column({ type: DataType.BOOLEAN, allowNull: false })
+    declare retired: boolean;
+
     @ForeignKey(() => Users)
     @Column({ type: DataType.STRING(36), allowNull: false })
     declare fk_user: string;

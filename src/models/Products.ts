@@ -6,10 +6,12 @@ import {
     ForeignKey,
     BelongsTo,
     HasOne,
+    HasMany,
 } from "sequelize-typescript";
 import { Products as ProductsTypes } from "../types/db/model";
 import Categories from "./Categories";
 import Stocks from "./Stocks";
+import Images_Products from "./ImagesProducts";
 
 @Table({ tableName: "products" })
 export default class Products extends Model<ProductsTypes> {
@@ -23,6 +25,9 @@ export default class Products extends Model<ProductsTypes> {
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare name: string;
 
+    @Column({ type: DataType.STRING(3000), allowNull: true })
+    declare description: string;
+
     @Column({ type: DataType.INTEGER, allowNull: false })
     declare price: number;
 
@@ -35,4 +40,7 @@ export default class Products extends Model<ProductsTypes> {
 
     @HasOne(() => Stocks)
     declare stock: Stocks;
+
+    @HasMany(() => Images_Products)
+    declare images?: Images_Products[];
 }

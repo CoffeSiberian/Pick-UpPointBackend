@@ -27,6 +27,12 @@ export default class Stores extends Model<StoresTypes> {
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare location: string;
 
+    @Column({ type: DataType.STRING(256), allowNull: false })
+    declare phone: string;
+
+    @Column({ type: DataType.STRING(256), allowNull: false })
+    declare email: string;
+
     @HasOne(() => Configs)
     declare configs?: Configs;
 

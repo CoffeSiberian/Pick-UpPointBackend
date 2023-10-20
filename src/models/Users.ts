@@ -5,9 +5,11 @@ import {
     DataType,
     ForeignKey,
     BelongsTo,
+    HasMany,
 } from "sequelize-typescript";
 import { Users as UsersTypes } from "../types/db/model";
 import Stores from "./Stores";
+import Purchases from "./Purchases";
 
 @Table({ tableName: "users" })
 export default class Users extends Model<UsersTypes> {
@@ -36,4 +38,7 @@ export default class Users extends Model<UsersTypes> {
 
     @BelongsTo(() => Stores, "fk_store")
     declare store: Stores;
+
+    @HasMany(() => Purchases)
+    declare purchases?: Purchases[];
 }

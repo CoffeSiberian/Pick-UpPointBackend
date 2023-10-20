@@ -2,6 +2,8 @@ export interface Stores {
     id: string;
     name: string;
     location: string;
+    phone: string;
+    email: string;
 
     created_at: Date;
     updated_at: Date;
@@ -12,6 +14,10 @@ export interface Configs {
     payment_method: string | null?;
     api_key_private: string;
     api_key_public: string;
+    logo: string;
+    adminname: string;
+    adminemail: string;
+    adminpassword: string;
     fk_store: string;
 
     created_at: Date;
@@ -39,9 +45,20 @@ export interface Categories {
     updated_at: Date;
 }
 
+export interface Images_Products {
+    id: string;
+    name: string;
+    src: string;
+    fk_product: string;
+
+    created_at: Date;
+    updated_at: Date;
+}
+
 export interface Products {
     id: string;
     name: string;
+    description: string;
     price: number;
     fk_category: string;
 
@@ -62,6 +79,12 @@ export interface Stocks {
 export interface Purchases {
     id: string;
     total: number;
+    date: Date;
+    status: string;
+    payment_method: string | null?;
+    payment_id: string | null?;
+    payment_successful: boolean;
+    retired: boolean;
     fk_user: string;
 
     created_at: Date;

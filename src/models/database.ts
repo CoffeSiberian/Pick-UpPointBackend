@@ -16,6 +16,7 @@ import Products from "./Products";
 import Stocks from "./Stocks";
 import Purchases from "./Purchases";
 import Purchases_Items from "./Purchases_Items";
+import Images_Products from "./ImagesProducts";
 
 export const sequelize = new Sequelize({
     host: DB_IP,
@@ -34,6 +35,7 @@ sequelize.addModels([
     Users,
     Categories,
     Products,
+    Images_Products,
     Purchases,
     Purchases_Items,
     Stocks,

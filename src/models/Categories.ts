@@ -5,12 +5,14 @@ import {
     DataType,
     ForeignKey,
     BelongsTo,
+    HasMany,
 } from "sequelize-typescript";
-import { Users as UsersTypes } from "../types/db/model";
+import { Categories as CategoriesTypes } from "../types/db/model";
 import Stores from "./Stores";
+import Products from "./Products";
 
-@Table({ tableName: "users" })
-export default class Users extends Model<UsersTypes> {
+@Table({ tableName: "categories" })
+export default class Categories extends Model<CategoriesTypes> {
     @Column({
         type: DataType.STRING(36),
         primaryKey: true,
@@ -18,17 +20,8 @@ export default class Users extends Model<UsersTypes> {
     })
     declare id: string;
 
-    @Column({ type: DataType.STRING(15), allowNull: false })
-    declare rut: string;
-
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare name: string;
-
-    @Column({ type: DataType.STRING(256), allowNull: false })
-    declare email: string;
-
-    @Column({ type: DataType.STRING(500), allowNull: false })
-    declare password: string;
 
     @ForeignKey(() => Stores)
     @Column({ type: DataType.STRING(36), allowNull: false })
@@ -36,4 +29,7 @@ export default class Users extends Model<UsersTypes> {
 
     @BelongsTo(() => Stores, "fk_store")
     declare store: Stores;
+
+    @HasMany(() => Products)
+    declare products: Products[];
 }

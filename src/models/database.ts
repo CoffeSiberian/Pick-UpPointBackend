@@ -8,8 +8,14 @@ import {
     DB_USERNAME,
     DB_PASSWORD,
 } from "../utils/configs";
+import Stores from "./Stores";
+import Configs from "./Configs";
 import Users from "./Users";
-import Companys from "./Companys";
+import Categories from "./Categories";
+import Products from "./Products";
+import Stocks from "./Stocks";
+import Purchases from "./Purchases";
+import Purchases_Items from "./Purchases_Items";
 
 export const sequelize = new Sequelize({
     host: DB_IP,
@@ -22,4 +28,13 @@ export const sequelize = new Sequelize({
     logging: false,
 });
 
-sequelize.addModels([Users, Companys]);
+sequelize.addModels([
+    Stores,
+    Configs,
+    Users,
+    Categories,
+    Products,
+    Purchases,
+    Purchases_Items,
+    Stocks,
+]);

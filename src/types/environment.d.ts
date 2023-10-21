@@ -12,8 +12,6 @@ declare global {
             DB_NAME: string;
             DB_USERNAME: string;
             DB_PASSWORD: string;
-            SV_USERNAME: string;
-            SV_PASSWORD_HASH: string;
             HASH_ROUNDS: string;
             JWT_TIMEOUT_TOKEN: string;
             JWT_ALGORITHM: string;

@@ -7,7 +7,11 @@ export const getJwt = async (
     res: ResponsePass,
     next: NextFunction
 ): Promise<any> => {
-    const jwt = await createJWT({ id: res.locals.id, name: res.locals.name });
+    const jwt = await createJWT({
+        id: res.locals.id,
+        isAdmin: res.locals.isAdmin,
+        fk_store: res.locals.fk_store,
+    });
     res.status(200).json({ jwt });
     return next();
 };

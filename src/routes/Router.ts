@@ -4,7 +4,7 @@ import { Express } from "express";
 import { ResponsePass } from "../types/ResponseExtends";
 
 // middlewares
-import { authPasssServer } from "../middlewares/authMiddleware";
+import { authAdmin } from "../middlewares/authMiddleware";
 import { logAccessMiddleware } from "../middlewares/logAccessMiddleware";
 import { logResponsesMiddleware } from "../middlewares/logResponsesMiddleware";
 import { dbErrors } from "../middlewares/errorMiddleware";
@@ -14,6 +14,10 @@ import { verifyJWT } from "../routes/get/verifyJWT";
 
 // POST
 import { getJwt } from "./post/getJwt";
+
+// PUT
+
+// DELETE
 
 // Routes
 
@@ -27,7 +31,7 @@ export default function (app: Express) {
     });
 
     // POST
-    app.post("/login", authPasssServer, (req, res, next) => {
+    app.post("/loginadmin", authAdmin, (req, res, next) => {
         getJwt(req, res as ResponsePass, next);
     });
 

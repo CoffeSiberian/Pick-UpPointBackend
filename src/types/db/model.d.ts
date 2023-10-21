@@ -12,8 +12,8 @@ export interface Stores {
 export interface Configs {
     id: string;
     payment_method: string | null?;
-    api_key_private: string;
-    api_key_public: string;
+    api_key_public: string | null?;
+    api_key_private: string | null?;
     logo: string;
     adminname: string;
     adminemail: string;

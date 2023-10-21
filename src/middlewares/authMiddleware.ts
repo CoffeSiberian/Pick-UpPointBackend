@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from "express";
+import { getConfigs } from "../repositories/ConfigsR";
 import { InfoResponse } from "../utils/InfoResponse";
 import { ResponseJwt } from "../types/ResponseExtends";
 import { verifyJWT } from "../utils/jwt";
 import { checkHash } from "../utils/hash";
-import { SV_USERNAME, SV_PASSWORD_HASH } from "../utils/configs";
 
 export const authJwt = async (
     req: Request,
@@ -24,31 +24,40 @@ export const authJwt = async (
     res.status(401).json(InfoResponse(401, "Unauthorized"));
 };
 
-export const authPasssServer = async (
+export const authAdmin = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<NextFunction | any> => {
-    const userId = req.body.userid;
+    const userId = req.body.username;
     const password = req.body.password;
-    if (!userId || !password) {
+    const fk_store = req.body.fk_store;
+    if (!userId || !password || !fk_store) {
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
 
-    if (typeof userId !== "string" || typeof password !== "string") {
+    if (
+        typeof userId !== "string" ||
+        typeof password !== "string" ||
+        typeof fk_store !== "string"
+    ) {
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
 
-    if (userId !== SV_USERNAME) {
+    const configs = await getConfigs(fk_store);
+    if (!configs) {
         return res.status(401).json(InfoResponse(401, "Unauthorized"));
     }
 
-    checkHash(password, SV_PASSWORD_HASH, (result: boolean) => {
+    if (userId !== configs.adminname) {
+        return res.status(401).json(InfoResponse(401, "Unauthorized"));
+    }
+
+    checkHash(password, configs.adminpassword, (result: boolean) => {
         if (!result) {
             return res.status(401).json(InfoResponse(401, "Unauthorized"));
         }
-        res.locals.id = userId;
-        res.locals.name = SV_USERNAME;
+        res.locals.fk_store = configs.fk_store;
         next();
     });
 };

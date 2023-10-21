@@ -8,7 +8,8 @@ interface JwtLocals {
 
 interface PassLocals {
     id: string;
-    name: string;
+    isAdmin: boolean;
+    fk_store: string;
 }
 
 export interface ResponseJwt extends Response {

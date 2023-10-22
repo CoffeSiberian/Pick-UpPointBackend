@@ -29,6 +29,27 @@ export const updateUser = async (user: UsersTypes): Promise<number> => {
     return rows[0];
 };
 
+export const updatePassword = async (
+    id: string,
+    password: string
+): Promise<number> => {
+    const rows = await Users.update({ password }, { where: { id } });
+    return rows[0];
+};
+
+export const updateName = async (id: string, name: string): Promise<number> => {
+    const rows = await Users.update({ name }, { where: { id } });
+    return rows[0];
+};
+
+export const updateEmail = async (
+    id: string,
+    email: string
+): Promise<number> => {
+    const rows = await Users.update({ email }, { where: { id } });
+    return rows[0];
+};
+
 // DELETE
 export const deleteUser = async (id: string): Promise<number> => {
     const rows = await Users.destroy({ where: { id } });

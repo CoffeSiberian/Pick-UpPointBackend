@@ -4,9 +4,6 @@ export interface Stores {
     location: string;
     phone: string;
     email: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Configs {
@@ -19,9 +16,6 @@ export interface Configs {
     adminemail: string;
     adminpassword: string;
     fk_store: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Users {
@@ -31,18 +25,12 @@ export interface Users {
     email: string;
     password: string;
     fk_store: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Categories {
     id: string;
     name: string;
     fk_store: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Images_Products {
@@ -50,9 +38,6 @@ export interface Images_Products {
     name: string;
     src: string;
     fk_products: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Products {
@@ -61,9 +46,6 @@ export interface Products {
     description: string;
     price: number;
     fk_category: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Stocks {
@@ -71,9 +53,6 @@ export interface Stocks {
     quantity: number;
     fk_store: string;
     fk_product: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Purchases {
@@ -86,9 +65,6 @@ export interface Purchases {
     payment_successful: boolean;
     retired: boolean;
     fk_user: string;
-
-    created_at: Date;
-    updated_at: Date;
 }
 
 export interface Purchases_Items {
@@ -96,7 +72,4 @@ export interface Purchases_Items {
     quantity: number;
     fk_purchase: string;
     fk_product: string;
-
-    created_at: Date;
-    updated_at: Date;
 }

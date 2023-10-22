@@ -31,5 +31,5 @@ export default class Categories extends Model<CategoriesTypes> {
     declare store: Stores;
 
     @HasMany(() => Products)
-    declare products: Products[];
+    declare products?: Products[];
 }

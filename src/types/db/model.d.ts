@@ -49,7 +49,7 @@ export interface Images_Products {
     id: string;
     name: string;
     src: string;
-    fk_product: string;
+    fk_products: string;
 
     created_at: Date;
     updated_at: Date;

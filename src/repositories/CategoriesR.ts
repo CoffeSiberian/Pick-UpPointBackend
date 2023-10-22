@@ -2,8 +2,14 @@ import Categories from "../models/Categories";
 import { Categories as CategoriesTypes } from "../types/db/model";
 
 // GET
-export const getCategories = async (id: string): Promise<Categories | null> => {
+export const getCategorie = async (id: string): Promise<Categories | null> => {
     return await Categories.findOne({ where: { id } });
+};
+
+export const getCategories = async (
+    fk_store: string
+): Promise<Categories[]> => {
+    return await Categories.findAll({ where: { fk_store } });
 };
 
 // POST

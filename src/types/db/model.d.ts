@@ -4,6 +4,7 @@ export interface Stores {
     location: string;
     phone: string;
     email: string;
+    domain: string;
 }
 
 export interface Configs {

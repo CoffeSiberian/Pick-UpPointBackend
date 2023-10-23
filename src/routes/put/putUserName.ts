@@ -1,21 +1,19 @@
 import { Request, Response, NextFunction } from "express";
-import { updateUser } from "../../repositories/UsersR";
-import { hashPass } from "../../utils/hash";
-import { userSchemaUpdate } from "../../schemas/UsersSch";
+import { updateName } from "../../repositories/UsersR";
+import { userSchemaUpdateName } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const putUser = async (
+export const putUserName = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<any> => {
-    const { error, value } = userSchemaUpdate.validate(req.body);
+    const { error, value } = userSchemaUpdateName.validate(req.body);
     if (error) next({ error });
-    const User = value as UserUpdate;
-    const UserPassHash = await hashPass(User.password);
+    const User = value as UserUpdateName;
 
     try {
-        const rows = await updateUser({ ...User, password: UserPassHash });
+        const rows = await updateName(User.id, User.name);
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -27,6 +25,7 @@ export const putUser = async (
     }
 };
 
-interface UserUpdate extends UserPost {
+interface UserUpdateName {
     id: string;
+    name: string;
 }

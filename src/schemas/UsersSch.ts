@@ -17,3 +17,18 @@ export const userSchemaUpdate = Joi.object<Users>({
     password: Joi.string().min(1).max(60).optional(),
     fk_store: Joi.string().uuid().optional(),
 });
+
+export const userSchemaUpdatePass = Joi.object<Users>({
+    id: Joi.string().uuid().required(),
+    password: Joi.string().min(1).max(60).required(),
+});
+
+export const userSchemaUpdateName = Joi.object<Users>({
+    id: Joi.string().uuid().required(),
+    name: Joi.string().min(1).max(256).required(),
+});
+
+export const userSchemaUpdateEmail = Joi.object<Users>({
+    id: Joi.string().uuid().required(),
+    email: Joi.string().min(1).max(256).required(),
+});

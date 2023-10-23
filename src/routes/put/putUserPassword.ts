@@ -1,21 +1,21 @@
 import { Request, Response, NextFunction } from "express";
-import { updateUser } from "../../repositories/UsersR";
+import { updatePassword } from "../../repositories/UsersR";
+import { userSchemaUpdatePass } from "../../schemas/UsersSch";
 import { hashPass } from "../../utils/hash";
-import { userSchemaUpdate } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const putUser = async (
+export const putUserPassword = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<any> => {
-    const { error, value } = userSchemaUpdate.validate(req.body);
+    const { error, value } = userSchemaUpdatePass.validate(req.body);
     if (error) next({ error });
-    const User = value as UserUpdate;
-    const UserPassHash = await hashPass(User.password);
+    const User = value as UserUpdatePass;
+    const hash = await hashPass(User.password);
 
     try {
-        const rows = await updateUser({ ...User, password: UserPassHash });
+        const rows = await updatePassword(User.id, hash);
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -27,6 +27,7 @@ export const putUser = async (
     }
 };
 
-interface UserUpdate extends UserPost {
+interface UserUpdatePass {
     id: string;
+    password: string;
 }

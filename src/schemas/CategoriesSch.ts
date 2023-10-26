@@ -1,7 +1,13 @@
 import Joi from "joi";
 import { Categories } from "../types/db/model";
 
-export const CategoriesSchema = Joi.object<Categories>({
+export const categoriesSchema = Joi.object<Categories>({
     name: Joi.string().min(1).max(256).required(),
     fk_store: Joi.string().uuid().required(),
+});
+
+export const categoriesSchemaUpdate = Joi.object<Categories>({
+    id: Joi.string().uuid().required(),
+    name: Joi.string().min(1).max(256),
+    fk_store: Joi.string().uuid(),
 });

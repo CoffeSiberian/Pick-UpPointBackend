@@ -16,3 +16,8 @@ interface ConfigPost {
     adminpassword: string;
     fk_store: string;
 }
+
+interface CategoriePost {
+    name: string;
+    fk_store: string;
+}

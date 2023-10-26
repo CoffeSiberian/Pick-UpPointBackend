@@ -2,8 +2,11 @@ import Categories from "../models/Categories";
 import { Categories as CategoriesTypes } from "../types/db/model";
 
 // GET
-export const getCategorie = async (id: string): Promise<Categories | null> => {
-    return await Categories.findOne({ where: { id } });
+export const getCategorie = async (
+    id: string,
+    fk_store: string
+): Promise<Categories | null> => {
+    return await Categories.findOne({ where: { id, fk_store } });
 };
 
 export const getCategories = async (
@@ -20,16 +23,20 @@ export const createCategories = async (
 };
 
 // PUT
-export const updateCategories = async (
+export const updateCategoriesName = async (
     id: string,
-    data: CategoriesTypes
+    fk_store: string,
+    name: string
 ): Promise<number> => {
-    const rows = await Categories.update(data, { where: { id } });
+    const rows = await Categories.update({ name }, { where: { id, fk_store } });
     return rows[0];
 };
 
 // DELETE
-export const deleteCategories = async (id: string): Promise<number> => {
-    const rows = await Categories.destroy({ where: { id } });
+export const deleteCategorie = async (
+    id: string,
+    fk_store: string
+): Promise<number> => {
+    const rows = await Categories.destroy({ where: { id, fk_store } });
     return rows;
 };

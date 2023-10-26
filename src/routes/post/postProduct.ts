@@ -1,21 +1,21 @@
 import { Request, Response, NextFunction } from "express";
-import { categoriesSchema } from "../../schemas/CategoriesSch";
-import { createCategories } from "../../repositories/CategoriesR";
 import { v4 as uuidv4 } from "uuid";
+import { createProduct } from "../../repositories/ProductsR";
+import { productSchema } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const postCategorie = async (
+export const postProduct = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<any> => {
-    const { error, value } = categoriesSchema.validate(req.body);
+    const { error, value } = productSchema.validate(req.body);
     if (error) return next({ error });
-    const Bode = value as CategoriePost;
-    const Categorie = { id: uuidv4(), ...Bode };
+    const body = value as ProductPost;
+    const Product = { id: uuidv4(), ...body };
 
     try {
-        const rows = await createCategories(Categorie);
+        await createProduct(Product);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {

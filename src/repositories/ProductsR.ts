@@ -6,7 +6,20 @@ import { Products as ProductsTypes } from "../types/db/model";
 
 // GET
 export const getProduct = async (id: string): Promise<Products | null> => {
-    return await Products.findOne({ where: { id } });
+    return await Products.findOne({
+        where: { id },
+        include: [
+            {
+                model: Stocks,
+            },
+            {
+                model: Categories,
+            },
+            {
+                model: Images_Products,
+            },
+        ],
+    });
 };
 
 export const getAllStoreProducts = async (
@@ -70,7 +83,7 @@ export const createProduct = async (
 // PUT
 export const updateProduct = async (
     id: string,
-    product: ProductsTypes
+    product: ProductPost
 ): Promise<number> => {
     const rows = await Products.update(product, { where: { id } });
     return rows[0];
@@ -85,10 +98,4 @@ export const updateStock = async (
         { where: { fk_product } }
     );
     return rows[0];
-};
-
-// DELETE
-export const deleteProduct = async (id: string): Promise<number> => {
-    const rows = await Products.destroy({ where: { id } });
-    return rows;
 };

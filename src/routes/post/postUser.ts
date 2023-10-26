@@ -4,13 +4,13 @@ import { createUser } from "../../repositories/UsersR";
 import { userSchema } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const getListUsers = async (
+export const postUser = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchema.validate(req.body);
-    if (error) next({ error });
+    if (error) return next({ error });
     const body = value as UserPost;
     const User = { id: uuidv4(), ...body };
 

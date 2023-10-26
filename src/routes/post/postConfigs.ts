@@ -9,7 +9,7 @@ export const postConfigs = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = configSchema.validate(req.body);
-    if (error) next({ error });
+    if (error) return next({ error });
     const body = value as ConfigPost;
     const Config = { id: uuidv4(), ...body };
 

@@ -21,3 +21,10 @@ interface CategoriePost {
     name: string;
     fk_store: string;
 }
+
+interface ProductPost {
+    name: string;
+    description: string;
+    price: number;
+    fk_category: string;
+}

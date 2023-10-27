@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateProduct } from "../../repositories/ProductsR";
 import { productUpodateSchemaCustom } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putProduct = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = productUpodateSchemaCustom.validate(req.body);
@@ -20,7 +21,11 @@ export const putProduct = async (
     } as ProductPost;
 
     try {
-        const rows = await updateProduct(body.id, Product);
+        const rows = await updateProduct(
+            body.id,
+            Product,
+            res.jwtPayload.fk_store
+        );
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -34,5 +39,4 @@ export const putProduct = async (
 
 interface ProductUpdate extends ProductPost {
     id: string;
-    fk_store: string;
 }

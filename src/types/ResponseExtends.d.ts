@@ -1,9 +1,9 @@
 import { Response } from "express";
-import { Jwt } from "./jwt";
+import { JwtPayload } from "./jwt";
 import { Users } from "./db/model";
 
-interface JwtLocals {
-    jwt?: Jwt;
+interface ResponseJwt extends Response {
+    jwtPayload: JwtPayload;
 }
 
 interface PassLocals {
@@ -12,10 +12,6 @@ interface PassLocals {
     fk_store: string;
 }
 
-export interface ResponseJwt extends Response {
-    locals: JwtLocals;
-}
-
-export interface ResponsePass extends Response {
+interface ResponsePass extends Response {
     locals: PassLocals;
 }

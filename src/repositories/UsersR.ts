@@ -2,8 +2,11 @@ import Users from "../models/Users";
 import { Users as UsersTypes } from "../types/db/model";
 
 // GET
-export const getUser = async (id: string): Promise<Users | null> => {
-    return await Users.findOne({ where: { id } });
+export const getUser = async (
+    id: string,
+    fk_store: string
+): Promise<Users | null> => {
+    return await Users.findOne({ where: { id, fk_store } });
 };
 
 export const getListUsers = async (
@@ -25,7 +28,9 @@ export const createUser = async (user: UsersTypes): Promise<Users> => {
 
 // PUT
 export const updateUser = async (user: UsersTypes): Promise<number> => {
-    const rows = await Users.update(user, { where: { id: user.id } });
+    const rows = await Users.update(user, {
+        where: { id: user.id, fk_store: user.fk_store },
+    });
     return rows[0];
 };
 
@@ -51,7 +56,10 @@ export const updateEmail = async (
 };
 
 // DELETE
-export const deleteUser = async (id: string): Promise<number> => {
-    const rows = await Users.destroy({ where: { id } });
+export const deleteUser = async (
+    id: string,
+    fk_store: string
+): Promise<number> => {
+    const rows = await Users.destroy({ where: { id, fk_store } });
     return rows;
 };

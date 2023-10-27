@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateEmail } from "../../repositories/UsersR";
 import { userSchemaUpdateEmail } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putUserEmail = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdateEmail.validate(req.body);
@@ -13,7 +14,7 @@ export const putUserEmail = async (
     const User = value as UserUpdateEmail;
 
     try {
-        const rows = await updateEmail(User.id, User.email);
+        const rows = await updateEmail(res.jwtPayload.id, User.email);
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -26,6 +27,5 @@ export const putUserEmail = async (
 };
 
 interface UserUpdateEmail {
-    id: string;
     email: string;
 }

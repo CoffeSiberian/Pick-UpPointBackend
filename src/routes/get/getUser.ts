@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { getUser as getUserR } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const getUser = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const id = req.query.id;
@@ -14,7 +15,7 @@ export const getUser = async (
     }
 
     try {
-        const user = await getUserR(id);
+        const user = await getUserR(id, res.jwtPayload.fk_store);
         if (!user) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();

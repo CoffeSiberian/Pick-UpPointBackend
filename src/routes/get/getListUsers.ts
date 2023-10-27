@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { getListUsers as getListUsersR } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const getListUsers = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const queryData = validateQueryData(req);
@@ -13,10 +14,15 @@ export const getListUsers = async (
         return next();
     }
 
-    const { id, limit_start, limit_end } = queryData;
+    const { limit_start, limit_end } = queryData;
 
     try {
-        const Users = await getListUsersR(id, limit_start, limit_end);
+        const Users = await getListUsersR(
+            res.jwtPayload.fk_store,
+            limit_start,
+            limit_end
+        );
+
         if (!Users) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -29,7 +35,6 @@ export const getListUsers = async (
 };
 
 interface QueryData {
-    id: string;
     limit_start: number;
     limit_end: number;
 }
@@ -39,7 +44,6 @@ const validateQueryData = (req: Request): null | QueryData => {
     const limit_start = req.query.limit_start;
     const limit_end = req.query.limit_end;
 
-    if (!id || typeof id !== "string") return null;
     if (!limit_start || typeof limit_start !== "string") {
         return null;
     }
@@ -52,7 +56,6 @@ const validateQueryData = (req: Request): null | QueryData => {
     }
 
     return {
-        id,
         limit_start: limit_startParse,
         limit_end: limit_endParse,
     };

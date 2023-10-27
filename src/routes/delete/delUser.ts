@@ -1,10 +1,11 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { deleteUser } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const delSelectOption = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const id = req.query.id;
@@ -14,7 +15,7 @@ export const delSelectOption = async (
     }
 
     try {
-        const rows = await deleteUser(id);
+        const rows = await deleteUser(id, res.jwtPayload.fk_store);
         res.json({ rows });
         return next();
     } catch (err: any) {

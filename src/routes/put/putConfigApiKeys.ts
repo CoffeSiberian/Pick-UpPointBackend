@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateConfigsApiKeys } from "../../repositories/ConfigsR";
 import { configSchemaUpdateApiKeys } from "../../schemas/ConfigsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putConfigApiKeys = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = configSchemaUpdateApiKeys.validate(req.body);
@@ -14,7 +15,7 @@ export const putConfigApiKeys = async (
 
     try {
         const rows = await updateConfigsApiKeys(
-            Config.fk_store,
+            res.jwtPayload.fk_store,
             Config.api_key_private,
             Config.api_key_public
         );
@@ -32,5 +33,4 @@ export const putConfigApiKeys = async (
 interface ConfingUpdateApiKeys {
     api_key_public: string;
     api_key_private: string;
-    fk_store: string;
 }

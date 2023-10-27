@@ -14,7 +14,6 @@ export const productUpodateSchemaCustom = Joi.object({
     description: Joi.string().min(1).max(256).required(),
     price: Joi.number().min(0).max(99999999999999999999).required(),
     fk_category: Joi.string().uuid().required(),
-    fk_store: Joi.string().uuid().required(),
 });
 
 export const productUpdateStockSchemaCustom = Joi.object({

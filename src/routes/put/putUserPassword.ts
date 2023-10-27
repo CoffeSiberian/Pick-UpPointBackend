@@ -1,12 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updatePassword } from "../../repositories/UsersR";
 import { userSchemaUpdatePass } from "../../schemas/UsersSch";
 import { hashPass } from "../../utils/hash";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putUserPassword = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdatePass.validate(req.body);
@@ -15,7 +16,7 @@ export const putUserPassword = async (
     const hash = await hashPass(User.password);
 
     try {
-        const rows = await updatePassword(User.id, hash);
+        const rows = await updatePassword(res.jwtPayload.id, hash);
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -28,6 +29,5 @@ export const putUserPassword = async (
 };
 
 interface UserUpdatePass {
-    id: string;
     password: string;
 }

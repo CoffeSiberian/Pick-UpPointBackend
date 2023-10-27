@@ -3,7 +3,6 @@ interface UserPost {
     name: string;
     email: string;
     password: string;
-    fk_store: string;
 }
 
 interface ConfigPost {
@@ -14,12 +13,10 @@ interface ConfigPost {
     adminname: string;
     adminemail: string;
     adminpassword: string;
-    fk_store: string;
 }
 
 interface CategoriePost {
     name: string;
-    fk_store: string;
 }
 
 interface ProductPost {

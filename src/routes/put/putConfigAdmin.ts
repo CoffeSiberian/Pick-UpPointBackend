@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateConfigsAdmin } from "../../repositories/ConfigsR";
 import { configsSchemaUpdateAdmin } from "../../schemas/ConfigsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putConfigAdmin = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = configsSchemaUpdateAdmin.validate(req.body);
@@ -14,7 +15,7 @@ export const putConfigAdmin = async (
 
     try {
         const rows = await updateConfigsAdmin(
-            Config.fk_store,
+            res.jwtPayload.fk_store,
             Config.adminname,
             Config.adminemail,
             Config.adminpassword
@@ -34,5 +35,4 @@ interface ConfingUpdateAdmin {
     adminname: string;
     adminemail: string;
     adminpassword: string;
-    fk_store: string;
 }

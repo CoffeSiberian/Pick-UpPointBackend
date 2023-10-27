@@ -1,12 +1,13 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateUser } from "../../repositories/UsersR";
 import { hashPass } from "../../utils/hash";
 import { userSchemaUpdate } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putUser = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdate.validate(req.body);
@@ -15,7 +16,11 @@ export const putUser = async (
     const UserPassHash = await hashPass(User.password);
 
     try {
-        const rows = await updateUser({ ...User, password: UserPassHash });
+        const rows = await updateUser({
+            ...User,
+            password: UserPassHash,
+            fk_store: res.jwtPayload.fk_store,
+        });
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();

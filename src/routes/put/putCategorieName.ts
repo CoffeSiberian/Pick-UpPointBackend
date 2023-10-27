@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
 import { updateCategoriesName } from "../../repositories/CategoriesR";
 import { categoriesSchemaUpdate } from "../../schemas/CategoriesSch";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { ResponseJwt } from "../../types/ResponseExtends";
 
 export const putCategorieName = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = categoriesSchemaUpdate.validate(req.body);
@@ -15,7 +16,7 @@ export const putCategorieName = async (
     try {
         const rows = await updateCategoriesName(
             Categorie.id,
-            Categorie.fk_store,
+            res.jwtPayload.fk_store,
             Categorie.name
         );
         if (rows === 0) {

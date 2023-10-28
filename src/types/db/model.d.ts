@@ -61,8 +61,8 @@ export interface Purchases {
     total: number;
     date: Date;
     status: string;
-    payment_method: string | null?;
-    payment_id: string | null?;
+    payment_method?: string | null;
+    payment_id?: string | null;
     payment_successful: boolean;
     retired: boolean;
     fk_user: string;
@@ -71,6 +71,7 @@ export interface Purchases {
 export interface Purchases_Items {
     id: string;
     quantity: number;
+    price: number;
     fk_purchase: string;
     fk_product: string;
 }

@@ -1,4 +1,7 @@
+import { sequelize } from "../models/database";
 import Purchases from "../models/Purchases";
+import Purchases_Items from "../models/Purchases_Items";
+import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import { Purchases as PurchasesTypes } from "../types/db/model";
 
 // GET
@@ -17,11 +20,33 @@ export const getPurchasesById = async (
     });
 };
 
+export const getPurchasesByOnlyId = async (
+    id: string
+): Promise<Purchases | null> => {
+    return await Purchases.findOne({ where: { id } });
+};
+
 // POST
 export const createPurchases = async (
     purchases: PurchasesTypes
 ): Promise<Purchases> => {
     return await Purchases.create(purchases);
+};
+
+export const createPurchasesWithItems = async (
+    purchases: PurchasesTypes,
+    items: Purchases_ItemsTypes[]
+): Promise<Purchases> => {
+    const t = await sequelize.transaction();
+    try {
+        const purchase = await Purchases.create(purchases, { transaction: t });
+        await Purchases_Items.bulkCreate(items, { transaction: t });
+        await t.commit();
+        return purchase;
+    } catch (err) {
+        await t.rollback();
+        throw err;
+    }
 };
 
 // PUT
@@ -51,12 +76,4 @@ export const updateStatus = async (
 ): Promise<number> => {
     const rows = await Purchases.update({ status }, { where: { id } });
     return rows[0];
-};
-
-// DELETE
-export const deletePurchases = async (id: string): Promise<number> => {
-    const rows = await Purchases.destroy({
-        where: { id },
-    });
-    return rows;
 };

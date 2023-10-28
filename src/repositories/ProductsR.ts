@@ -74,6 +74,22 @@ export const getCategoriesProducts = async (
     });
 };
 
+export const getManyProducts = async (
+    ids: string[]
+): Promise<Products[] | null> => {
+    return await Products.findAll({
+        where: { id: ids },
+        include: [
+            {
+                model: Stocks,
+            },
+            {
+                model: Images_Products,
+            },
+        ],
+    });
+};
+
 // POST
 export const createProduct = async (
     product: ProductsTypes,

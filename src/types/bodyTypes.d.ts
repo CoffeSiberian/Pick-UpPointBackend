@@ -25,3 +25,10 @@ interface ProductPost {
     price: number;
     fk_category: string;
 }
+
+interface buyProcessPOST {
+    products: {
+        id: string;
+        quantity: number;
+    }[];
+}

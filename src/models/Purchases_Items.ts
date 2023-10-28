@@ -23,6 +23,9 @@ export default class Purchases_Items extends Model<Purchases_ItemsTypes> {
     @Column({ type: DataType.INTEGER, allowNull: false })
     declare quantity: number;
 
+    @Column({ type: DataType.INTEGER, allowNull: false })
+    declare price: number;
+
     @ForeignKey(() => Purchases)
     @Column({ type: DataType.STRING(36), allowNull: false })
     declare fk_purchase: string;

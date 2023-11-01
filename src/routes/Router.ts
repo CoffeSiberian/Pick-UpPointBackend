@@ -20,6 +20,7 @@ import { getJwt } from "./post/getJwt";
 // DELETE
 
 // Routes
+import CategoriesRoutes from "./Routes/Categories";
 
 export default function (app: Express) {
     // middlewares
@@ -36,6 +37,7 @@ export default function (app: Express) {
     });
 
     // Routes
+    CategoriesRoutes(app);
 
     // middlewares
     app.use(logResponsesMiddleware);

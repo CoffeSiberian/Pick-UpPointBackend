@@ -3,7 +3,7 @@ import { deleteUser } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
-export const delSelectOption = async (
+export const delUser = async (
     req: Request,
     res: ResponseJwt,
     next: NextFunction

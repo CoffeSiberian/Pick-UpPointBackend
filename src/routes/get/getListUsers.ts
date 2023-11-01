@@ -40,7 +40,6 @@ interface QueryData {
 }
 
 const validateQueryData = (req: Request): null | QueryData => {
-    const id = req.query.guildid;
     const limit_start = req.query.limit_start;
     const limit_end = req.query.limit_end;
 

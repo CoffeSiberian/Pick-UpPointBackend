@@ -21,6 +21,7 @@ import { getJwt } from "./post/getJwt";
 
 // Routes
 import CategoriesRoutes from "./Routes/Categories";
+import UsersRoutes from "./Routes/Users";
 
 export default function (app: Express) {
     // middlewares
@@ -38,6 +39,7 @@ export default function (app: Express) {
 
     // Routes
     CategoriesRoutes(app);
+    UsersRoutes(app);
 
     // middlewares
     app.use(logResponsesMiddleware);

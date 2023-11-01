@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { getAllStoreProducts as getAllStoreProductsR } from "../../repositories/ProductsR";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const getProduct = async (
+export const getAllStoreProducts = async (
     req: Request,
     res: Response,
     next: NextFunction

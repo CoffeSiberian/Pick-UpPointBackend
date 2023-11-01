@@ -131,3 +131,16 @@ export const updateStock = async (
     );
     return rows[0];
 };
+
+// DELETE
+export const deleteProduct = async (
+    id: string,
+    fk_store: string
+): Promise<number> => {
+    const validateStore = await getProduct(id);
+    if (!validateStore) return 0;
+    if (validateStore.category.fk_store !== fk_store) return 0;
+
+    const rows = await Products.destroy({ where: { id } });
+    return rows;
+};

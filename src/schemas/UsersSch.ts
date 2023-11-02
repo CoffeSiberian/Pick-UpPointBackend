@@ -8,6 +8,14 @@ export const userSchema = Joi.object<Users>({
     password: Joi.string().min(1).max(60).required(),
 });
 
+export const userSchemaRegister = Joi.object<Users>({
+    rut: Joi.string().min(1).max(15).required(),
+    name: Joi.string().min(1).max(256).required(),
+    email: Joi.string().min(1).max(256).required(),
+    password: Joi.string().min(1).max(60).required(),
+    fk_store: Joi.string().uuid().required(),
+});
+
 export const userSchemaUpdate = Joi.object<Users>({
     id: Joi.string().uuid().required(),
     rut: Joi.string().min(1).max(15).optional(),

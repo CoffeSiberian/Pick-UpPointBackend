@@ -20,7 +20,7 @@ export const postCategorie = async (
     };
 
     try {
-        const rows = await createCategories(Categorie);
+        await createCategories(Categorie);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {

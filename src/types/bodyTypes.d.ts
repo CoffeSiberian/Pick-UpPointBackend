@@ -5,6 +5,10 @@ interface UserPost {
     password: string;
 }
 
+interface UserPostRegister extends UserPost {
+    fk_store: string;
+}
+
 interface ConfigPost {
     payment_method: string | null?;
     api_key_public: string | null?;

@@ -1,4 +1,5 @@
 import { Request, NextFunction } from "express";
+import { InfoResponse } from "../../utils/InfoResponse";
 import { createConfigs } from "../../repositories/ConfigsR";
 import { configSchema } from "../../schemas/ConfigsSch";
 import { v4 as uuidv4 } from "uuid";
@@ -15,8 +16,8 @@ export const postConfigs = async (
     const Config = { id: uuidv4(), ...body, fk_store: res.jwtPayload.fk_store };
 
     try {
-        const configs = await createConfigs(Config);
-        res.json(configs);
+        await createConfigs(Config);
+        res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {
         next({ err });

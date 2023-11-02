@@ -9,6 +9,13 @@ export const getUser = async (
     return await Users.findOne({ where: { id, fk_store } });
 };
 
+export const getUserByEmail = async (
+    email: string,
+    fk_store: string
+): Promise<Users | null> => {
+    return await Users.findOne({ where: { email, fk_store } });
+};
+
 export const getListUsers = async (
     fk_store: string,
     limit_start: number,

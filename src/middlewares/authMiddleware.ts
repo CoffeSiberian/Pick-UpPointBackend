@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getConfigs } from "../repositories/ConfigsR";
+import { getUserByEmail } from "../repositories/UsersR";
+import { loginAdminSchema, loginUserSchema } from "../schemas/AuthenticateSch";
 import { InfoResponse } from "../utils/InfoResponse";
 import { ResponseJwt } from "../types/ResponseExtends";
 import { verifyJWT } from "../utils/jwt";
@@ -29,35 +31,51 @@ export const authAdmin = async (
     res: Response,
     next: NextFunction
 ): Promise<NextFunction | any> => {
-    const userId = req.body.username;
-    const password = req.body.password;
-    const fk_store = req.body.fk_store;
-    if (!userId || !password || !fk_store) {
+    const { error, value } = loginAdminSchema.validate(req.body);
+    if (error) {
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
+    const body = value as LoginAdmin;
 
-    if (
-        typeof userId !== "string" ||
-        typeof password !== "string" ||
-        typeof fk_store !== "string"
-    ) {
-        return res.status(400).json(InfoResponse(400, "Bad Request"));
-    }
-
-    const configs = await getConfigs(fk_store);
+    const configs = await getConfigs(body.fk_store);
     if (!configs) {
         return res.status(401).json(InfoResponse(401, "Unauthorized"));
     }
 
-    if (userId !== configs.adminname) {
+    if (body.username !== configs.adminname) {
         return res.status(401).json(InfoResponse(401, "Unauthorized"));
     }
 
-    checkHash(password, configs.adminpassword, (result: boolean) => {
+    checkHash(body.password, configs.adminpassword, (result: boolean) => {
         if (!result) {
             return res.status(401).json(InfoResponse(401, "Unauthorized"));
         }
         res.locals.fk_store = configs.fk_store;
+        next();
+    });
+};
+
+export const authUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<NextFunction | any> => {
+    const { error, value } = loginUserSchema.validate(req.body);
+    if (error) {
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
+    const body = value as LoginUser;
+
+    const user = await getUserByEmail(body.email, body.fk_store);
+    if (!user) {
+        return res.status(401).json(InfoResponse(401, "Unauthorized"));
+    }
+
+    checkHash(body.password, user.password, (result: boolean) => {
+        if (!result) {
+            return res.status(401).json(InfoResponse(401, "Unauthorized"));
+        }
+        res.locals.fk_store = user.fk_store;
         next();
     });
 };

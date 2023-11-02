@@ -36,3 +36,15 @@ interface buyProcessPOST {
         quantity: number;
     }[];
 }
+
+interface LoginAdmin {
+    username: string;
+    password: string;
+    fk_store: string;
+}
+
+interface LoginUser {
+    email: string;
+    password: string;
+    fk_store: string;
+}

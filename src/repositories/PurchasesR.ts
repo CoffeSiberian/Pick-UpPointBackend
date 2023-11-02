@@ -1,6 +1,7 @@
 import { sequelize } from "../models/database";
 import Purchases from "../models/Purchases";
 import Purchases_Items from "../models/Purchases_Items";
+import { getUser } from "./UsersR";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import { Purchases as PurchasesTypes } from "../types/db/model";
 
@@ -50,7 +51,7 @@ export const createPurchasesWithItems = async (
 };
 
 // PUT
-export const updatePayment = async (
+export const updatePurchasesPayment = async (
     id: string,
     payment_id: string,
     payment_successful: boolean
@@ -62,18 +63,33 @@ export const updatePayment = async (
     return rows[0];
 };
 
-export const updateRetired = async (
+export const updatePurchasesRetired = async (
     id: string,
-    retired: boolean
+    retired: boolean,
+    fk_user: string,
+    fk_store: string
 ): Promise<number> => {
-    const rows = await Purchases.update({ retired }, { where: { id } });
+    const validateStore = await getUser(fk_user, fk_store);
+    if (!validateStore) return 0;
+    if (validateStore.fk_store !== fk_store) return 0;
+
+    const rows = await Purchases.update(
+        { retired },
+        { where: { id, fk_user } }
+    );
     return rows[0];
 };
 
-export const updateStatus = async (
+export const updatePurchasesStatus = async (
     id: string,
-    status: string
+    status: string,
+    fk_user: string,
+    fk_store: string
 ): Promise<number> => {
-    const rows = await Purchases.update({ status }, { where: { id } });
+    const validateStore = await getUser(fk_user, fk_store);
+    if (!validateStore) return 0;
+    if (validateStore.fk_store !== fk_store) return 0;
+
+    const rows = await Purchases.update({ status }, { where: { id, fk_user } });
     return rows[0];
 };

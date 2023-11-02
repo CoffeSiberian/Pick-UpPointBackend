@@ -23,6 +23,7 @@ import { getJwt } from "./post/getJwt";
 import CategoriesRoutes from "./Routes/Categories";
 import UsersRoutes from "./Routes/Users";
 import ProductsRoutes from "./Routes/Products";
+import PurchasesRoutes from "./Routes/Purchases";
 
 export default function (app: Express) {
     // middlewares
@@ -42,6 +43,7 @@ export default function (app: Express) {
     CategoriesRoutes(app);
     UsersRoutes(app);
     ProductsRoutes(app);
+    PurchasesRoutes(app);
 
     // middlewares
     app.use(logResponsesMiddleware);

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const loginAdminSchema = Joi.object<LoginAdmin>({
-    username: Joi.string().uuid().required(),
+    username: Joi.string().required(),
     password: Joi.string().required(),
     fk_store: Joi.string().uuid().required(),
 });

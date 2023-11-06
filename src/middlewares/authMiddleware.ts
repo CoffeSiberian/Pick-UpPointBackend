@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { logErrorSchemas } from "../utils/logger";
 import { getConfigs } from "../repositories/ConfigsR";
 import { getUserByEmail } from "../repositories/UsersR";
 import { loginAdminSchema, loginUserSchema } from "../schemas/AuthenticateSch";
@@ -33,6 +34,7 @@ export const authAdmin = async (
 ): Promise<NextFunction | any> => {
     const { error, value } = loginAdminSchema.validate(req.body);
     if (error) {
+        logErrorSchemas(`authAdmin: ${error.details[0].message}`);
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
     const body = value as LoginAdmin;
@@ -50,7 +52,9 @@ export const authAdmin = async (
         if (!result) {
             return res.status(401).json(InfoResponse(401, "Unauthorized"));
         }
+        res.locals.id = configs.adminname;
         res.locals.fk_store = configs.fk_store;
+        res.locals.isAdmin = true;
         next();
     });
 };
@@ -62,6 +66,7 @@ export const authUser = async (
 ): Promise<NextFunction | any> => {
     const { error, value } = loginUserSchema.validate(req.body);
     if (error) {
+        logErrorSchemas(`authUser: ${error.details[0].message}`);
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
     const body = value as LoginUser;
@@ -75,6 +80,9 @@ export const authUser = async (
         if (!result) {
             return res.status(401).json(InfoResponse(401, "Unauthorized"));
         }
+
+        res.locals.id = user.id;
+        res.locals.isAdmin = false;
         res.locals.fk_store = user.fk_store;
         next();
     });

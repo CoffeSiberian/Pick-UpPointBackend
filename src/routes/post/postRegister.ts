@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { userSchema } from "../../schemas/UsersSch";
+import { userSchemaRegister } from "../../schemas/UsersSch";
 import { createUser } from "../../repositories/UsersR";
 import { v4 as uuidv4 } from "uuid";
 import { hashPass } from "../../utils/hash";
@@ -10,13 +10,15 @@ export const postRegister = async (
     res: Response,
     next: NextFunction
 ): Promise<any> => {
-    const { error, value } = userSchema.validate(req.body);
+    const { error, value } = userSchemaRegister.validate(req.body);
     if (error) return next({ error });
-    const Bode = value as UserPostRegister;
+    const Body = value as UserPostRegister;
+    const hash = await hashPass(Body.password);
+
     const Categorie = {
         id: uuidv4(),
-        ...Bode,
-        password: await hashPass(Bode.password),
+        ...Body,
+        password: hash,
     };
 
     try {

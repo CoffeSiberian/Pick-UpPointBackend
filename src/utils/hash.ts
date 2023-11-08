@@ -2,17 +2,13 @@ import bcrypt from "bcrypt";
 import { HASH_ROUNDS } from "./configs";
 
 export const hashPass = async (pass: string): Promise<string> => {
-    let hasHToReturn: string = "";
-    hashPassCallBack(pass, (hash: string) => {
-        hasHToReturn = hash;
+    const hash = await new Promise<string>((resolve, reject) => {
+        bcrypt.hash(pass, HASH_ROUNDS, (err, hash) => {
+            if (err) reject(err);
+            resolve(hash);
+        });
     });
-    return hasHToReturn;
-};
-
-const hashPassCallBack = (pass: string, callback: Function): void => {
-    bcrypt.hash(pass, HASH_ROUNDS, (err, hash) => {
-        return callback(hash);
-    });
+    return hash;
 };
 
 export const checkHash = (

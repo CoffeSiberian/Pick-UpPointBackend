@@ -20,13 +20,13 @@ export default class Users extends Model<UsersTypes> {
     })
     declare id: string;
 
-    @Column({ type: DataType.STRING(15), allowNull: false })
+    @Column({ type: DataType.STRING(15), allowNull: false, unique: true })
     declare rut: string;
 
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare name: string;
 
-    @Column({ type: DataType.STRING(256), allowNull: false })
+    @Column({ type: DataType.STRING(256), allowNull: false, unique: true })
     declare email: string;
 
     @Column({ type: DataType.STRING(500), allowNull: false })

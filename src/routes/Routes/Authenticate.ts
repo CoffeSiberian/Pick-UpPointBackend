@@ -14,9 +14,7 @@ import { postRegister } from "../post/postRegister";
 
 const AuthenticateRoutes = (app: Express) => {
     // GET
-    app.get("/verifyjwt", (req, res, next) => {
-        verifyJWT(req, res, next);
-    });
+    app.get("/verifyjwt", verifyJWT);
 
     // POST
     app.post("/loginadmin", authAdmin, (req, res, next) => {

@@ -11,7 +11,9 @@ const loggerSrv = createLogger({
         )
     ),
     transports: [
-        new transports.Console(),
+        new transports.Console({
+            silent: true,
+        }),
         new transports.File({ filename: "logSrv.log" }),
     ],
 });

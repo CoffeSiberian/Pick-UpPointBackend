@@ -34,4 +34,5 @@ export const putUser = async (
 
 interface UserUpdate extends UserPost {
     id: string;
+    isAdmin: boolean;
 }

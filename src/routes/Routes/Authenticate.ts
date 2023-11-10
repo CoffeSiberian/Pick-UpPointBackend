@@ -3,7 +3,7 @@ import { Express } from "express";
 import { ResponsePass } from "../../types/ResponseExtends";
 
 // middlewares
-import { authAdmin, authUser } from "../../middlewares/authMiddleware";
+import { authUser } from "../../middlewares/authMiddleware";
 
 // GET
 import { verifyJWT } from "../../routes/get/verifyJWT";
@@ -17,9 +17,6 @@ const AuthenticateRoutes = (app: Express) => {
     app.get("/verifyjwt", verifyJWT);
 
     // POST
-    app.post("/loginadmin", authAdmin, (req, res, next) => {
-        getJwt(req, res as ResponsePass, next);
-    });
     app.post("/login", authUser, (req, res, next) => {
         getJwt(req, res as ResponsePass, next);
     });

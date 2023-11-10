@@ -14,9 +14,6 @@ interface ConfigPost {
     api_key_public: string | null?;
     api_key_private: string | null?;
     logo: string;
-    adminname: string;
-    adminemail: string;
-    adminpassword: string;
 }
 
 interface CategoriePost {

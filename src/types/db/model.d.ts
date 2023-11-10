@@ -13,9 +13,6 @@ export interface Configs {
     api_key_public: string | null?;
     api_key_private: string | null?;
     logo: string;
-    adminname: string;
-    adminemail: string;
-    adminpassword: string;
     fk_store: string;
 }
 
@@ -25,6 +22,7 @@ export interface Users {
     name: string;
     email: string;
     password: string;
+    isAdmin: boolean;
     fk_store: string;
 }
 

@@ -30,15 +30,6 @@ export default class Configs extends Model<ConfigsTypes> {
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare logo: string;
 
-    @Column({ type: DataType.STRING(256), allowNull: false })
-    declare adminname: string;
-
-    @Column({ type: DataType.STRING(256), allowNull: false })
-    declare adminemail: string;
-
-    @Column({ type: DataType.STRING(1000), allowNull: false })
-    declare adminpassword: string;
-
     @ForeignKey(() => Stores)
     @Column({ type: DataType.STRING(36), allowNull: false })
     declare fk_store: string;

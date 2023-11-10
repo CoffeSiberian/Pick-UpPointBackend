@@ -40,16 +40,3 @@ export const updateConfigsLogo = async (
     const rows = await Configs.update({ logo }, { where: { fk_store } });
     return rows[0];
 };
-
-export const updateConfigsAdmin = async (
-    fk_store: string,
-    adminname: string,
-    adminemail: string,
-    adminpassword: string
-): Promise<number> => {
-    const rows = await Configs.update(
-        { adminname, adminemail, adminpassword },
-        { where: { fk_store } }
-    );
-    return rows[0];
-};

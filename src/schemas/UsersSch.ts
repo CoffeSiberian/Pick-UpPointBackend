@@ -21,6 +21,7 @@ export const userSchemaUpdate = Joi.object<Users>({
     rut: Joi.string().min(1).max(15).optional(),
     name: Joi.string().min(1).max(256).optional(),
     email: Joi.string().email().min(1).max(256).optional(),
+    isAdmin: Joi.boolean().optional(),
     password: Joi.string().min(1).max(60).optional(),
 });
 

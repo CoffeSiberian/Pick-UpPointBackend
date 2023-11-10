@@ -23,7 +23,11 @@ syncDataBase()
     .then(() => {
         httpsServer.listen(PORT);
         logInfo(`Server running on port ${PORT}`);
+        console.log(`Server running on port ${PORT}`);
     })
     .catch((err) => {
         logError(`Error while trying to connect to database: ${err.message}`);
+        console.log(
+            `Error while trying to connect to database: ${err.message}`
+        );
     });

@@ -32,6 +32,9 @@ export default class Users extends Model<UsersTypes> {
     @Column({ type: DataType.STRING(500), allowNull: false })
     declare password: string;
 
+    @Column({ type: DataType.BOOLEAN, allowNull: false })
+    declare isAdmin: boolean;
+
     @ForeignKey(() => Stores)
     @Column({ type: DataType.STRING(36), allowNull: false })
     declare fk_store: string;

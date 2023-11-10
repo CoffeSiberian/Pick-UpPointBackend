@@ -6,9 +6,6 @@ export const configSchema = Joi.object<Configs>({
     api_key_public: Joi.string().min(1).max(256).allow(null).required(),
     api_key_private: Joi.string().min(1).max(256).allow(null).required(),
     logo: Joi.string().min(1).max(256).required(),
-    adminname: Joi.string().min(1).max(256).required(),
-    adminemail: Joi.string().min(1).max(256).required(),
-    adminpassword: Joi.string().min(1).max(256).required(),
 });
 
 export const configsSchemaUpdate = Joi.object<Configs>({
@@ -16,18 +13,9 @@ export const configsSchemaUpdate = Joi.object<Configs>({
     api_key_public: Joi.string().min(1).max(256).allow(null).required(),
     api_key_private: Joi.string().min(1).max(256).allow(null).required(),
     logo: Joi.string().min(1).max(256).required(),
-    adminname: Joi.string().min(1).max(256).required(),
-    adminemail: Joi.string().min(1).max(256).required(),
-    adminpassword: Joi.string().min(1).max(256).required(),
 });
 
 export const configSchemaUpdateApiKeys = Joi.object<Configs>({
     api_key_public: Joi.string().min(1).max(256).allow(null).required(),
     api_key_private: Joi.string().min(1).max(256).allow(null).required(),
-});
-
-export const configsSchemaUpdateAdmin = Joi.object<Configs>({
-    adminname: Joi.string().min(1).max(256).required(),
-    adminemail: Joi.string().min(1).max(256).required(),
-    adminpassword: Joi.string().min(1).max(256).required(),
 });

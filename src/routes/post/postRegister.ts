@@ -15,14 +15,15 @@ export const postRegister = async (
     const Body = value as UserPostRegister;
     const hash = await hashPass(Body.password);
 
-    const Categorie = {
+    const User = {
         id: uuidv4(),
         ...Body,
+        isAdmin: false,
         password: hash,
     };
 
     try {
-        await createUser(Categorie);
+        await createUser(User);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {

@@ -18,6 +18,7 @@ export const postUser = async (
     const User = {
         id: uuidv4(),
         ...body,
+        isAdmin: false,
         password: passHash,
         fk_store: res.jwtPayload.fk_store,
     };

@@ -49,7 +49,7 @@ export const authUser = async (
         }
 
         res.locals.id = user.id;
-        res.locals.isAdmin = false;
+        res.locals.isAdmin = user.isAdmin;
         res.locals.fk_store = user.fk_store;
         next();
     });

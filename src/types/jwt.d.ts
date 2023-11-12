@@ -1,5 +1,6 @@
 export interface JwtPayload {
     id: string;
+    username: string;
     isAdmin: boolean;
     fk_store: string;
     iat?: number;

@@ -9,6 +9,7 @@ export const getJwt = async (
 ): Promise<any> => {
     const jwt = await createJWT({
         id: res.locals.id,
+        username: res.locals.username,
         isAdmin: res.locals.isAdmin,
         fk_store: res.locals.fk_store,
     });

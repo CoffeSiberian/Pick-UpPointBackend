@@ -8,6 +8,7 @@ interface ResponseJwt extends Response {
 
 interface PassLocals {
     id: string;
+    username: string;
     isAdmin: boolean;
     fk_store: string;
 }

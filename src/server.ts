@@ -4,7 +4,7 @@ import { syncDataBase } from "./app";
 import https from "https";
 import Router from "./routes/Router";
 import cors from "cors";
-import { PORT, SERVER_CRT_SSL, SERVER_KEY_SSL } from "./utils/configs";
+import { PORT, LISTEN, SERVER_CRT_SSL, SERVER_KEY_SSL } from "./utils/configs";
 
 const app: Express = express();
 
@@ -21,7 +21,7 @@ const httpsServer = https.createServer(credentials, app);
 
 syncDataBase()
     .then(() => {
-        httpsServer.listen(PORT);
+        httpsServer.listen(PORT, LISTEN);
         logInfo(`Server running on port ${PORT}`);
         console.log(`Server running on port ${PORT}`);
     })

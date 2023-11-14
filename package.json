@@ -2,6 +2,8 @@
     "name": "pick-uppointbackend",
     "version": "1.0.0",
     "description": "",
+    "lockfileVersion": 3,
+    "requires": true,
     "main": "server.js",
     "scripts": {
         "build": "CI=false npx tsc",

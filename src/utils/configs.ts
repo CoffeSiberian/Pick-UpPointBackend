@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const LISTEN = process.env.LISTEN_IP;
-export const PORT: number = parseInt(process.env.LISTEN_PORT);
+export const LISTEN = process.env.IP;
+export const PORT: number = parseInt(process.env.PORT);
 export const CACHE_TIME = process.env.CACHE_TIME;
 export const DB_IP = process.env.DB_IP;
 export const DB_PORT: number = parseInt(process.env.DB_PORT);

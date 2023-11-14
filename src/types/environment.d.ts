@@ -3,8 +3,8 @@ import { Dialect } from "sequelize";
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            LISTEN_IP: string;
-            LISTEN_PORT: string;
+            IP: string;
+            PORT: string;
             CACHE_TIME: string;
             DB_IP: string;
             DB_PORT: string;

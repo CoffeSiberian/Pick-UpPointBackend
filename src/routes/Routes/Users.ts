@@ -1,6 +1,12 @@
 import { Express } from "express";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
+// middlewares
+import {
+    authMiddlewareAdmin,
+    authMiddlewareUser,
+} from "../../middlewares/authMiddleware";
+
 // GET
 import { getUser } from "../get/getUser";
 import { getListUsers } from "../get/getListUsers";
@@ -24,7 +30,7 @@ const UsersRoutes = (app: Express) => {
     app.get("/user/", (req, res, next) => {
         getUser(req, res as ResponseJwt, next);
     });
-    app.get("/user/list", (req, res, next) => {
+    app.get("/user/list", authMiddlewareAdmin, (req, res, next) => {
         getListUsers(req, res as ResponseJwt, next);
     });
     app.get("/user/purchase/", (req, res, next) => {

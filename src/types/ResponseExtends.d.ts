@@ -6,6 +6,10 @@ interface ResponseJwt extends Response {
     jwtPayload: JwtPayload;
 }
 
+interface ResponseUndefinedJwt extends Response {
+    jwtPayload?: undefined | JwtPayload;
+}
+
 interface PassLocals {
     id: string;
     username: string;

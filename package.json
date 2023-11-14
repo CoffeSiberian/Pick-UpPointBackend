@@ -6,8 +6,8 @@
     "requires": true,
     "main": "server.js",
     "scripts": {
-        "build": "CI=false npx tsc",
-        "start": "node build/server.js",
+        "build": "npx tsc && cp -r static/ build/",
+        "start": "node ./build/server.js",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\""
     },
     "repository": {

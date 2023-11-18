@@ -5,6 +5,7 @@ import { hashPass } from "../../utils/hash";
 import { userSchema } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const postUser = async (
     req: Request,
@@ -12,7 +13,11 @@ export const postUser = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchema.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        logErrorSchemas(`validUpdateNameUser: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
+
     const body = value as UserPost;
     const passHash = await hashPass(body.password);
     const User = {

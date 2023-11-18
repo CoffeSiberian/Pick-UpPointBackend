@@ -4,6 +4,7 @@ import { createUser } from "../../repositories/UsersR";
 import { v4 as uuidv4 } from "uuid";
 import { hashPass } from "../../utils/hash";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const postRegister = async (
     req: Request,
@@ -11,7 +12,10 @@ export const postRegister = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaRegister.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        logErrorSchemas(`validUpdateNameUser: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
     const Body = value as UserPostRegister;
     const hash = await hashPass(Body.password);
 

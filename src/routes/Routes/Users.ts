@@ -41,7 +41,7 @@ const UsersRoutes = (app: Express) => {
     });
 
     // POST
-    app.post("/user/", (req, res, next) => {
+    app.post("/user/", authMiddlewareAdmin, (req, res, next) => {
         postUser(req, res as ResponseJwt, next);
     });
 

@@ -16,7 +16,12 @@ export const delUser = async (
 
     try {
         const rows = await deleteUser(id, res.jwtPayload.fk_store);
-        res.json({ rows });
+        if (rows === 0) {
+            res.status(404).json(InfoResponse(404, "User not found"));
+            return next();
+        }
+
+        res.status(200).json(InfoResponse(200, "User deleted"));
         return next();
     } catch (err: any) {
         next({ err });

@@ -60,7 +60,7 @@ const UsersRoutes = (app: Express) => {
     });
 
     // DELETE
-    app.delete("/user/", (req, res, next) => {
+    app.delete("/user/", authMiddlewareAdmin, (req, res, next) => {
         delUser(req, res as ResponseJwt, next);
     });
 };

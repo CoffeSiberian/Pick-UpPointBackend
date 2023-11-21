@@ -4,6 +4,7 @@ import { hashPass } from "../../utils/hash";
 import { userSchemaUpdate } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const putUser = async (
     req: Request,
@@ -11,7 +12,10 @@ export const putUser = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdate.validate(req.body);
-    if (error) next({ error });
+    if (error) {
+        logErrorSchemas(`validUpdateNameUser: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
     const User = value as UserUpdate;
     const UserPassHash = await hashPass(User.password);
 

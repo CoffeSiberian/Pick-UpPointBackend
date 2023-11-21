@@ -18,11 +18,11 @@ export const userSchemaRegister = Joi.object<Users>({
 
 export const userSchemaUpdate = Joi.object<Users>({
     id: Joi.string().uuid().required(),
-    rut: Joi.string().min(1).max(15).optional(),
-    name: Joi.string().min(1).max(256).optional(),
-    email: Joi.string().email().min(1).max(256).optional(),
-    isAdmin: Joi.boolean().optional(),
-    password: Joi.string().min(1).max(60).optional(),
+    rut: Joi.string().min(1).max(15).required(),
+    name: Joi.string().min(1).max(256).required(),
+    email: Joi.string().email().min(1).max(256).required(),
+    isAdmin: Joi.boolean().required(),
+    password: Joi.string().min(1).max(60).required(),
 });
 
 export const userSchemaUpdatePass = Joi.object<Users>({

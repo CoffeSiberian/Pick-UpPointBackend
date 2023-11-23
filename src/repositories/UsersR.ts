@@ -26,6 +26,7 @@ export const getListUsers = async (
 ): Promise<Users[]> => {
     return await Users.findAll({
         where: { fk_store },
+        attributes: { exclude: ["password"] },
         offset: limit_start,
         limit: limit_end,
     });

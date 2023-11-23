@@ -6,7 +6,10 @@ export const getUser = async (
     id: string,
     fk_store: string
 ): Promise<Users | null> => {
-    return await Users.findOne({ where: { id, fk_store } });
+    return await Users.findOne({
+        where: { id, fk_store },
+        attributes: { exclude: ["password"] },
+    });
 };
 
 export const getUserByEmail = async (

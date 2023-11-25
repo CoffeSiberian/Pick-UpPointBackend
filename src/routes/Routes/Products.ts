@@ -1,6 +1,9 @@
 import { Express } from "express";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
+// middlewares
+import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
+
 // GET
 import { getAllStoreProducts } from "../get/getAllStoreProducts";
 import { getProduct } from "../get/getProduct";
@@ -25,20 +28,20 @@ const ProductsRoutes = (app: Express) => {
     });
 
     // POST
-    app.post("/product", (req, res, next) => {
+    app.post("/product", authMiddlewareAdmin, (req, res, next) => {
         postProduct(req, res as ResponseJwt, next);
     });
 
     // PUT
-    app.put("/product", (req, res, next) => {
+    app.put("/product", authMiddlewareAdmin, (req, res, next) => {
         putProduct(req, res as ResponseJwt, next);
     });
-    app.put("/product/stock", (req, res, next) => {
+    app.put("/product/stock", authMiddlewareAdmin, (req, res, next) => {
         putProductStock(req, res as ResponseJwt, next);
     });
 
     // DELETE
-    app.delete("/product", (req, res, next) => {
+    app.delete("/product", authMiddlewareAdmin, (req, res, next) => {
         delProduct(req, res as ResponseJwt, next);
     });
 };

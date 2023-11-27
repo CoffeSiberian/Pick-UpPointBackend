@@ -16,7 +16,11 @@ export const delCategorie = async (
 
     try {
         const rows = await deleteCategorie(id, res.jwtPayload.fk_store);
-        res.json({ rows });
+        if (rows === 0) {
+            res.status(404).json(InfoResponse(404, "Categorie not found"));
+            return next();
+        }
+
         return next();
     } catch (err: any) {
         next({ err });

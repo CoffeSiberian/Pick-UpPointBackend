@@ -3,6 +3,7 @@ import { updateCategoriesName } from "../../repositories/CategoriesR";
 import { categoriesSchemaUpdate } from "../../schemas/CategoriesSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const putCategorieName = async (
     req: Request,
@@ -10,7 +11,11 @@ export const putCategorieName = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = categoriesSchemaUpdate.validate(req.body);
-    if (error) next({ error });
+    if (error) {
+        logErrorSchemas(`validUpdateCategorie: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
+
     const Categorie = value as CategorieUpdate;
 
     try {

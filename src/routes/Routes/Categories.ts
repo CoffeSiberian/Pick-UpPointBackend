@@ -1,6 +1,8 @@
 import { Express } from "express";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
+import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
+
 // GET
 import { getCategories } from "../get/getCategories";
 import { getCategorie } from "../get/getCategorie";
@@ -22,17 +24,17 @@ const CategoriesRoutes = (app: Express) => {
     app.get("/categorie/products", getCategoriesProducts);
 
     // POST
-    app.post("/categorie", (req, res, next) => {
+    app.post("/categorie", authMiddlewareAdmin, (req, res, next) => {
         postCategorie(req, res as ResponseJwt, next);
     });
 
     // PUT
-    app.put("/categorie/name", (req, res, next) => {
+    app.put("/categorie/name", authMiddlewareAdmin, (req, res, next) => {
         putCategorieName(req, res as ResponseJwt, next);
     });
 
     // DELETE
-    app.delete("/categorie", (req, res, next) => {
+    app.delete("/categorie", authMiddlewareAdmin, (req, res, next) => {
         delCategorie(req, res as ResponseJwt, next);
     });
 };

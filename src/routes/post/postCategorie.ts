@@ -4,6 +4,7 @@ import { createCategories } from "../../repositories/CategoriesR";
 import { v4 as uuidv4 } from "uuid";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const postCategorie = async (
     req: Request,
@@ -11,7 +12,11 @@ export const postCategorie = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = categoriesSchema.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        logErrorSchemas(`validCreateCategorie: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
+
     const Bode = value as CategoriePost;
     const Categorie = {
         id: uuidv4(),

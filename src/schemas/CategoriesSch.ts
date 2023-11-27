@@ -8,5 +8,4 @@ export const categoriesSchema = Joi.object<Categories>({
 export const categoriesSchemaUpdate = Joi.object<Categories>({
     id: Joi.string().uuid().required(),
     name: Joi.string().min(1).max(256),
-    fk_store: Joi.string().uuid(),
 });

@@ -21,6 +21,7 @@ export const delCategorie = async (
             return next();
         }
 
+        res.status(200).json(InfoResponse(200, "Categorie deleted"));
         return next();
     } catch (err: any) {
         next({ err });

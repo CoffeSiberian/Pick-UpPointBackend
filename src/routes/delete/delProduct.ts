@@ -21,6 +21,7 @@ export const delProduct = async (
             return next();
         }
 
+        res.status(200).json(InfoResponse(200, "Product deleted"));
         return next();
     } catch (err: any) {
         next({ err });

@@ -2,12 +2,12 @@ import { Request, Response, NextFunction } from "express";
 import { getAllStoreProducts as getAllStoreProductsR } from "../../repositories/ProductsR";
 import { InfoResponse } from "../../utils/InfoResponse";
 
-export const getAllStoreProducts = async (
+export const getProducts = async (
     req: Request,
     res: Response,
     next: NextFunction
 ): Promise<any> => {
-    const storeId = req.query.storeid;
+    const storeId = req.query.store;
     const limit_start = req.query.limit_start;
     const limit_end = req.query.limit_end;
 

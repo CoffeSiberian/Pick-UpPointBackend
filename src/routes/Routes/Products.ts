@@ -5,7 +5,7 @@ import { ResponseJwt } from "../../types/ResponseExtends";
 import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 
 // GET
-import { getAllStoreProducts } from "../get/getAllStoreProducts";
+import { getProducts } from "../get/getAllStoreProducts";
 import { getProduct } from "../get/getProduct";
 
 // POST
@@ -24,7 +24,7 @@ const ProductsRoutes = (app: Express) => {
         getProduct(req, res as ResponseJwt, next);
     });
     app.get("/products", (req, res, next) => {
-        getAllStoreProducts(req, res as ResponseJwt, next);
+        getProducts(req, res as ResponseJwt, next);
     });
 
     // POST

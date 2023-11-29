@@ -5,7 +5,7 @@ import { ResponseJwt } from "../../types/ResponseExtends";
 import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 
 // GET
-import { getProducts } from "../get/getAllStoreProducts";
+import { getProducts } from "../get/getProducts";
 import { getProduct } from "../get/getProduct";
 
 // POST

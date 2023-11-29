@@ -41,7 +41,13 @@ export const getProducts = async (
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Products);
+
+        if (Products[0].products === undefined) {
+            res.status(404).json(InfoResponse(404, "Not Found"));
+            return next();
+        }
+
+        res.json(Products[0].products);
         return next();
     } catch (err: any) {
         next({ err });

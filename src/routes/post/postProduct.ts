@@ -4,6 +4,7 @@ import { createProduct } from "../../repositories/ProductsR";
 import { productSchema } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const postProduct = async (
     req: Request,
@@ -11,7 +12,11 @@ export const postProduct = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = productSchema.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        logErrorSchemas(`validCreateProduct: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
+
     const body = value as ProductPost;
     const Product = { id: uuidv4(), ...body };
 

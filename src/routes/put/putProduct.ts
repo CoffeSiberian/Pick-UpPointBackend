@@ -3,6 +3,7 @@ import { updateProduct } from "../../repositories/ProductsR";
 import { productUpodateSchemaCustom } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { logErrorSchemas } from "../../utils/logger";
 
 export const putProduct = async (
     req: Request,
@@ -10,7 +11,10 @@ export const putProduct = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = productUpodateSchemaCustom.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        logErrorSchemas(`validUpdateProduct: ${error.details[0].message}`);
+        return res.status(400).json(InfoResponse(400, "Bad Request"));
+    }
 
     const body = value as ProductUpdate;
     const Product = {

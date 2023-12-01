@@ -20,10 +20,17 @@ export const postProduct = async (
 
     const body = value as ProductPost;
     const productId = uuidv4();
-    const Product = { id: productId, ...body };
+    const Product = {
+        id: productId,
+        name: body.name,
+        description: body.description,
+        price: body.price,
+        fk_category: body.fk_category,
+    };
+
     const Stock = {
         id: uuidv4(),
-        quantity: 0,
+        quantity: body.stock,
         fk_store: res.jwtPayload.fk_store,
         fk_product: productId,
     };

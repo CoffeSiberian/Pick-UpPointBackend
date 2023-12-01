@@ -24,6 +24,7 @@ interface ProductPost {
     name: string;
     description: string;
     price: number;
+    stock: number;
     fk_category: string;
 }
 

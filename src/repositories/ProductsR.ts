@@ -40,6 +40,9 @@ export const getAllStoreProducts = async (
                     {
                         model: Images_Products,
                     },
+                    {
+                        model: Categories,
+                    },
                 ],
                 limit: limit_end,
                 offset: limit_start, // https://github.com/sequelize/sequelize/issues/12969

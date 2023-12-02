@@ -27,27 +27,22 @@ export const getAllStoreProducts = async (
     fk_store: string,
     limit_start: number,
     limit_end: number
-): Promise<Categories[]> => {
-    return await Categories.findAll({
-        where: { fk_store },
+): Promise<Products[]> => {
+    return await Products.findAll({
         include: [
             {
-                model: Products,
-                include: [
-                    {
-                        model: Stocks,
-                    },
-                    {
-                        model: Images_Products,
-                    },
-                    {
-                        model: Categories,
-                    },
-                ],
-                limit: limit_end,
-                offset: limit_start, // https://github.com/sequelize/sequelize/issues/12969
+                model: Categories,
+                where: { fk_store },
+            },
+            {
+                model: Stocks,
+            },
+            {
+                model: Images_Products,
             },
         ],
+        limit: limit_end,
+        offset: limit_start,
     });
 };
 

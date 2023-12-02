@@ -37,22 +37,17 @@ export const getProducts = async (
             limit_start_number,
             limit_end_number
         );
+
         if (!Products) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-
-        if (Products[0].products === undefined) {
-            res.status(404).json(InfoResponse(404, "Not Found"));
+        if (Products.length === 0) {
+            res.status(404).json(InfoResponse(404, "No Found"));
             return next();
         }
 
-        if (Products[0].products.length === 0) {
-            res.status(404).json(InfoResponse(404, "Not Found"));
-            return next();
-        }
-
-        res.json(Products[0].products);
+        res.json(Products);
         return next();
     } catch (err: any) {
         next({ err });

@@ -47,6 +47,11 @@ export const getProducts = async (
             return next();
         }
 
+        if (Products[0].products.length === 0) {
+            res.status(404).json(InfoResponse(404, "Not Found"));
+            return next();
+        }
+
         res.json(Products[0].products);
         return next();
     } catch (err: any) {

@@ -24,6 +24,7 @@ const verifyHeaders = (headers: JWSHeaderParameters): JwtHeader | null => {
 const verifyPayload = (payload: JWTPayload): JwtPayload | null => {
     if (typeof payload.id !== "string") return null;
     if (typeof payload.username !== "string") return null;
+    if (typeof payload.email !== "string") return null;
     if (typeof payload.isAdmin !== "boolean") return null;
     if (typeof payload.fk_store !== "string") return null;
 
@@ -33,6 +34,7 @@ const verifyPayload = (payload: JWTPayload): JwtPayload | null => {
     return {
         id: payload.id,
         username: payload.username,
+        email: payload.email,
         isAdmin: payload.isAdmin,
         fk_store: payload.fk_store,
         iat: payload.iat,

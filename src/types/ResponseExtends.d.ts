@@ -13,6 +13,7 @@ interface ResponseUndefinedJwt extends Response {
 interface PassLocals {
     id: string;
     username: string;
+    email: string;
     isAdmin: boolean;
     fk_store: string;
 }

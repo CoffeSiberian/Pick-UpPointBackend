@@ -10,6 +10,7 @@ export const getJwt = async (
     const jwt = await createJWT({
         id: res.locals.id,
         username: res.locals.username,
+        email: res.locals.email,
         isAdmin: res.locals.isAdmin,
         fk_store: res.locals.fk_store,
     });

@@ -48,7 +48,7 @@ export const signDataPostCreatePay = async (
                 "Content-Type": "application/x-www-form-urlencoded",
             },
         },
-        JSON.stringify(dataToSend),
+        dataToSend,
         `${FLOW_API_URL}/payment/create`
     );
 

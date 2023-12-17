@@ -1,11 +1,16 @@
 import { Express } from "express";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import {
+    authMiddlewareUser,
+    authMiddlewareAdmin,
+} from "../../middlewares/authMiddleware";
 
 // GET
 import { getPurchase } from "../get/getPurchase";
 
 // POST
 import { postBuyItems } from "../post/postBuyItems";
+import { createPayCallback } from "../post/createPayCallback";
 
 // PUT
 import { putPurchaseStatus } from "../put/putPurchaseStatus";
@@ -18,15 +23,18 @@ const PurchasesRoutes = (app: Express) => {
     });
 
     // POST
-    app.post("/purchase", (req, res, next) => {
+    app.post("/purchase", authMiddlewareUser, (req, res, next) => {
         postBuyItems(req, res as ResponseJwt, next);
+    });
+    app.post("/purchase/callback", (req, res, next) => {
+        createPayCallback(req, res as ResponseJwt, next);
     });
 
     // PUT
-    app.put("/purchase/status", (req, res, next) => {
+    app.put("/purchase/status", authMiddlewareAdmin, (req, res, next) => {
         putPurchaseStatus(req, res as ResponseJwt, next);
     });
-    app.put("/purchase/retired", (req, res, next) => {
+    app.put("/purchase/retired", authMiddlewareAdmin, (req, res, next) => {
         putPurchaseRetired(req, res as ResponseJwt, next);
     });
 };

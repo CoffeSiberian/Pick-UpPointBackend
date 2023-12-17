@@ -14,6 +14,8 @@ declare global {
             DB_USERNAME: string;
             DB_PASSWORD: string;
             HASH_ROUNDS: string;
+            FLOW_API_CALLBACK_URL: string;
+            FLOW_API_RETURN_URL: string;
             FLOW_API_URL: string;
             FLOW_API_KEY: string;
             FLOW_API_SECRET_KEY: string;

@@ -18,7 +18,7 @@ const dataGet = async (
 
 const dataPost = async (
     options: AxiosRequestConfig,
-    payload: string,
+    payload: string | object,
     url: string
 ): Promise<AxiosResponse | null> => {
     try {

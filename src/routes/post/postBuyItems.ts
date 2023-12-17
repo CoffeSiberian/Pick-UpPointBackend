@@ -1,4 +1,8 @@
 import { Request, NextFunction } from "express";
+import {
+    FLOW_API_CALLBACK_URL,
+    FLOW_API_RETURN_URL,
+} from "../../utils/configs";
 import { buyProcessSchema } from "../../schemas/ProductsSch";
 import { createPurchasesWithItems } from "../../repositories/PurchasesR";
 import { getManyProducts } from "../../repositories/ProductsR";
@@ -6,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { Purchases as PurchaseType } from "../../types/db/model";
+import { signDataPostCreatePay } from "../../utils/flowApi";
 
 export const postBuyItems = async (
     req: Request,
@@ -23,9 +28,26 @@ export const postBuyItems = async (
         return res.status(404).json(InfoResponse(404, "Products not found"));
     }
 
+    const response = await signDataPostCreatePay({
+        amount: purchase.purchase.total,
+        commerceOrder: purchase.purchase.id,
+        email: res.jwtPayload.email,
+        paymentMethod: 1,
+        subject: res.jwtPayload.username,
+        urlConfirmation: FLOW_API_CALLBACK_URL,
+        urlReturn: FLOW_API_RETURN_URL,
+    });
+    if (!response) {
+        return res.status(500).json(InfoResponse(500, "Internal server error"));
+    }
+
     try {
         await createPurchasesWithItems(purchase.purchase, purchase.products);
-        res.status(200).json(InfoResponse(200, "Created"));
+        res.status(200).json({
+            id: purchase.purchase.id,
+            url_pay: `${response.url}?token=${response.token}`,
+            pay_flow_id: response.flowOrder,
+        });
         return next();
     } catch (err: any) {
         next({ err });

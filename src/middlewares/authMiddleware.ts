@@ -52,6 +52,7 @@ export const authUser = async (
 
         res.locals.id = user.id;
         res.locals.username = user.name;
+        res.locals.email = user.email;
         res.locals.isAdmin = user.isAdmin;
         res.locals.fk_store = user.fk_store;
         next();

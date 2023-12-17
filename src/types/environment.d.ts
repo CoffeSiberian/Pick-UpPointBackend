@@ -14,6 +14,9 @@ declare global {
             DB_USERNAME: string;
             DB_PASSWORD: string;
             HASH_ROUNDS: string;
+            FLOW_API_URL: string;
+            FLOW_API_KEY: string;
+            FLOW_API_SECRET_KEY: string;
             JWT_TIMEOUT_TOKEN: string;
             JWT_ALGORITHM: string;
             JWT_SECRET_PKCS8: string;

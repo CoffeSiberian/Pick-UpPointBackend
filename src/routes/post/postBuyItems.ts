@@ -13,13 +13,17 @@ export const postBuyItems = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = buyProcessSchema.validate(req.body);
-    if (error) return next({ error });
+    if (error) {
+        return res.status(400).json(InfoResponse(400, error.message));
+    }
     const body = value as buyProcessPOST;
 
     const purchase = await getTotalPayment(body, res.jwtPayload.id);
+    if (!purchase) {
+        return res.status(404).json(InfoResponse(404, "Products not found"));
+    }
 
     try {
-        if (!purchase) return next({ error: "Products not found" });
         await createPurchasesWithItems(purchase.purchase, purchase.products);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();

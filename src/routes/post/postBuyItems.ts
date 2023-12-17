@@ -43,11 +43,13 @@ export const postBuyItems = async (
 
     try {
         await createPurchasesWithItems(purchase.purchase, purchase.products);
+
         res.status(200).json({
             id: purchase.purchase.id,
             url_pay: `${response.url}?token=${response.token}`,
             pay_flow_id: response.flowOrder,
         });
+
         return next();
     } catch (err: any) {
         next({ err });

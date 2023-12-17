@@ -7,6 +7,8 @@ import {
     DataPostCreatePay,
     DataPostCreatePayAxios,
     DataPostCreatePayAxiosResponse,
+    DataGetPayStatusAxios,
+    DataGetPayStatusAxiosResponse,
 } from "../types/flowApiTypes";
 
 const sign = (encodedData: { [key: string]: any }): string => {
@@ -57,10 +59,12 @@ export const signDataPostCreatePay = async (
     return response.data;
 };
 
-const signDataGetGetPayByFlowOrder = (flowOrder: number) => {
+export const signDataGetGetPayByFlowOrder = async (
+    token: string
+): Promise<DataGetPayStatusAxiosResponse | null> => {
     const dataToSign = {
         apiKey: FLOW_API_KEY,
-        flowOrder: flowOrder,
+        token: token,
     };
 
     const signData = sign(dataToSign);
@@ -69,4 +73,17 @@ const signDataGetGetPayByFlowOrder = (flowOrder: number) => {
         ...dataToSign,
         s: signData,
     };
+
+    const response: DataGetPayStatusAxios | null = await dataGet(
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        },
+        `${FLOW_API_URL}/payment/getStatus?apiKey=${dataToSend.apiKey}&token=${dataToSend.token}&s=${dataToSend.s}`
+    );
+
+    if (!response) return null;
+    if (response.status !== 200) return null;
+    return response.data;
 };

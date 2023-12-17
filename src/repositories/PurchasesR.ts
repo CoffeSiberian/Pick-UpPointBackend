@@ -82,7 +82,7 @@ export const updatePurchasesRetired = async (
 
 export const updatePurchasesStatus = async (
     id: string,
-    status: string,
+    status: number,
     fk_user: string,
     fk_store: string
 ): Promise<number> => {

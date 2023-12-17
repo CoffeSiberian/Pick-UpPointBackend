@@ -33,6 +33,6 @@ export const putPurchaseStatus = async (
 
 interface PurchaseUpdate {
     id: string;
-    status: string;
+    status: number;
     fk_user: string;
 }

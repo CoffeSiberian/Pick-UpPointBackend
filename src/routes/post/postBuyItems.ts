@@ -88,7 +88,7 @@ const getTotalPayment = async (
             id: fk_purchase,
             total,
             date: new Date(),
-            status: "pending",
+            status: 1,
             payment_successful: false,
             retired: false,
             fk_user,

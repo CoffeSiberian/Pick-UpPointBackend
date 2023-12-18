@@ -27,7 +27,17 @@ export const getPurchasesByOnlyId = async (
     id: string,
     fk_store: string
 ): Promise<Purchases | null> => {
-    return await Purchases.findOne({ where: { id, fk_store } });
+    return await Purchases.findOne({
+        include: [
+            {
+                model: Purchases_Items,
+            },
+            {
+                model: Users,
+            },
+        ],
+        where: { id, fk_store },
+    });
 };
 
 export const getAllStorePurchases = async (

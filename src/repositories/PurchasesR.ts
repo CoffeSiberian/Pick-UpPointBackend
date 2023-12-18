@@ -24,9 +24,10 @@ export const getPurchasesById = async (
 };
 
 export const getPurchasesByOnlyId = async (
-    id: string
+    id: string,
+    fk_store: string
 ): Promise<Purchases | null> => {
-    return await Purchases.findOne({ where: { id } });
+    return await Purchases.findOne({ where: { id, fk_store } });
 };
 
 export const getAllStorePurchases = async (

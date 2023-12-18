@@ -15,7 +15,10 @@ export const getPurchase = async (
     }
 
     try {
-        const Purchase = await getPurchasesByOnlyId(id);
+        const Purchase = await getPurchasesByOnlyId(
+            id,
+            res.jwtPayload.fk_store
+        );
         if (!Purchase) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();

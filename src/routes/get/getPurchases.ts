@@ -1,19 +1,17 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, NextFunction } from "express";
+import { ResponseJwt } from "../../types/ResponseExtends";
 import { getAllStorePurchases } from "../../repositories/PurchasesR";
 import { InfoResponse } from "../../utils/InfoResponse";
 
 export const getPurchases = async (
     req: Request,
-    res: Response,
+    res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
-    const storeId = req.query.store;
     const limit_start = req.query.limit_start;
     const limit_end = req.query.limit_end;
 
     if (
-        !storeId ||
-        typeof storeId !== "string" ||
         !limit_start ||
         typeof limit_start !== "string" ||
         !limit_end ||
@@ -33,7 +31,7 @@ export const getPurchases = async (
 
     try {
         const Products = await getAllStorePurchases(
-            storeId,
+            res.jwtPayload.fk_store,
             limit_start_number,
             limit_end_number
         );

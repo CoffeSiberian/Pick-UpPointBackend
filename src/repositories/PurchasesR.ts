@@ -1,6 +1,7 @@
 import { sequelize } from "../models/database";
 import Purchases from "../models/Purchases";
 import Purchases_Items from "../models/Purchases_Items";
+import Users from "../models/Users";
 import { getUser } from "./UsersR";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import { Purchases as PurchasesTypes } from "../types/db/model";
@@ -37,6 +38,9 @@ export const getAllStorePurchases = async (
         include: [
             {
                 model: Purchases_Items,
+            },
+            {
+                model: Users,
             },
         ],
         where: { fk_store },

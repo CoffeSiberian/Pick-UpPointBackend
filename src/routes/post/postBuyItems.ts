@@ -23,7 +23,11 @@ export const postBuyItems = async (
     }
     const body = value as buyProcessPOST;
 
-    const purchase = await getTotalPayment(body, res.jwtPayload.id);
+    const purchase = await getTotalPayment(
+        body,
+        res.jwtPayload.id,
+        res.jwtPayload.fk_store
+    );
     if (!purchase) {
         return res.status(404).json(InfoResponse(404, "Products not found"));
     }
@@ -66,7 +70,8 @@ export const postBuyItems = async (
 
 const getTotalPayment = async (
     items: buyProcessPOST,
-    fk_user: string
+    fk_user: string,
+    fk_store: string
 ): Promise<buyObject | null> => {
     const ids = items.products.map((item) => item.id);
     const products = await getManyProducts(ids);
@@ -100,6 +105,7 @@ const getTotalPayment = async (
             payment_successful: false,
             retired: false,
             fk_user,
+            fk_store,
         },
         products: purchaseItems as itemsBuy[],
     };

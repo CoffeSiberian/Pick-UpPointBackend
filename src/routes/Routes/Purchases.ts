@@ -8,6 +8,7 @@ import {
 // GET
 import { getPurchase } from "../get/getPurchase";
 import { getUserPurchase } from "../get/getUserPurchase";
+import { getPurchases } from "../get/getPurchases";
 
 // POST
 import { postBuyItems } from "../post/postBuyItems";
@@ -25,6 +26,9 @@ const PurchasesRoutes = (app: Express) => {
     });
     app.get("/purchase/user", authMiddlewareUser, (req, res, next) => {
         getUserPurchase(req, res as ResponseJwt, next);
+    });
+    app.get("/purchases", authMiddlewareAdmin, (req, res, next) => {
+        getPurchases(req, res as ResponseJwt, next);
     });
 
     // POST

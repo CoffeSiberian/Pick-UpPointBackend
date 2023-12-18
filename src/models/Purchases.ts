@@ -9,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import { Purchases as PurchasesTypes } from "../types/db/model";
 import Users from "./Users";
+import Stores from "./Stores";
 import Purchases_Items from "./Purchases_Items";
 
 @Table({ tableName: "purchases" })
@@ -45,8 +46,15 @@ export default class Purchases extends Model<PurchasesTypes> {
     @Column({ type: DataType.STRING(36), allowNull: false })
     declare fk_user: string;
 
+    @ForeignKey(() => Stores)
+    @Column({ type: DataType.STRING(36), allowNull: false })
+    declare fk_store: string;
+
     @BelongsTo(() => Users, "fk_user")
     declare user: Users;
+
+    @BelongsTo(() => Stores, "fk_store")
+    declare store: Stores;
 
     @HasMany(() => Purchases_Items)
     declare purchases_items?: Purchases_Items[];

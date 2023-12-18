@@ -8,6 +8,7 @@ import {
 } from "sequelize-typescript";
 import { Stores as StoresTypes } from "../types/db/model";
 import Users from "./Users";
+import Purchases from "./Purchases";
 import Stocks from "./Stocks";
 import Categories from "./Categories";
 import Configs from "./Configs";
@@ -41,6 +42,9 @@ export default class Stores extends Model<StoresTypes> {
 
     @HasMany(() => Users)
     declare members?: Users[];
+
+    @HasMany(() => Purchases)
+    declare purchases?: Purchases[];
 
     @HasMany(() => Categories)
     declare categories?: Categories[];

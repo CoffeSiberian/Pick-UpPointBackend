@@ -7,6 +7,7 @@ import { Purchases as PurchasesTypes } from "../types/db/model";
 
 // GET
 export const getPurchases = async (fk_user: string): Promise<Purchases[]> => {
+    // need pogination
     return await Purchases.findAll({
         where: { fk_user },
     });
@@ -25,6 +26,23 @@ export const getPurchasesByOnlyId = async (
     id: string
 ): Promise<Purchases | null> => {
     return await Purchases.findOne({ where: { id } });
+};
+
+export const getAllStorePurchases = async (
+    fk_store: string,
+    limit_start: number,
+    limit_end: number
+): Promise<Purchases[]> => {
+    return await Purchases.findAll({
+        include: [
+            {
+                model: Purchases_Items,
+            },
+        ],
+        where: { fk_store },
+        limit: limit_end,
+        offset: limit_start,
+    });
 };
 
 // POST

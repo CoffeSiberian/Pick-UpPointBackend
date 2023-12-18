@@ -4,7 +4,7 @@ import { PurchaseStatusUpdateSchema } from "../../schemas/Purchases_ItemsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
-export const putPurchaseStatus = async (
+/* export const putPurchaseStatus = async (
     req: Request,
     res: ResponseJwt,
     next: NextFunction
@@ -35,4 +35,4 @@ interface PurchaseUpdate {
     id: string;
     status: number;
     fk_user: string;
-}
+} */

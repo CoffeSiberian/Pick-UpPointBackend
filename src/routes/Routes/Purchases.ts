@@ -15,7 +15,7 @@ import { createPayCallback } from "../post/createPayCallback";
 import { postPurchaseRedirect } from "../post/postPurchaseRedirect";
 
 // PUT
-import { putPurchaseStatus } from "../put/putPurchaseStatus";
+// import { putPurchaseStatus } from "../put/putPurchaseStatus"; // need to be fixed
 import { putPurchaseRetired } from "../put/putPurchaseRetired";
 
 const PurchasesRoutes = (app: Express) => {
@@ -37,9 +37,9 @@ const PurchasesRoutes = (app: Express) => {
     app.post("/purchase/redirect", postPurchaseRedirect);
 
     // PUT
-    app.put("/purchase/status", authMiddlewareAdmin, (req, res, next) => {
+    /*     app.put("/purchase/status", authMiddlewareAdmin, (req, res, next) => {
         putPurchaseStatus(req, res as ResponseJwt, next);
-    });
+    }); */
     app.put("/purchase/retired", authMiddlewareAdmin, (req, res, next) => {
         putPurchaseRetired(req, res as ResponseJwt, next);
     });

@@ -18,7 +18,7 @@ import { putPurchaseRetired } from "../put/putPurchaseRetired";
 
 const PurchasesRoutes = (app: Express) => {
     // GET
-    app.get("/purchase", (req, res, next) => {
+    app.get("/purchase", authMiddlewareAdmin, (req, res, next) => {
         getPurchase(req, res as ResponseJwt, next);
     });
 

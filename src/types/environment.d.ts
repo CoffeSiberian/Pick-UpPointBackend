@@ -5,6 +5,7 @@ declare global {
         interface ProcessEnv {
             IP: string;
             PORT: string;
+            WEB_URL: string;
             CACHE_TIME: string;
             DB_IP: string;
             DB_PORT: string;

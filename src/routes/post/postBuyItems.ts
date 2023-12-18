@@ -35,7 +35,7 @@ export const postBuyItems = async (
         paymentMethod: 1,
         subject: res.jwtPayload.username,
         urlConfirmation: FLOW_API_CALLBACK_URL,
-        urlReturn: FLOW_API_RETURN_URL,
+        urlReturn: `${FLOW_API_RETURN_URL}?id=${purchase.purchase.id}`,
         optional: JSON.stringify({
             userId: res.jwtPayload.id,
             username: res.jwtPayload.username,

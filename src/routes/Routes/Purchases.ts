@@ -7,10 +7,12 @@ import {
 
 // GET
 import { getPurchase } from "../get/getPurchase";
+import { getUserPurchase } from "../get/getUserPurchase";
 
 // POST
 import { postBuyItems } from "../post/postBuyItems";
 import { createPayCallback } from "../post/createPayCallback";
+import { postPurchaseRedirect } from "../post/postPurchaseRedirect";
 
 // PUT
 import { putPurchaseStatus } from "../put/putPurchaseStatus";
@@ -21,6 +23,9 @@ const PurchasesRoutes = (app: Express) => {
     app.get("/purchase", authMiddlewareAdmin, (req, res, next) => {
         getPurchase(req, res as ResponseJwt, next);
     });
+    app.get("/purchase/user", authMiddlewareUser, (req, res, next) => {
+        getUserPurchase(req, res as ResponseJwt, next);
+    });
 
     // POST
     app.post("/purchase", authMiddlewareUser, (req, res, next) => {
@@ -29,6 +34,7 @@ const PurchasesRoutes = (app: Express) => {
     app.post("/purchase/callback", (req, res, next) => {
         createPayCallback(req, res as ResponseJwt, next);
     });
+    app.post("/purchase/redirect", postPurchaseRedirect);
 
     // PUT
     app.put("/purchase/status", authMiddlewareAdmin, (req, res, next) => {

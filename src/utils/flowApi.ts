@@ -32,6 +32,7 @@ export const signDataPostCreatePay = async (
         commerceOrder: data.commerceOrder,
         currency: "CLP",
         email: data.email,
+        optional: data.optional,
         paymentMethod: data.paymentMethod,
         subject: data.subject,
         urlConfirmation: data.urlConfirmation,

@@ -29,8 +29,8 @@ export default class Purchases extends Model<PurchasesTypes> {
     @Column({ type: DataType.INTEGER, allowNull: false })
     declare status: number;
 
-    @Column({ type: DataType.STRING(128), allowNull: true })
-    declare payment_method: string;
+    @Column({ type: DataType.INTEGER, allowNull: true })
+    declare payment_method: number;
 
     @Column({ type: DataType.STRING(128), allowNull: true })
     declare payment_id: string;

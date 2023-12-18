@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { signDataGetGetPayByFlowOrder } from "../../utils/flowApi";
+import { updatePurchasesStatus } from "../../repositories/PurchasesR";
 
 export const createPayCallback = async (
     req: Request,
@@ -17,6 +18,21 @@ export const createPayCallback = async (
         return res.status(404).json(InfoResponse(404, "Not found"));
     }
 
-    res.status(200).json(InfoResponse(200, "Ok"));
-    return next();
+    try {
+        const rows = await updatePurchasesStatus(
+            response.flowOrder.toString(),
+            response.status,
+            response.status === 2,
+            response.optional.userId,
+            response.optional.fk_store
+        );
+        if (rows === 0) {
+            res.status(404).json(InfoResponse(404, "Not Found"));
+            return next();
+        }
+        res.status(200).json(InfoResponse(200, "Updated"));
+        return next();
+    } catch (err: any) {
+        next({ err });
+    }
 };

@@ -36,10 +36,18 @@ export const postBuyItems = async (
         subject: res.jwtPayload.username,
         urlConfirmation: FLOW_API_CALLBACK_URL,
         urlReturn: FLOW_API_RETURN_URL,
+        optional: JSON.stringify({
+            userId: res.jwtPayload.id,
+            username: res.jwtPayload.username,
+            fk_store: res.jwtPayload.fk_store,
+        }),
     });
     if (!response) {
         return res.status(500).json(InfoResponse(500, "Internal server error"));
     }
+
+    purchase.purchase.payment_id = response.flowOrder.toString();
+    purchase.purchase.payment_method = 1;
 
     try {
         await createPurchasesWithItems(purchase.purchase, purchase.products);

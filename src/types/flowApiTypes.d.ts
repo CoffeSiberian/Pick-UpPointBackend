@@ -6,6 +6,7 @@ export interface DataPostCreatePay {
     email: string;
     paymentMethod: number;
     subject: string;
+    optional: Optional;
     urlConfirmation: string;
     urlReturn: string;
 }
@@ -25,15 +26,16 @@ export interface DataGetPayStatusAxiosResponse {
     currency: string;
     amount: number;
     payer: string;
-    optional: Optional;
+    optional: UserOptional;
     pending_info: PendingInfo;
     paymentData: PaymentData;
     merchantId: string;
 }
 
-export interface Optional {
-    RUT: string;
-    ID: string;
+export interface UserOptional {
+    userId: string;
+    username: string;
+    fk_store: string;
 }
 
 export interface PendingInfo {

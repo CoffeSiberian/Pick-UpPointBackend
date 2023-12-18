@@ -81,8 +81,9 @@ export const updatePurchasesRetired = async (
 };
 
 export const updatePurchasesStatus = async (
-    id: string,
+    payment_id: string,
     status: number,
+    payment_successful: boolean,
     fk_user: string,
     fk_store: string
 ): Promise<number> => {
@@ -90,6 +91,9 @@ export const updatePurchasesStatus = async (
     if (!validateStore) return 0;
     if (validateStore.fk_store !== fk_store) return 0;
 
-    const rows = await Purchases.update({ status }, { where: { id, fk_user } });
+    const rows = await Purchases.update(
+        { status, payment_successful },
+        { where: { payment_id, fk_user } }
+    );
     return rows[0];
 };

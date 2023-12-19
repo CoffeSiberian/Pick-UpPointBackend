@@ -35,9 +35,7 @@ const PurchasesRoutes = (app: Express) => {
     app.post("/purchase", authMiddlewareUser, (req, res, next) => {
         postBuyItems(req, res as ResponseJwt, next);
     });
-    app.post("/purchase/callback", (req, res, next) => {
-        createPayCallback(req, res as ResponseJwt, next);
-    });
+    app.post("/purchase/callback", createPayCallback);
     app.post("/purchase/redirect", postPurchaseRedirect);
 
     // PUT

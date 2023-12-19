@@ -6,7 +6,7 @@ import {
 } from "../../middlewares/authMiddleware";
 
 // GET
-import { getPurchase } from "../get/getPurchase";
+import { postCheckPurchase } from "../post/postCheckPurchase";
 import { getUserPurchase } from "../get/getUserPurchase";
 import { getPurchases } from "../get/getPurchases";
 
@@ -21,9 +21,6 @@ import { putPurchaseRetired } from "../put/putPurchaseRetired";
 
 const PurchasesRoutes = (app: Express) => {
     // GET
-    app.get("/purchase", authMiddlewareAdmin, (req, res, next) => {
-        getPurchase(req, res as ResponseJwt, next);
-    });
     app.get("/purchase/user", authMiddlewareUser, (req, res, next) => {
         getUserPurchase(req, res as ResponseJwt, next);
     });
@@ -32,6 +29,9 @@ const PurchasesRoutes = (app: Express) => {
     });
 
     // POST
+    app.post("/purchase/check", authMiddlewareAdmin, (req, res, next) => {
+        postCheckPurchase(req, res as ResponseJwt, next);
+    });
     app.post("/purchase", authMiddlewareUser, (req, res, next) => {
         postBuyItems(req, res as ResponseJwt, next);
     });

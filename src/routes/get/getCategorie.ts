@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getCategorie as getCategorieR } from "../../repositories/CategoriesR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getCategorie = async (
     req: Request,
@@ -27,6 +28,7 @@ export const getCategorie = async (
         res.json(Users);
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

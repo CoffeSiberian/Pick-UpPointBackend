@@ -4,6 +4,7 @@ import { productUpdateStockSchemaCustom } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { logErrorSchemas } from "../../utils/logger";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const putProductStock = async (
     req: Request,
@@ -30,7 +31,8 @@ export const putProductStock = async (
         res.status(200).json(InfoResponse(200, "Updated"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };
 

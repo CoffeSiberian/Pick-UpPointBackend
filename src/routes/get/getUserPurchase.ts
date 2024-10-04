@@ -2,6 +2,7 @@ import { Request, NextFunction } from "express";
 import { getPurchasesById } from "../../repositories/PurchasesR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getUserPurchase = async (
     req: Request,
@@ -23,6 +24,7 @@ export const getUserPurchase = async (
         res.json(Purchase);
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

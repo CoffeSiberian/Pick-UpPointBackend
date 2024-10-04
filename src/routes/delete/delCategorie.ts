@@ -2,6 +2,7 @@ import { Request, NextFunction } from "express";
 import { deleteCategorie } from "../../repositories/CategoriesR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const delCategorie = async (
     req: Request,
@@ -24,6 +25,7 @@ export const delCategorie = async (
         res.status(200).json(InfoResponse(200, "Categorie deleted"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

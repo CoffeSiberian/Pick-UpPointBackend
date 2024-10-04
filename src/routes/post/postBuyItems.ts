@@ -11,6 +11,7 @@ import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { Purchases as PurchaseType } from "../../types/db/model";
 import { signDataPostCreatePay } from "../../utils/flowApi";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const postBuyItems = async (
     req: Request,
@@ -64,7 +65,8 @@ export const postBuyItems = async (
 
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };
 

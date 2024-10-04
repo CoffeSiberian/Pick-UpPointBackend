@@ -2,6 +2,7 @@ import { Request, NextFunction } from "express";
 import { getUser as getUserR } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getUser = async (
     req: Request,
@@ -23,6 +24,7 @@ export const getUser = async (
         res.json(user);
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

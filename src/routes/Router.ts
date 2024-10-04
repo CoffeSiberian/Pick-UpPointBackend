@@ -25,5 +25,4 @@ export default function (app: Express) {
 
     // middlewares
     app.use(logResponsesMiddleware);
-    app.use(dbErrors);
 }

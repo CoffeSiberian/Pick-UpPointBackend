@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { logErrorSchemas } from "../../utils/logger";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const postCategorie = async (
     req: Request,
@@ -29,6 +30,7 @@ export const postCategorie = async (
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

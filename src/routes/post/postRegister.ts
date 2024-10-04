@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { hashPass } from "../../utils/hash";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { logErrorSchemas } from "../../utils/logger";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const postRegister = async (
     req: Request,
@@ -31,6 +32,7 @@ export const postRegister = async (
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

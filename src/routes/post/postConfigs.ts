@@ -4,6 +4,7 @@ import { createConfigs } from "../../repositories/ConfigsR";
 import { configSchema } from "../../schemas/ConfigsSch";
 import { v4 as uuidv4 } from "uuid";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const postConfigs = async (
     req: Request,
@@ -20,6 +21,7 @@ export const postConfigs = async (
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

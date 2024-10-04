@@ -3,6 +3,7 @@ import { updateConfigs } from "../../repositories/ConfigsR";
 import { configsSchemaUpdate } from "../../schemas/ConfigsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const putConfig = async (
     req: Request,
@@ -25,7 +26,8 @@ export const putConfig = async (
         res.status(200).json(InfoResponse(200, "Updated"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };
 

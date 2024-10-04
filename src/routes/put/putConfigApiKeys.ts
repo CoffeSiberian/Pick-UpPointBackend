@@ -3,6 +3,7 @@ import { updateConfigsApiKeys } from "../../repositories/ConfigsR";
 import { configSchemaUpdateApiKeys } from "../../schemas/ConfigsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const putConfigApiKeys = async (
     req: Request,
@@ -26,7 +27,8 @@ export const putConfigApiKeys = async (
         res.status(200).json(InfoResponse(200, "Updated"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };
 

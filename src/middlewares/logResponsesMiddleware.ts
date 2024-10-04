@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { logInfoResponses } from "../utils/logger";
 
-export const logResponsesMiddleware = (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
+export const logResponsesMiddleware = (req: Request, res: Response) => {
     logInfoResponses(
         `IP: ${req.ip} | Host: ${req.hostname} | Protocol: ${
             req.protocol
@@ -15,6 +11,4 @@ export const logResponsesMiddleware = (
             req.params
         )}`
     );
-
-    if (!res.headersSent) next();
 };

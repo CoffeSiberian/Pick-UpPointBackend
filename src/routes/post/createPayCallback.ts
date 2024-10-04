@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { signDataGetGetPayByFlowOrder } from "../../utils/flowApi";
 import { updatePurchasesStatus } from "../../repositories/PurchasesR";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const createPayCallback = async (
     req: Request,
@@ -33,6 +34,7 @@ export const createPayCallback = async (
         res.status(200).json(InfoResponse(200, "Updated"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

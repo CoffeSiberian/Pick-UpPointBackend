@@ -2,6 +2,7 @@ import { Request, NextFunction } from "express";
 import { getConfigs as getConfigsR } from "../../repositories/ConfigsR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getConfigs = async (
     req: Request,
@@ -17,6 +18,7 @@ export const getConfigs = async (
         res.json(Users);
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

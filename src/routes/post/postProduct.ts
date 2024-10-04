@@ -6,6 +6,7 @@ import { productSchema } from "../../schemas/ProductsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { logErrorSchemas } from "../../utils/logger";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const postProduct = async (
     req: Request,
@@ -41,6 +42,7 @@ export const postProduct = async (
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

@@ -2,6 +2,7 @@ import { Request, NextFunction } from "express";
 import { deleteUser } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const delUser = async (
     req: Request,
@@ -24,6 +25,7 @@ export const delUser = async (
         res.status(200).json(InfoResponse(200, "User deleted"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

@@ -5,6 +5,7 @@ import { userSchemaUpdate } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { logErrorSchemas } from "../../utils/logger";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const putUser = async (
     req: Request,
@@ -32,7 +33,8 @@ export const putUser = async (
         res.status(200).json(InfoResponse(200, "Updated"));
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };
 

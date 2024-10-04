@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getProduct as getProductR } from "../../repositories/ProductsR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getProduct = async (
     req: Request,
@@ -22,6 +23,7 @@ export const getProduct = async (
         res.json(Product);
         return next();
     } catch (err: any) {
-        next({ err });
+        dbErrors(err, res);
+        next();
     }
 };

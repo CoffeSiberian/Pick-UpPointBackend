@@ -15,9 +15,10 @@ import Purchases_Items from "./Purchases_Items";
 @Table({ tableName: "purchases" })
 export default class Purchases extends Model<PurchasesTypes> {
     @Column({
-        type: DataType.STRING(36),
+        type: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
+        unique: true,
     })
     declare id: string;
 

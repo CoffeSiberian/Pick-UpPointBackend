@@ -12,9 +12,10 @@ import Products from "./Products";
 @Table({ tableName: "images_products" })
 export default class Images_Products extends Model<Images_ProductsType> {
     @Column({
-        type: DataType.STRING(36),
+        type: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
+        unique: true,
     })
     declare id: string;
 

@@ -13,9 +13,10 @@ import Products from "./Products";
 @Table({ tableName: "stocks" })
 export default class Stocks extends Model<StocksTypes> {
     @Column({
-        type: DataType.STRING(36),
+        type: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
+        unique: true,
     })
     declare id: string;
 

@@ -16,9 +16,10 @@ import Configs from "./Configs";
 @Table({ tableName: "stores" })
 export default class Stores extends Model<StoresTypes> {
     @Column({
-        type: DataType.STRING(36),
+        type: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
+        unique: true,
     })
     declare id: string;
 

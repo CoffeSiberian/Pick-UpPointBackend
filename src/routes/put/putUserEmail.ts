@@ -1,4 +1,5 @@
 import { Request, NextFunction } from "express";
+import { ValidationError } from "sequelize";
 import { updateEmail } from "../../repositories/UsersR";
 import { userSchemaUpdateEmail } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
@@ -11,7 +12,10 @@ export const putUserEmail = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdateEmail.validate(req.body);
-    if (error) next({ error });
+    if (error) {
+        dbErrors(error as unknown as ValidationError, res);
+        return next();
+    }
     const User = value as UserUpdateEmail;
 
     try {

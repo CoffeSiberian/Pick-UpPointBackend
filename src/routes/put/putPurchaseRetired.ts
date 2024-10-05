@@ -1,4 +1,5 @@
 import { Request, NextFunction } from "express";
+import { ValidationError } from "sequelize";
 import { updatePurchasesRetired } from "../../repositories/PurchasesR";
 import { PurchaseRetiredUpdateSchema } from "../../schemas/Purchases_ItemsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
@@ -11,7 +12,12 @@ export const putPurchaseRetired = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = PurchaseRetiredUpdateSchema.validate(req.body);
-    if (error) return next({ error });
+
+    if (error) {
+        dbErrors(error as unknown as ValidationError, res);
+        return next();
+    }
+
     const body = value as PurchaseUpdate;
 
     try {

@@ -1,4 +1,5 @@
 import { Request, NextFunction } from "express";
+import { ValidationError } from "sequelize";
 import { updatePassword } from "../../repositories/UsersR";
 import { userSchemaUpdatePass } from "../../schemas/UsersSch";
 import { hashPass } from "../../utils/hash";
@@ -12,7 +13,12 @@ export const putUserPassword = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = userSchemaUpdatePass.validate(req.body);
-    if (error) next({ error });
+
+    if (error) {
+        dbErrors(error as unknown as ValidationError, res);
+        return next();
+    }
+
     const User = value as UserUpdatePass;
     const hash = await hashPass(User.password);
 

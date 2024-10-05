@@ -1,4 +1,5 @@
 import { Request, NextFunction } from "express";
+import { ValidationError } from "sequelize";
 import { updateConfigs } from "../../repositories/ConfigsR";
 import { configsSchemaUpdate } from "../../schemas/ConfigsSch";
 import { InfoResponse } from "../../utils/InfoResponse";
@@ -11,7 +12,12 @@ export const putConfig = async (
     next: NextFunction
 ): Promise<any> => {
     const { error, value } = configsSchemaUpdate.validate(req.body);
-    if (error) next({ error });
+
+    if (error) {
+        dbErrors(error as unknown as ValidationError, res);
+        return next();
+    }
+
     const Configs = value as ConfigUpdate;
 
     try {

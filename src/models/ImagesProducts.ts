@@ -12,7 +12,7 @@ import Products from "./Products";
 @Table({ tableName: "images_products" })
 export default class Images_Products extends Model<Images_ProductsType> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -26,7 +26,7 @@ export default class Images_Products extends Model<Images_ProductsType> {
     declare src: string;
 
     @ForeignKey(() => Products)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_products: string;
 
     @BelongsTo(() => Products, "fk_products")

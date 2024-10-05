@@ -16,7 +16,7 @@ import Configs from "./Configs";
 @Table({ tableName: "stores" })
 export default class Stores extends Model<StoresTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,

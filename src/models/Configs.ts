@@ -12,7 +12,7 @@ import Stores from "./Stores";
 @Table({ tableName: "configs" })
 export default class Configs extends Model<ConfigsTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -32,7 +32,7 @@ export default class Configs extends Model<ConfigsTypes> {
     declare logo: string;
 
     @ForeignKey(() => Stores)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_store: string;
 
     @BelongsTo(() => Stores, "fk_store")

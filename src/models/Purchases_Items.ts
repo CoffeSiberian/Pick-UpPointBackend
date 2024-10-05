@@ -14,7 +14,7 @@ import Products from "./Products";
 @Table({ tableName: "purchases_items" })
 export default class Purchases_Items extends Model<Purchases_ItemsTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -28,11 +28,11 @@ export default class Purchases_Items extends Model<Purchases_ItemsTypes> {
     declare price: number;
 
     @ForeignKey(() => Purchases)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_purchase: string;
 
     @ForeignKey(() => Products)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_product: string;
 
     @BelongsTo(() => Purchases, "fk_purchase")

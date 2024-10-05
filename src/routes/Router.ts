@@ -3,7 +3,6 @@ import { Express } from "express";
 // middlewares
 import { logAccessMiddleware } from "../middlewares/logAccessMiddleware";
 import { logResponsesMiddleware } from "../middlewares/logResponsesMiddleware";
-import { dbErrors } from "../middlewares/errorMiddleware";
 
 // Routes
 import AuthenticateRoutes from "./Routes/Authenticate";

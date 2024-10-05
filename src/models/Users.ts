@@ -14,7 +14,7 @@ import Purchases from "./Purchases";
 @Table({ tableName: "users" })
 export default class Users extends Model<UsersTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -37,7 +37,7 @@ export default class Users extends Model<UsersTypes> {
     declare isAdmin: boolean;
 
     @ForeignKey(() => Stores)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_store: string;
 
     @BelongsTo(() => Stores, "fk_store")

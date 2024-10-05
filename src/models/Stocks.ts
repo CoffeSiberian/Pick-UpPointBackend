@@ -13,7 +13,7 @@ import Products from "./Products";
 @Table({ tableName: "stocks" })
 export default class Stocks extends Model<StocksTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -24,11 +24,11 @@ export default class Stocks extends Model<StocksTypes> {
     declare quantity: number;
 
     @ForeignKey(() => Stores)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_store: string;
 
     @ForeignKey(() => Products)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_product: string;
 
     @BelongsTo(() => Stores, "fk_store")

@@ -16,7 +16,7 @@ import Images_Products from "./ImagesProducts";
 @Table({ tableName: "products" })
 export default class Products extends Model<ProductsTypes> {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
         primaryKey: true,
         allowNull: false,
         unique: true,
@@ -33,7 +33,7 @@ export default class Products extends Model<ProductsTypes> {
     declare price: number;
 
     @ForeignKey(() => Categories)
-    @Column({ type: DataType.STRING(36), allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     declare fk_category: string;
 
     @BelongsTo(() => Categories, "fk_category")

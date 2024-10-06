@@ -1,7 +1,6 @@
 import { Request, NextFunction } from "express";
 import { categoriesSchema } from "../../schemas/CategoriesSch";
 import { createCategories } from "../../repositories/CategoriesR";
-import { v4 as uuidv4 } from "uuid";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { logErrorSchemas } from "../../utils/logger";
@@ -18,15 +17,14 @@ export const postCategorie = async (
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
 
-    const Bode = value as CategoriePost;
-    const Categorie = {
-        id: uuidv4(),
-        ...Bode,
+    const body = value as CategoriePost;
+    const categorie = {
+        ...body,
         fk_store: res.jwtPayload.fk_store,
     };
 
     try {
-        await createCategories(Categorie);
+        await createCategories(categorie);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {

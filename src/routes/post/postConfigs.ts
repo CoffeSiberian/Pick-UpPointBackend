@@ -1,5 +1,4 @@
 import { Request, NextFunction } from "express";
-import { v4 as uuidv4 } from "uuid";
 import { ValidationError } from "sequelize";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { createConfigs } from "../../repositories/ConfigsR";
@@ -20,10 +19,10 @@ export const postConfigs = async (
     }
 
     const body = value as ConfigPost;
-    const Config = { id: uuidv4(), ...body, fk_store: res.jwtPayload.fk_store };
+    const config = { ...body, fk_store: res.jwtPayload.fk_store };
 
     try {
-        await createConfigs(Config);
+        await createConfigs(config);
         res.status(200).json(InfoResponse(200, "Created"));
         return next();
     } catch (err: any) {

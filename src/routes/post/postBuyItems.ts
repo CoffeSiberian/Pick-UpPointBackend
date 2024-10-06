@@ -13,6 +13,7 @@ import { Purchases as PurchaseType } from "../../types/db/model";
 import { signDataPostCreatePay } from "../../utils/flowApi";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
+// Need Refactor
 export const postBuyItems = async (
     req: Request,
     res: ResponseJwt,
@@ -35,7 +36,7 @@ export const postBuyItems = async (
 
     const response = await signDataPostCreatePay({
         amount: purchase.purchase.total,
-        commerceOrder: purchase.purchase.id,
+        commerceOrder: purchase.purchase.id!,
         email: res.jwtPayload.email,
         paymentMethod: 1,
         subject: res.jwtPayload.username,

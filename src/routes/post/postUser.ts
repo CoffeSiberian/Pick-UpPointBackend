@@ -1,5 +1,4 @@
 import { Request, NextFunction } from "express";
-import { v4 as uuidv4 } from "uuid";
 import { createUser } from "../../repositories/UsersR";
 import { hashPass } from "../../utils/hash";
 import { userSchema } from "../../schemas/UsersSch";
@@ -22,7 +21,6 @@ export const postUser = async (
     const body = value as UserPost;
     const passHash = await hashPass(body.password);
     const User = {
-        id: uuidv4(),
         ...body,
         isAdmin: false,
         password: passHash,

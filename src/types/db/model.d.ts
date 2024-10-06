@@ -1,5 +1,5 @@
 export interface Stores {
-    id: string;
+    id?: string;
     name: string;
     location: string;
     phone: string;
@@ -8,7 +8,7 @@ export interface Stores {
 }
 
 export interface Configs {
-    id: string;
+    id?: string;
     payment_method: string | null?;
     api_key_public: string | null?;
     api_key_private: string | null?;
@@ -17,7 +17,7 @@ export interface Configs {
 }
 
 export interface Users {
-    id: string;
+    id?: string;
     rut: string;
     name: string;
     email: string;
@@ -27,20 +27,20 @@ export interface Users {
 }
 
 export interface Categories {
-    id: string;
+    id?: string;
     name: string;
     fk_store: string;
 }
 
 export interface Images_Products {
-    id: string;
+    id?: string;
     name: string;
     src: string;
     fk_products: string;
 }
 
 export interface Products {
-    id: string;
+    id?: string;
     name: string;
     description: string;
     price: number;
@@ -48,14 +48,14 @@ export interface Products {
 }
 
 export interface Stocks {
-    id: string;
+    id?: string;
     quantity: number;
     fk_store: string;
     fk_product: string;
 }
 
 export interface Purchases {
-    id: string;
+    id?: string;
     total: number;
     date: Date;
     status: number;
@@ -68,7 +68,7 @@ export interface Purchases {
 }
 
 export interface Purchases_Items {
-    id: string;
+    id?: string;
     quantity: number;
     price: number;
     fk_purchase: string;

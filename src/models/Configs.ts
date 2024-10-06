@@ -13,6 +13,7 @@ import Stores from "./Stores";
 export default class Configs extends Model<ConfigsTypes> {
     @Column({
         type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
         unique: true,

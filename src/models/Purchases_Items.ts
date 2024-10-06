@@ -15,6 +15,7 @@ import Products from "./Products";
 export default class Purchases_Items extends Model<Purchases_ItemsTypes> {
     @Column({
         type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
         unique: true,

@@ -17,6 +17,7 @@ import Images_Products from "./ImagesProducts";
 export default class Products extends Model<ProductsTypes> {
     @Column({
         type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
         unique: true,

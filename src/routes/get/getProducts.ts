@@ -33,22 +33,22 @@ export const getProducts = async (
     }
 
     try {
-        const Products = await getAllStoreProductsR(
+        const products = await getAllStoreProductsR(
             storeId,
             limit_start_number,
             limit_end_number
         );
 
-        if (!Products) {
+        if (!products) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        if (Products.length === 0) {
+        if (products.length === 0) {
             res.status(404).json(InfoResponse(404, "No Found"));
             return next();
         }
 
-        res.json(Products);
+        res.json({ products });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

@@ -20,6 +20,7 @@ export const getProduct = async (
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
+
         res.json(Product);
         return next();
     } catch (err: any) {

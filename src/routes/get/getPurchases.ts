@@ -31,22 +31,22 @@ export const getPurchases = async (
     }
 
     try {
-        const Products = await getAllStorePurchases(
+        const purchases = await getAllStorePurchases(
             res.jwtPayload.fk_store,
             limit_start_number,
             limit_end_number
         );
 
-        if (!Products) {
+        if (!purchases) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        if (Products.length === 0) {
+        if (purchases.length === 0) {
             res.status(404).json(InfoResponse(404, "No Found"));
             return next();
         }
 
-        res.json(Products);
+        res.json({ purchases });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

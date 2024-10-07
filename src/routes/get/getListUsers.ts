@@ -18,17 +18,18 @@ export const getListUsers = async (
     const { limit_start, limit_end } = queryData;
 
     try {
-        const Users = await getListUsersR(
+        const users = await getListUsersR(
             res.jwtPayload.fk_store,
             limit_start,
             limit_end
         );
 
-        if (!Users) {
+        if (!users) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Users);
+
+        res.json({ users });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

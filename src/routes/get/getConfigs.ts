@@ -10,12 +10,13 @@ export const getConfigs = async (
     next: NextFunction
 ): Promise<any> => {
     try {
-        const Users = await getConfigsR(res.jwtPayload.fk_store);
-        if (!Users) {
+        const Configs = await getConfigsR(res.jwtPayload.fk_store);
+        if (!Configs) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Users);
+
+        res.json(Configs);
         return next();
     } catch (err: any) {
         dbErrors(err, res);

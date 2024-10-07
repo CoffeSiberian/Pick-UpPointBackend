@@ -21,6 +21,7 @@ export const getUser = async (
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
+
         res.json(user);
         return next();
     } catch (err: any) {

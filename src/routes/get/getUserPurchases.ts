@@ -10,12 +10,13 @@ export const getUserPurchases = async (
     next: NextFunction
 ): Promise<any> => {
     try {
-        const Purchases = await getPurchases(res.jwtPayload.id);
-        if (!Purchases) {
+        const purchases = await getPurchases(res.jwtPayload.id);
+        if (!purchases) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Purchases);
+
+        res.json({ purchases });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

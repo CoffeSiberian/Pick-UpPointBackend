@@ -36,18 +36,19 @@ export const getCategoriesProducts = async (
     }
 
     try {
-        const Products = await getCategoriesProductsR(
+        const Categories = await getCategoriesProductsR(
             idCategory,
             storeId,
             limit_start_number,
             limit_end_number
         );
 
-        if (!Products) {
+        if (!Categories) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Products);
+
+        res.json(Categories);
         return next();
     } catch (err: any) {
         dbErrors(err, res);

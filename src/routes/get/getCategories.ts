@@ -15,12 +15,13 @@ export const getCategories = async (
     }
 
     try {
-        const Users = await getCategoriesR(storeId);
-        if (!Users) {
+        const categories = await getCategoriesR(storeId);
+        if (!categories) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Users);
+
+        res.json({ categories });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

@@ -20,12 +20,13 @@ export const getCategorie = async (
     }
 
     try {
-        const Users = await getCategorieR(CategorieId, storeId);
-        if (!Users) {
+        const Categories = await getCategorieR(CategorieId, storeId);
+        if (!Categories) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        res.json(Users);
+
+        res.json(Categories);
         return next();
     } catch (err: any) {
         dbErrors(err, res);

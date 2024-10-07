@@ -20,12 +20,12 @@ const credentials = {
 };
 
 const httpsServer = https.createServer(credentials, app);
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
 syncDataBase()
     .then(() => {
-        // httpsServer.listen(PORT, LISTEN);
-        httpServer.listen(PORT, LISTEN);
+        httpsServer.listen(PORT, LISTEN);
+        // httpServer.listen(PORT, LISTEN);
         logInfo(`Server running on port ${PORT}`);
         console.log(`Server running on port ${PORT}`);
     })

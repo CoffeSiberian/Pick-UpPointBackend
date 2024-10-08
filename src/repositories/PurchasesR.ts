@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { sequelize } from "../models/database";
 import Purchases from "../models/Purchases";
 import Purchases_Items from "../models/Purchases_Items";
@@ -61,29 +62,33 @@ export const getAllStorePurchases = async (
 };
 
 // POST
-export const createPurchases = async (
-    purchases: PurchasesTypes
+export const createPurchasesWithTransaction = async (
+    purchases: PurchasesTypes,
+    transaction: Transaction
 ): Promise<Purchases> => {
-    return await Purchases.create(purchases);
+    return await Purchases.create(purchases, { transaction });
 };
 
-export const createPurchasesWithItems = async (
-    purchases: PurchasesTypes,
-    items: Purchases_ItemsTypes[]
-): Promise<Purchases> => {
-    const t = await sequelize.transaction();
-    try {
-        const purchase = await Purchases.create(purchases, { transaction: t });
-        await Purchases_Items.bulkCreate(items, { transaction: t });
-        await t.commit();
-        return purchase;
-    } catch (err) {
-        await t.rollback();
-        throw err;
-    }
+export const createPurchaseItems = async (
+    items: Purchases_ItemsTypes[],
+    transaction: Transaction
+): Promise<Purchases_Items[]> => {
+    return await Purchases_Items.bulkCreate(items, { transaction });
 };
 
 // PUT
+export const updatePurchase = async (
+    id: string,
+    purchases: PurchasesTypes,
+    transaction: Transaction
+): Promise<number> => {
+    const rows = await Purchases.update(purchases, {
+        where: { id },
+        transaction,
+    });
+    return rows[0];
+};
+
 export const updatePurchasesPayment = async (
     id: string,
     payment_id: string,

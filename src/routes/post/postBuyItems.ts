@@ -1,19 +1,22 @@
 import { Request, NextFunction } from "express";
+import { sequelize } from "../../models/database";
 import {
     FLOW_API_CALLBACK_URL,
     FLOW_API_RETURN_URL,
 } from "../../utils/configs";
 import { buyProcessSchema } from "../../schemas/ProductsSch";
-import { createPurchasesWithItems } from "../../repositories/PurchasesR";
+import {
+    createPurchasesWithTransaction,
+    createPurchaseItems,
+    updatePurchase,
+} from "../../repositories/PurchasesR";
 import { getManyProducts } from "../../repositories/ProductsR";
-import { v4 as uuidv4 } from "uuid";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
-import { Purchases as PurchaseType } from "../../types/db/model";
+import { Purchases_Items } from "../../types/db/model";
 import { signDataPostCreatePay } from "../../utils/flowApi";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
-// Need Refactor
 export const postBuyItems = async (
     req: Request,
     res: ResponseJwt,
@@ -23,43 +26,90 @@ export const postBuyItems = async (
     if (error) {
         return res.status(400).json(InfoResponse(400, error.message));
     }
-    const body = value as buyProcessPOST;
 
-    const purchase = await getTotalPayment(
-        body,
-        res.jwtPayload.id,
-        res.jwtPayload.fk_store
-    );
+    const body = value as buyProcessPOST;
+    const items_buy = await getTotalPayment(body);
+
+    if (!items_buy) {
+        return res.status(404).json(InfoResponse(404, "Products not found"));
+    }
+
+    let transaction;
+    try {
+        transaction = await sequelize.transaction();
+    } catch (err: any) {
+        dbErrors(err, res);
+        return next();
+    }
+
+    let purchase;
+    try {
+        purchase = await createPurchasesWithTransaction(
+            {
+                total: items_buy.total_price,
+                date: new Date(),
+                status: 1,
+                payment_successful: false,
+                retired: false,
+                fk_user: res.jwtPayload.id,
+                fk_store: res.jwtPayload.fk_store,
+            },
+            transaction
+        );
+    } catch (err: any) {
+        dbErrors(err, res);
+        return next();
+    }
+
     if (!purchase) {
         return res.status(404).json(InfoResponse(404, "Products not found"));
     }
 
     const response = await signDataPostCreatePay({
-        amount: purchase.purchase.total,
-        commerceOrder: purchase.purchase.id!,
+        amount: purchase.total,
+        commerceOrder: purchase.id!,
         email: res.jwtPayload.email,
         paymentMethod: 1,
         subject: res.jwtPayload.username,
         urlConfirmation: FLOW_API_CALLBACK_URL,
-        urlReturn: `${FLOW_API_RETURN_URL}?id=${purchase.purchase.id}`,
+        urlReturn: `${FLOW_API_RETURN_URL}?id=${purchase.id}`,
         optional: JSON.stringify({
             userId: res.jwtPayload.id,
             username: res.jwtPayload.username,
             fk_store: res.jwtPayload.fk_store,
         }),
     });
+
     if (!response) {
         return res.status(500).json(InfoResponse(500, "Internal server error"));
     }
 
-    purchase.purchase.payment_id = response.flowOrder.toString();
-    purchase.purchase.payment_method = 1;
+    try {
+        await updatePurchase(
+            purchase.id!,
+            {
+                ...purchase,
+                payment_id: response.flowOrder.toString(),
+                payment_method: 1,
+            },
+            transaction
+        );
+    } catch (err: any) {
+        dbErrors(err, res);
+        return next();
+    }
 
     try {
-        await createPurchasesWithItems(purchase.purchase, purchase.products);
+        await createPurchaseItems(
+            items_buy.items.map((item) => ({
+                ...item,
+                fk_purchase: purchase.id!,
+            })),
+            transaction
+        );
 
         res.status(200).json({
-            id: purchase.purchase.id,
+            id: purchase.id,
             url_pay: `${response.url}?token=${response.token}`,
             pay_flow_id: response.flowOrder,
         });
@@ -72,57 +122,45 @@ export const postBuyItems = async (
 };
 
 const getTotalPayment = async (
-    items: buyProcessPOST,
-    fk_user: string,
-    fk_store: string
-): Promise<buyObject | null> => {
+    items: buyProcessPOST
+): Promise<Items_Cart | null> => {
     const ids = items.products.map((item) => item.id);
-    const products = await getManyProducts(ids);
+
+    let products;
+    try {
+        products = await getManyProducts(ids);
+    } catch (err: any) {
+        return null;
+    }
+
     if (!products) return null;
+    // validate if all products are found
     if (products.find((product) => !product)) return null;
 
-    let total = 0;
-    const fk_purchase = uuidv4();
-    const purchaseItems: Array<itemsBuy | null> = products.map((product) => {
+    let total_price = 0;
+    let items_cart: Purchases_Items_No_Purchase[] = [];
+    for (const product of products) {
         const item = items.products.find((item) => item.id === product.id);
-        if (!item) return null;
+        if (!item) continue;
         const price = product.price * item.quantity;
-        total += price;
+        total_price += price;
 
-        return {
-            id: uuidv4(),
+        items_cart.push({
             quantity: item.quantity,
             price,
-            fk_purchase,
-            fk_product: product.id,
-        };
-    });
-    if (purchaseItems.find((item) => !item)) return null;
+            fk_product: product.id!,
+        });
+    }
 
     return {
-        purchase: {
-            id: fk_purchase,
-            total,
-            date: new Date(),
-            status: 1,
-            payment_successful: false,
-            retired: false,
-            fk_user,
-            fk_store,
-        },
-        products: purchaseItems as itemsBuy[],
+        items: items_cart,
+        total_price,
     };
 };
 
-interface itemsBuy {
-    id: string;
-    quantity: number;
-    price: number;
-    fk_purchase: string;
-    fk_product: string;
-}
+type Purchases_Items_No_Purchase = Omit<Purchases_Items, "fk_purchase">;
 
-interface buyObject {
-    purchase: PurchaseType;
-    products: itemsBuy[];
+interface Items_Cart {
+    items: Purchases_Items_No_Purchase[];
+    total_price: number;
 }

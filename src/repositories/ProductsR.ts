@@ -1,3 +1,4 @@
+import { sequelize } from "../models/database";
 import Products from "../models/Products";
 import Categories from "../models/Categories";
 import Stocks from "../models/Stocks";
@@ -98,6 +99,33 @@ export const createProduct = async (
     if (validateStore.fk_store !== fk_store) throw new Error("Not your store");
 
     return await Products.create(product);
+};
+
+export const createProductWithStock = async (
+    product: ProductsTypes,
+    stock: number,
+    fk_store: string
+): Promise<Products> => {
+    const validateStore = await getCategorie(product.fk_category, fk_store);
+    if (!validateStore) throw new Error("Category not found");
+    if (validateStore.fk_store !== fk_store) throw new Error("Not your store");
+
+    const t = await sequelize.transaction(async (transaction) => {
+        const newProduct = await Products.create(product, { transaction });
+        await Stocks.create(
+            {
+                id: product.id,
+                quantity: stock,
+                fk_product: product.id!,
+                fk_store,
+            },
+            { transaction }
+        );
+
+        return newProduct;
+    });
+
+    return t;
 };
 
 // PUT

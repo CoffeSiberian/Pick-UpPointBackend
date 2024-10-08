@@ -57,11 +57,13 @@ export const postBuyItems = async (
             transaction
         );
     } catch (err: any) {
+        await transaction.rollback();
         dbErrors(err, res);
         return next();
     }
 
     if (!purchase) {
+        await transaction.rollback();
         return res.status(404).json(InfoResponse(404, "Products not found"));
     }
 
@@ -81,6 +83,7 @@ export const postBuyItems = async (
     });
 
     if (!response) {
+        await transaction.rollback();
         return res.status(500).json(InfoResponse(500, "Internal server error"));
     }
 
@@ -95,6 +98,7 @@ export const postBuyItems = async (
             transaction
         );
     } catch (err: any) {
+        await transaction.rollback();
         dbErrors(err, res);
         return next();
     }
@@ -108,6 +112,8 @@ export const postBuyItems = async (
             transaction
         );
 
+        await transaction.commit();
+
         res.status(200).json({
             id: purchase.id,
             url_pay: `${response.url}?token=${response.token}`,
@@ -116,6 +122,7 @@ export const postBuyItems = async (
 
         return next();
     } catch (err: any) {
+        await transaction.rollback();
         dbErrors(err, res);
         next();
     }

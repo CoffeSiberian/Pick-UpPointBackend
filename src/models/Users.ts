@@ -44,6 +44,8 @@ export default class Users extends Model<UsersTypes> {
     @BelongsTo(() => Stores, "fk_store")
     declare store: Stores;
 
-    @HasMany(() => Purchases)
+    @HasMany(() => Purchases, {
+        onDelete: "RESTRICT",
+    })
     declare purchases?: Purchases[];
 }

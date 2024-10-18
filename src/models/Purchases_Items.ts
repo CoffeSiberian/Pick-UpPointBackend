@@ -39,6 +39,9 @@ export default class Purchases_Items extends Model<Purchases_ItemsTypes> {
     @BelongsTo(() => Purchases, "fk_purchase")
     declare purchase: Purchases;
 
-    @BelongsTo(() => Products, "fk_product")
+    @BelongsTo(() => Products, {
+        foreignKey: "fk_product",
+        onDelete: "RESTRICT",
+    })
     declare product: Products;
 }

@@ -58,6 +58,8 @@ export default class Purchases extends Model<PurchasesTypes> {
     @BelongsTo(() => Stores, "fk_store")
     declare store: Stores;
 
-    @HasMany(() => Purchases_Items)
+    @HasMany(() => Purchases_Items, {
+        onDelete: "RESTRICT",
+    })
     declare purchases_items?: Purchases_Items[];
 }

@@ -39,18 +39,28 @@ export default class Stores extends Model<StoresTypes> {
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare domain: string;
 
-    @HasOne(() => Configs)
+    @HasOne(() => Configs, {
+        onDelete: "RESTRICT",
+    })
     declare configs?: Configs;
 
-    @HasMany(() => Users)
+    @HasMany(() => Users, {
+        onDelete: "RESTRICT",
+    })
     declare members?: Users[];
 
-    @HasMany(() => Purchases)
+    @HasMany(() => Purchases, {
+        onDelete: "RESTRICT",
+    })
     declare purchases?: Purchases[];
 
-    @HasMany(() => Categories)
+    @HasMany(() => Categories, {
+        onDelete: "RESTRICT",
+    })
     declare categories?: Categories[];
 
-    @HasMany(() => Stocks)
+    @HasMany(() => Stocks, {
+        onDelete: "RESTRICT",
+    })
     declare stocks?: Stocks[];
 }

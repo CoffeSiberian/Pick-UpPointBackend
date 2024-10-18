@@ -32,6 +32,8 @@ export default class Categories extends Model<CategoriesTypes> {
     @BelongsTo(() => Stores, "fk_store")
     declare store: Stores;
 
-    @HasMany(() => Products)
+    @HasMany(() => Products, {
+        onDelete: "RESTRICT",
+    })
     declare products?: Products[];
 }

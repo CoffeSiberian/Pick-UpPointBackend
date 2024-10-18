@@ -41,3 +41,18 @@ pm2 start /home/user/Pick-UpPointBackend/build/index.js --name Pick-UpPointBacke
 ```
 
 Being inside the folder so that it takes the .env
+
+## Pending
+
+-   [ ] Listar órdenes de compra de un cliente
+-   [ ] Visualizar órdenes de compra (sus datos y los productos adquiridos)
+-   [ ] Habilitar paginación en todos los componentes necesarios de UI
+-   [ ] Mejorar el aspecto del carrito de compra
+-   [ ] Al editar un usuario, si la contraseña no es asignada, esta no debe ser modificada
+-   [ ] Mejorar la generación de código QR (necesita márgenes blancos para facilitar su lectura por la cámara)
+-   [ ] Habilitar la posibilidad de subir imágenes para los productos creados
+-   [ ] Mostrar imágenes de los productos al visualizarlos en la web
+-   [ ] Al ingresar el RUT, el usuario podría estar registrado en otra tienda y podría generar conflicto por las IDs únicas de RUT (se necesita mejorar)
+-   [ ] Habilitar estadísticas de forma dinámica según los datos generados por el comercio
+-   [ ] Poder modificar las credenciales de FLOW.CL desde la tienda y la UI de esta
+-   [ ] Habilitar panel de usuario con opciones básicas (lista de pedidos y modificar parámetros de su cuenta)

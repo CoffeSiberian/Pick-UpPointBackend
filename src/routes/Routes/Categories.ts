@@ -4,7 +4,7 @@ import { ResponseJwt } from "../../types/ResponseExtends";
 import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 
 // GET
-import { getCategories } from "../get/getCategories";
+import { getCategoriesAdmin } from "../get/getCategoriesAdmin";
 import { getCategorie } from "../get/getCategorie";
 import { getCategoriesProducts } from "../get/getCategoriesProducts";
 
@@ -19,7 +19,7 @@ import { delCategorie } from "../delete/delCategorie";
 
 const CategoriesRoutes = (app: Express) => {
     // GET
-    app.get("/categories", getCategories);
+    app.get("/categories", authMiddlewareAdmin, getCategoriesAdmin);
     app.get("/categorie", getCategorie);
     app.get("/categorie/products", getCategoriesProducts);
 

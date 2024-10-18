@@ -10,9 +10,15 @@ export const getCategorie = async (
 };
 
 export const getCategories = async (
-    fk_store: string
+    fk_store: string,
+    limit_start: number,
+    limit_end: number
 ): Promise<Categories[]> => {
-    return await Categories.findAll({ where: { fk_store } });
+    return await Categories.findAll({
+        where: { fk_store },
+        limit: limit_end,
+        offset: limit_start,
+    });
 };
 
 // POST

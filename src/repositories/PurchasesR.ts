@@ -7,10 +7,15 @@ import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import { Purchases as PurchasesTypes } from "../types/db/model";
 
 // GET
-export const getPurchases = async (fk_user: string): Promise<Purchases[]> => {
-    // need pogination
+export const getPurchases = async (
+    fk_user: string,
+    limit_start: number,
+    limit_end: number
+): Promise<Purchases[]> => {
     return await Purchases.findAll({
         where: { fk_user },
+        limit: limit_end,
+        offset: limit_start,
     });
 };
 

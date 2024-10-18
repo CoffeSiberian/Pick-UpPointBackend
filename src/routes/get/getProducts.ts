@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getAllStoreProducts as getAllStoreProductsR } from "../../repositories/ProductsR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { validateQueryPagination } from "../../utils/queryValidations";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
 export const getProducts = async (
@@ -9,34 +10,25 @@ export const getProducts = async (
     next: NextFunction
 ): Promise<any> => {
     const storeId = req.query.store;
-    const limit_start = req.query.limit_start;
-    const limit_end = req.query.limit_end;
 
-    if (
-        !storeId ||
-        typeof storeId !== "string" ||
-        !limit_start ||
-        typeof limit_start !== "string" ||
-        !limit_end ||
-        typeof limit_end !== "string"
-    ) {
+    if (!storeId || typeof storeId !== "string") {
         res.status(400).json(InfoResponse(400, "Bad Request"));
         return next();
     }
 
-    const limit_start_number = parseInt(limit_start);
-    const limit_end_number = parseInt(limit_end);
-
-    if (isNaN(limit_start_number) || isNaN(limit_end_number)) {
+    const queryDataPagination = validateQueryPagination(req);
+    if (!queryDataPagination) {
         res.status(400).json(InfoResponse(400, "Bad Request"));
         return next();
     }
+
+    const { limit_start, limit_end } = queryDataPagination;
 
     try {
         const products = await getAllStoreProductsR(
             storeId,
-            limit_start_number,
-            limit_end_number
+            limit_start,
+            limit_end
         );
 
         if (!products) {

@@ -1,6 +1,7 @@
 import { Request, NextFunction } from "express";
 import { getListUsers as getListUsersR } from "../../repositories/UsersR";
 import { InfoResponse } from "../../utils/InfoResponse";
+import { validateQueryPagination } from "../../utils/queryValidations";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
@@ -9,13 +10,13 @@ export const getListUsers = async (
     res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
-    const queryData = validateQueryData(req);
-    if (!queryData) {
+    const queryDataPagination = validateQueryPagination(req);
+    if (!queryDataPagination) {
         res.status(400).json(InfoResponse(400, "Bad Request"));
         return next();
     }
 
-    const { limit_start, limit_end } = queryData;
+    const { limit_start, limit_end } = queryDataPagination;
 
     try {
         const users = await getListUsersR(
@@ -35,30 +36,4 @@ export const getListUsers = async (
         dbErrors(err, res);
         next();
     }
-};
-
-interface QueryData {
-    limit_start: number;
-    limit_end: number;
-}
-
-const validateQueryData = (req: Request): null | QueryData => {
-    const limit_start = req.query.limit_start;
-    const limit_end = req.query.limit_end;
-
-    if (!limit_start || typeof limit_start !== "string") {
-        return null;
-    }
-    if (!limit_end || typeof limit_end !== "string") return null;
-
-    const limit_startParse = parseInt(limit_start);
-    const limit_endParse = parseInt(limit_end);
-    if (isNaN(limit_startParse) || isNaN(limit_endParse)) {
-        return null;
-    }
-
-    return {
-        limit_start: limit_startParse,
-        limit_end: limit_endParse,
-    };
 };

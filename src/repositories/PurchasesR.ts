@@ -1,5 +1,4 @@
 import { Transaction } from "sequelize";
-import { sequelize } from "../models/database";
 import Purchases from "../models/Purchases";
 import Purchases_Items from "../models/Purchases_Items";
 import Users from "../models/Users";

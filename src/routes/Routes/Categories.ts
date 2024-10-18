@@ -5,6 +5,7 @@ import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 
 // GET
 import { getCategoriesAdmin } from "../get/getCategoriesAdmin";
+import { getAllCategories } from "../get/getAllCategories";
 import { getCategorie } from "../get/getCategorie";
 import { getCategoriesProducts } from "../get/getCategoriesProducts";
 
@@ -19,7 +20,8 @@ import { delCategorie } from "../delete/delCategorie";
 
 const CategoriesRoutes = (app: Express) => {
     // GET
-    app.get("/categories", authMiddlewareAdmin, getCategoriesAdmin);
+    app.get("/categoriesadmin", authMiddlewareAdmin, getCategoriesAdmin);
+    app.get("/categories", getAllCategories);
     app.get("/categorie", getCategorie);
     app.get("/categorie/products", getCategoriesProducts);
 

@@ -21,6 +21,15 @@ export const getCategories = async (
     });
 };
 
+export const getAllCategories = async (
+    fk_store: string
+): Promise<Categories[]> => {
+    return await Categories.findAll({
+        where: { fk_store },
+        attributes: { exclude: ["fk_store", "createdAt", "updatedAt"] },
+    });
+};
+
 // POST
 export const createCategories = async (
     data: CategoriesTypes

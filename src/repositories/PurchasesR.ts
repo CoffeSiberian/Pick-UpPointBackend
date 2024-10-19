@@ -39,6 +39,9 @@ export const getPurchasesByOnlyId = async (
             },
             {
                 model: Users,
+                attributes: {
+                    exclude: ["password", "createdAt", "updatedAt", "fk_store"],
+                },
             },
         ],
         where: { id, fk_store },
@@ -53,10 +56,10 @@ export const getAllStorePurchases = async (
     return await Purchases.findAll({
         include: [
             {
-                model: Purchases_Items,
-            },
-            {
                 model: Users,
+                attributes: {
+                    exclude: ["password", "createdAt", "updatedAt", "fk_store"],
+                },
             },
         ],
         where: { fk_store },

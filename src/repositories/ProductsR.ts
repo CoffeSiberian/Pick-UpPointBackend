@@ -114,9 +114,8 @@ export const createProductWithStock = async (
         const newProduct = await Products.create(product, { transaction });
         await Stocks.create(
             {
-                id: product.id,
                 quantity: stock,
-                fk_product: product.id!,
+                fk_product: newProduct.id!,
                 fk_store,
             },
             { transaction }

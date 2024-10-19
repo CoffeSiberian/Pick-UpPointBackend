@@ -1,8 +1,14 @@
 import { Transaction } from "sequelize";
+
+// models
+import Products from "../models/Products";
+import Images_Products from "../models/ImagesProducts";
 import Purchases from "../models/Purchases";
 import Purchases_Items from "../models/Purchases_Items";
 import Users from "../models/Users";
 import { getUser } from "./UsersR";
+
+// types
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import { Purchases as PurchasesTypes } from "../types/db/model";
 
@@ -25,6 +31,21 @@ export const getPurchasesById = async (
 ): Promise<Purchases | null> => {
     return await Purchases.findOne({
         where: { id, fk_user },
+        include: [
+            {
+                model: Purchases_Items,
+                include: [
+                    {
+                        model: Products,
+                        include: [
+                            {
+                                model: Images_Products,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
     });
 };
 
@@ -36,6 +57,16 @@ export const getPurchasesByOnlyId = async (
         include: [
             {
                 model: Purchases_Items,
+                include: [
+                    {
+                        model: Products,
+                        include: [
+                            {
+                                model: Images_Products,
+                            },
+                        ],
+                    },
+                ],
             },
             {
                 model: Users,

@@ -27,40 +27,40 @@ import { delUser } from "../delete/delUser";
 
 const UsersRoutes = (app: Express) => {
     // GET
-    app.get("/user/", (req, res, next) => {
+    app.get("/user", authMiddlewareUser, (req, res, next) => {
         getUser(req, res as ResponseJwt, next);
     });
     app.get("/user/list", authMiddlewareAdmin, (req, res, next) => {
         getListUsers(req, res as ResponseJwt, next);
     });
-    app.get("/user/purchase/", authMiddlewareUser, (req, res, next) => {
+    app.get("/user/purchase", authMiddlewareUser, (req, res, next) => {
         getUserPurchase(req, res as ResponseJwt, next);
     });
-    app.get("/user/purchases/", authMiddlewareUser, (req, res, next) => {
+    app.get("/user/purchases", authMiddlewareUser, (req, res, next) => {
         getUserPurchases(req, res as ResponseJwt, next);
     });
 
     // POST
-    app.post("/user/", authMiddlewareAdmin, (req, res, next) => {
+    app.post("/user", authMiddlewareAdmin, (req, res, next) => {
         postUser(req, res as ResponseJwt, next);
     });
 
     // PUT
-    app.put("/user/", authMiddlewareAdmin, (req, res, next) => {
+    app.put("/user", authMiddlewareAdmin, (req, res, next) => {
         putUser(req, res as ResponseJwt, next);
     });
-    app.put("/user/password/", authMiddlewareUser, (req, res, next) => {
+    app.put("/user/password", authMiddlewareUser, (req, res, next) => {
         putUserPassword(req, res as ResponseJwt, next);
     });
-    app.put("/user/email/", authMiddlewareUser, (req, res, next) => {
+    app.put("/user/email", authMiddlewareUser, (req, res, next) => {
         putUserEmail(req, res as ResponseJwt, next);
     });
-    app.put("/user/name/", authMiddlewareUser, (req, res, next) => {
+    app.put("/user/name", authMiddlewareUser, (req, res, next) => {
         putUserName(req, res as ResponseJwt, next);
     });
 
     // DELETE
-    app.delete("/user/", authMiddlewareAdmin, (req, res, next) => {
+    app.delete("/user", authMiddlewareAdmin, (req, res, next) => {
         delUser(req, res as ResponseJwt, next);
     });
 };

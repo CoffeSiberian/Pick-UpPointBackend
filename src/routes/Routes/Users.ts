@@ -33,10 +33,10 @@ const UsersRoutes = (app: Express) => {
     app.get("/user/list", authMiddlewareAdmin, (req, res, next) => {
         getListUsers(req, res as ResponseJwt, next);
     });
-    app.get("/user/purchase/", (req, res, next) => {
+    app.get("/user/purchase/", authMiddlewareUser, (req, res, next) => {
         getUserPurchase(req, res as ResponseJwt, next);
     });
-    app.get("/user/purchases/", (req, res, next) => {
+    app.get("/user/purchases/", authMiddlewareUser, (req, res, next) => {
         getUserPurchases(req, res as ResponseJwt, next);
     });
 
@@ -49,13 +49,13 @@ const UsersRoutes = (app: Express) => {
     app.put("/user/", authMiddlewareAdmin, (req, res, next) => {
         putUser(req, res as ResponseJwt, next);
     });
-    app.put("/user/password/", (req, res, next) => {
+    app.put("/user/password/", authMiddlewareUser, (req, res, next) => {
         putUserPassword(req, res as ResponseJwt, next);
     });
-    app.put("/user/email/", (req, res, next) => {
+    app.put("/user/email/", authMiddlewareUser, (req, res, next) => {
         putUserEmail(req, res as ResponseJwt, next);
     });
-    app.put("/user/name/", (req, res, next) => {
+    app.put("/user/name/", authMiddlewareUser, (req, res, next) => {
         putUserName(req, res as ResponseJwt, next);
     });
 

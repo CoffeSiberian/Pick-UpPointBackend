@@ -9,6 +9,7 @@ export const postCheckPurchase = async (
     res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
+    // change post to get
     const id = req.body.id;
     if (!id || typeof id !== "string") {
         res.status(400).json(InfoResponse(400, "Bad Request"));

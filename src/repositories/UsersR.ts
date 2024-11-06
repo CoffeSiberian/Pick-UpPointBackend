@@ -1,4 +1,5 @@
 import Users from "../models/Users";
+import Purchases from "../models/Purchases";
 import { Users as UsersTypes } from "../types/db/model";
 
 // GET
@@ -29,6 +30,19 @@ export const getListUsers = async (
         attributes: { exclude: ["password"] },
         offset: limit_start,
         limit: limit_end,
+    });
+};
+
+export const getAllUserInfo = async (
+    id: string,
+    fk_store: string
+): Promise<Users | null> => {
+    return await Users.findOne({
+        where: { id, fk_store },
+        attributes: { exclude: ["password"] },
+        include: {
+            model: Purchases,
+        },
     });
 };
 

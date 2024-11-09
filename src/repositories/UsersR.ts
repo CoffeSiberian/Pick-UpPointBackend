@@ -34,20 +34,18 @@ export const getListUsers = async (
 };
 
 export const getTotalPurchasesByUser = async (
-    id: string,
-    fk_store: string
+    fk_user: string
 ): Promise<number> => {
     return await Purchases.count({
-        where: { id, fk_store },
+        where: { fk_user },
     });
 };
 
 export const getTotalAmountSpentByUser = async (
-    id: string,
-    fk_store: string
+    fk_user: string
 ): Promise<number> => {
     return await Purchases.sum("total", {
-        where: { id, fk_store },
+        where: { fk_user },
     });
 };
 

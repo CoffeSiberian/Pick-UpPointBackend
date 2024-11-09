@@ -26,21 +26,13 @@ export const getAllUserInfo = async (
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        const totalPurchases = await getTotalPurchasesByUser(
-            id,
-            res.jwtPayload.fk_store
-        );
-        const totalSpent = await getTotalAmountSpentByUser(
-            id,
-            res.jwtPayload.fk_store
-        );
+        const totalPurchases = await getTotalPurchasesByUser(id);
+        const totalSpent = await getTotalAmountSpentByUser(id);
 
         res.json({
-            user: {
-                ...user,
-                totalPurchases,
-                totalSpent,
-            },
+            user,
+            totalPurchases,
+            totalSpent,
         });
         return next();
     } catch (err: any) {

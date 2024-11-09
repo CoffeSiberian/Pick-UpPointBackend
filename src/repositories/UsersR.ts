@@ -43,7 +43,7 @@ export const getTotalPurchasesByUser = async (
 
 export const getTotalAmountSpentByUser = async (
     fk_user: string
-): Promise<number> => {
+): Promise<number | null> => {
     return await Purchases.sum("total", {
         where: { fk_user },
     });

@@ -32,7 +32,7 @@ export const getAllUserInfo = async (
         res.json({
             user,
             totalPurchases,
-            totalSpent,
+            totalSpent: totalSpent || 0,
         });
         return next();
     } catch (err: any) {

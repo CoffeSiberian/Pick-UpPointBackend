@@ -44,7 +44,7 @@ Being inside the folder so that it takes the .env
 
 ## Pending
 
--   [ ] Listar órdenes de compra de un cliente
+-   [x] Listar órdenes de compra de un cliente
 -   [ ] Visualizar órdenes de compra (sus datos y los productos adquiridos)
 -   [ ] Habilitar paginación en todos los componentes necesarios de UI
 -   [ ] Mejorar el aspecto del carrito de compra

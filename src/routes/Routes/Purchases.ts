@@ -9,6 +9,7 @@ import {
 import { getCheckPurchase } from "../get/getCheckPurchase";
 import { getPurchases } from "../get/getPurchases";
 import { getUserPurchasesAdmin } from "../get/getUserPurchasesAdmin";
+import { getAllItemsPurchased } from "../get/getAllItemsPurchased";
 
 // POST
 import { postBuyItems } from "../post/postBuyItems";
@@ -29,6 +30,9 @@ const PurchasesRoutes = (app: Express) => {
     });
     app.get("/purchases/user", authMiddlewareAdmin, (req, res, next) => {
         getUserPurchasesAdmin(req, res as ResponseJwt, next);
+    });
+    app.get("/purchase/items", authMiddlewareAdmin, (req, res, next) => {
+        getAllItemsPurchased(req, res as ResponseJwt, next);
     });
 
     // POST

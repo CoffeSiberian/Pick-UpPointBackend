@@ -1,4 +1,6 @@
 import Purchases_Items from "../models/Purchases_Items";
+import Purchases from "../models/Purchases";
+import Products from "../models/Products";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 
 // GET
@@ -16,6 +18,19 @@ export const getPurchases_ItemsById = async (
 ): Promise<Purchases_Items | null> => {
     return await Purchases_Items.findOne({
         where: { id, fk_purchase },
+    });
+};
+
+export const getAllItemsPurchased = async (
+    fk_purchase: string,
+    fk_store: string
+): Promise<Purchases_Items[]> => {
+    return await Purchases_Items.findAll({
+        where: { fk_purchase },
+        include: [
+            { model: Products },
+            { model: Purchases, where: { fk_store }, attributes: [] },
+        ],
     });
 };
 

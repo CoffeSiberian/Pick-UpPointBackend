@@ -33,6 +33,24 @@ export const getListUsers = async (
     });
 };
 
+export const getTotalPurchasesByUser = async (
+    id: string,
+    fk_store: string
+): Promise<number> => {
+    return await Purchases.count({
+        where: { id, fk_store },
+    });
+};
+
+export const getTotalAmountSpentByUser = async (
+    id: string,
+    fk_store: string
+): Promise<number> => {
+    return await Purchases.sum("total", {
+        where: { id, fk_store },
+    });
+};
+
 export const getAllUserInfo = async (
     id: string,
     fk_store: string

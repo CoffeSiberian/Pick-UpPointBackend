@@ -1,6 +1,7 @@
 import Purchases_Items from "../models/Purchases_Items";
 import Purchases from "../models/Purchases";
 import Products from "../models/Products";
+import Categories from "../models/Categories";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 
 // GET
@@ -28,7 +29,10 @@ export const getAllItemsPurchased = async (
     return await Purchases_Items.findAll({
         where: { fk_purchase },
         include: [
-            { model: Products },
+            {
+                model: Products,
+                include: [{ model: Categories, attributes: ["name"] }],
+            },
             { model: Purchases, where: { fk_store }, attributes: [] },
         ],
     });

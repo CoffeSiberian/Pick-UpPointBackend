@@ -74,3 +74,5 @@ export interface Purchases_Items {
     fk_purchase: string;
     fk_product: string;
 }
+
+export type UsersWithoutPassword = Omit<Users, "password">;

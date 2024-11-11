@@ -1,5 +1,8 @@
 import { Request, NextFunction } from "express";
-import { updateUser } from "../../repositories/UsersR";
+import {
+    updateUser,
+    updateUserWhitoutPassword,
+} from "../../repositories/UsersR";
 import { hashPass } from "../../utils/hash";
 import { userSchemaUpdate } from "../../schemas/UsersSch";
 import { InfoResponse } from "../../utils/InfoResponse";
@@ -18,14 +21,22 @@ export const putUser = async (
         return res.status(400).json(InfoResponse(400, "Bad Request"));
     }
     const User = value as UserUpdate;
-    const UserPassHash = await hashPass(User.password);
 
     try {
-        const rows = await updateUser({
-            ...User,
-            password: UserPassHash,
-            fk_store: res.jwtPayload.fk_store,
-        });
+        let rows: number;
+        if (User.password) {
+            rows = await updateUser({
+                ...User,
+                password: await hashPass(User.password),
+                fk_store: res.jwtPayload.fk_store,
+            });
+        } else {
+            rows = await updateUserWhitoutPassword({
+                ...User,
+                fk_store: res.jwtPayload.fk_store,
+            });
+        }
+
         if (rows === 0) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
@@ -38,7 +49,7 @@ export const putUser = async (
     }
 };
 
-interface UserUpdate extends UserPost {
+interface UserUpdate extends UserPostOptionalPassword {
     id: string;
     isAdmin: boolean;
 }

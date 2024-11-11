@@ -1,6 +1,6 @@
 import Users from "../models/Users";
 import Purchases from "../models/Purchases";
-import { Users as UsersTypes } from "../types/db/model";
+import { Users as UsersTypes, UsersWithoutPassword } from "../types/db/model";
 
 // GET
 export const getUser = async (
@@ -72,6 +72,16 @@ export const updateUser = async (user: UsersTypes): Promise<number> => {
     const rows = await Users.update(user, {
         where: { id: user.id, fk_store: user.fk_store },
     });
+    return rows[0];
+};
+
+export const updateUserWhitoutPassword = async (
+    user: UsersWithoutPassword
+): Promise<number> => {
+    const rows = await Users.update(
+        { name: user.name, email: user.email },
+        { where: { id: user.id, fk_store: user.fk_store } }
+    );
     return rows[0];
 };
 

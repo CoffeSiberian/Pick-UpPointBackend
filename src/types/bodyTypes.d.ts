@@ -5,6 +5,9 @@ interface UserPost {
     password: string;
 }
 
+type UserPostOptionalPassword = Omit<UserPost, "password"> &
+    Partial<Pick<UserPost, "password">>;
+
 interface UserPostRegister extends UserPost {
     fk_store: string;
 }

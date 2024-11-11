@@ -56,9 +56,6 @@ export const getAllUserInfo = async (
     return await Users.findOne({
         where: { id, fk_store },
         attributes: { exclude: ["password"] },
-        include: {
-            model: Purchases,
-        },
     });
 };
 

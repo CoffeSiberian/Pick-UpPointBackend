@@ -45,10 +45,10 @@ Being inside the folder so that it takes the .env
 ## Pending
 
 -   [x] Listar órdenes de compra de un cliente
--   [ ] Visualizar órdenes de compra (sus datos y los productos adquiridos)
--   [ ] Habilitar paginación en todos los componentes necesarios de UI
+-   [x] Visualizar órdenes de compra (sus datos y los productos adquiridos)
+-   [x] Habilitar paginación en todos los componentes necesarios de UI
 -   [ ] Mejorar el aspecto del carrito de compra
--   [ ] Al editar un usuario, si la contraseña no es asignada, esta no debe ser modificada
+-   [x] Al editar un usuario, si la contraseña no es asignada, esta no debe ser modificada
 -   [ ] Mejorar la generación de código QR (necesita márgenes blancos para facilitar su lectura por la cámara)
 -   [ ] Habilitar la posibilidad de subir imágenes para los productos creados
 -   [ ] Mostrar imágenes de los productos al visualizarlos en la web

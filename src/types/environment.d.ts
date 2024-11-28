@@ -6,6 +6,7 @@ declare global {
             IP: string;
             PORT: string;
             WEB_URL: string;
+            STATIC_FOLDER: string;
             CACHE_TIME: string;
             DB_IP: string;
             DB_PORT: string;

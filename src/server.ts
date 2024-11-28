@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import { logError, logInfo } from "./utils/logger";
-import { syncDataBase } from "./app";
+import { syncDataBaseAndStatic } from "./app";
 import https from "https";
 import http from "http";
 import Router from "./routes/Router";
@@ -22,7 +22,7 @@ const credentials = {
 const httpsServer = https.createServer(credentials, app);
 // const httpServer = http.createServer(app);
 
-syncDataBase()
+syncDataBaseAndStatic()
     .then(() => {
         httpsServer.listen(PORT, LISTEN);
         // httpServer.listen(PORT, LISTEN);

@@ -4,6 +4,7 @@ dotenv.config();
 export const LISTEN = process.env.IP;
 export const PORT: number = parseInt(process.env.PORT);
 export const WEB_URL: string = process.env.WEB_URL;
+export const STATIC_FOLDER: string = process.env.STATIC_FOLDER;
 export const CACHE_TIME = process.env.CACHE_TIME;
 export const HASH_ROUNDS: number = parseInt(process.env.HASH_ROUNDS);
 

@@ -44,10 +44,6 @@ export const getAllStoreProducts = async (
                 model: Stocks,
             },
             {
-                as: "images",
-                model: Images_Products,
-            },
-            {
                 as: "primary_image",
                 model: Images_Products,
             },
@@ -74,6 +70,7 @@ export const getCategoriesProducts = async (
                         model: Stocks,
                     },
                     {
+                        as: "primary_image",
                         model: Images_Products,
                     },
                 ],
@@ -92,9 +89,6 @@ export const getManyProducts = async (
         include: [
             {
                 model: Stocks,
-            },
-            {
-                model: Images_Products,
             },
         ],
     });

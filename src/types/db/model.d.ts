@@ -43,7 +43,9 @@ export interface Products {
     name: string;
     description: string;
     price: number;
+    is_active: boolean;
     fk_category: string;
+    primary_image?: string;
 }
 
 export interface Stocks {

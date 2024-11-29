@@ -33,6 +33,9 @@ export default class Products extends Model<ProductsTypes> {
     @Column({ type: DataType.INTEGER, allowNull: false })
     declare price: number;
 
+    @Column({ type: DataType.BOOLEAN, allowNull: false, defaultValue: true })
+    declare is_active: boolean;
+
     @ForeignKey(() => Categories)
     @Column({ type: DataType.UUID, allowNull: false })
     declare fk_category: string;
@@ -45,4 +48,11 @@ export default class Products extends Model<ProductsTypes> {
 
     @HasMany(() => Images_Products)
     declare images?: Images_Products[];
+
+    @ForeignKey(() => Images_Products)
+    @Column({ type: DataType.UUID, allowNull: true })
+    declare primary_image_id: string;
+
+    @BelongsTo(() => Images_Products, "primary_image_id")
+    declare primary_image?: Images_Products;
 }

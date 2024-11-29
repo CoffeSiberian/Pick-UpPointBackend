@@ -23,6 +23,7 @@ export const postProduct = async (
         name: body.name,
         description: body.description,
         price: body.price,
+        is_active: true,
         fk_category: body.fk_category,
     };
 

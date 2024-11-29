@@ -42,6 +42,7 @@ export const getAllStoreProducts = async (
                 model: Images_Products,
             },
         ],
+        attributes: { exclude: ["is_active"] },
         limit: limit_end,
         offset: limit_start,
     });

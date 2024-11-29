@@ -3,6 +3,7 @@ import Purchases from "../models/Purchases";
 import Products from "../models/Products";
 import Categories from "../models/Categories";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
+import Images_Products from "../models/ImagesProducts";
 
 // GET
 export const getPurchases_Items = async (
@@ -31,7 +32,13 @@ export const getAllItemsPurchased = async (
         include: [
             {
                 model: Products,
-                include: [{ model: Categories, attributes: ["name"] }],
+                include: [
+                    { model: Categories, attributes: ["name"] },
+                    {
+                        as: "primary_image",
+                        model: Images_Products,
+                    },
+                ],
             },
             { model: Purchases, where: { fk_store }, attributes: [] },
         ],

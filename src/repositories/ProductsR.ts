@@ -18,6 +18,11 @@ export const getProduct = async (id: string): Promise<Products | null> => {
                 model: Categories,
             },
             {
+                as: "images",
+                model: Images_Products,
+            },
+            {
+                as: "primary_image",
                 model: Images_Products,
             },
         ],

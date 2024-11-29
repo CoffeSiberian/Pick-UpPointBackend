@@ -15,6 +15,7 @@ import { postProductImages } from "../post/postProductImages";
 // PUT
 import { putProduct } from "../put/putProduct";
 import { putProductStock } from "../put/putProductStock";
+import { putPrimaryImage } from "../put/putPrimaryImage";
 
 // DELETE
 import { delProduct } from "../delete/delProduct";
@@ -43,6 +44,9 @@ const ProductsRoutes = (app: Express) => {
     });
     app.put("/product/stock", authMiddlewareAdmin, (req, res, next) => {
         putProductStock(req, res as ResponseJwt, next);
+    });
+    app.put("/product/primary_image", authMiddlewareAdmin, (req, res, next) => {
+        putPrimaryImage(req, res as ResponseJwt, next);
     });
 
     // DELETE

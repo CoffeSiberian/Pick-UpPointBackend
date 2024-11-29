@@ -185,6 +185,22 @@ export const updateStock = async (
     return rows[0];
 };
 
+export const updatePrimaryImage = async (
+    fk_product: string,
+    fk_image: string,
+    fk_store: string
+): Promise<number> => {
+    const validateStore = await getProduct(fk_product);
+    if (!validateStore) return 0;
+    if (validateStore.category.fk_store !== fk_store) return 0;
+
+    const rows = await Products.update(
+        { primary_image_id: fk_image },
+        { where: { id: fk_product } }
+    );
+    return rows[0];
+};
+
 // DELETE
 export const deleteProduct = async (
     id: string,

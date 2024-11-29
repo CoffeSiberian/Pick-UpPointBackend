@@ -45,7 +45,7 @@ export interface Products {
     price: number;
     is_active: boolean;
     fk_category: string;
-    primary_image?: string;
+    primary_image_id?: string;
 }
 
 export interface Stocks {

@@ -37,3 +37,8 @@ export const buyProcessSchema = Joi.object({
         )
         .required(),
 });
+
+export const productImageSchema = Joi.object({
+    id: Joi.string().uuid().required(),
+    fk_image: Joi.string().uuid().required(),
+});

@@ -127,6 +127,16 @@ export const createProductWithStock = async (
     return t;
 };
 
+export const createProductImages = async (
+    fk_product: string,
+    image: string
+): Promise<Images_Products> => {
+    return await Images_Products.create({
+        fk_products: fk_product,
+        file_name: image,
+    });
+};
+
 // PUT
 export const updateProduct = async (
     id: string,

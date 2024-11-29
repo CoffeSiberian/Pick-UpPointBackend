@@ -10,6 +10,7 @@ import { getProduct } from "../get/getProduct";
 
 // POST
 import { postProduct } from "../post/postProduct";
+import { postProductImages } from "../post/postProductImages";
 
 // PUT
 import { putProduct } from "../put/putProduct";
@@ -30,6 +31,9 @@ const ProductsRoutes = (app: Express) => {
     // POST
     app.post("/product", authMiddlewareAdmin, (req, res, next) => {
         postProduct(req, res as ResponseJwt, next);
+    });
+    app.post("/product/images", authMiddlewareAdmin, (req, res, next) => {
+        postProductImages(req, res as ResponseJwt, next);
     });
 
     // PUT

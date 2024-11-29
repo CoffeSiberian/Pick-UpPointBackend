@@ -129,8 +129,15 @@ export const createProductWithStock = async (
 
 export const createProductImages = async (
     fk_product: string,
-    image: string
+    image: string,
+    fk_store: string
 ): Promise<Images_Products> => {
+    const validateStore = await getProduct(fk_product);
+    if (!validateStore) throw new Error("Category not found");
+    if (validateStore.category.fk_store !== fk_store) {
+        throw new Error("Not your store");
+    }
+
     return await Images_Products.create({
         fk_products: fk_product,
         file_name: image,
@@ -177,5 +184,20 @@ export const deleteProduct = async (
     if (validateStore.category.fk_store !== fk_store) return 0;
 
     const rows = await Products.destroy({ where: { id } });
+    return rows;
+};
+
+export const deleteProductImage = async (
+    id: string,
+    fk_product: string,
+    fk_store: string
+): Promise<number> => {
+    const validateStore = await getProduct(fk_product);
+    if (!validateStore) return 0;
+    if (validateStore.category.fk_store !== fk_store) return 0;
+
+    const rows = await Images_Products.destroy({
+        where: { id, fk_products: fk_product },
+    });
     return rows;
 };

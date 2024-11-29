@@ -18,6 +18,7 @@ import { putProductStock } from "../put/putProductStock";
 
 // DELETE
 import { delProduct } from "../delete/delProduct";
+import { delProductImage } from "../delete/delProductImage";
 
 const ProductsRoutes = (app: Express) => {
     // GET
@@ -47,6 +48,9 @@ const ProductsRoutes = (app: Express) => {
     // DELETE
     app.delete("/product", authMiddlewareAdmin, (req, res, next) => {
         delProduct(req, res as ResponseJwt, next);
+    });
+    app.delete("/product/image", authMiddlewareAdmin, (req, res, next) => {
+        delProductImage(req, res as ResponseJwt, next);
     });
 };
 

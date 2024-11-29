@@ -47,7 +47,11 @@ export const postProductImages = async (
             return next();
         }
 
-        createProductImages(fields.fk_product[0], files.image[0].newFilename)
+        createProductImages(
+            fields.fk_product[0],
+            files.image[0].newFilename,
+            res.jwtPayload.fk_store
+        )
             .then(() => {
                 res.json(InfoResponse(200, "Created"));
                 next();

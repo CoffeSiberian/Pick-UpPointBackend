@@ -21,10 +21,7 @@ export default class Images_Products extends Model<Images_ProductsType> {
     declare id: string;
 
     @Column({ type: DataType.STRING(256), allowNull: false })
-    declare name: string;
-
-    @Column({ type: DataType.STRING(3000), allowNull: false })
-    declare src: string;
+    declare file_name: string;
 
     @ForeignKey(() => Products)
     @Column({ type: DataType.UUID, allowNull: false })

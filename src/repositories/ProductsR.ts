@@ -39,6 +39,11 @@ export const getAllStoreProducts = async (
                 model: Stocks,
             },
             {
+                as: "images",
+                model: Images_Products,
+            },
+            {
+                as: "primary_image",
                 model: Images_Products,
             },
         ],

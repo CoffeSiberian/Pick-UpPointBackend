@@ -29,10 +29,6 @@ export const getPurchases = async (
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        if (purchases.length === 0) {
-            res.status(404).json(InfoResponse(404, "No Found"));
-            return next();
-        }
 
         res.json({ purchases });
         return next();

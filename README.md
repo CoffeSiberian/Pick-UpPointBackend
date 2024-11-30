@@ -49,7 +49,7 @@ Being inside the folder so that it takes the .env
 -   [x] Habilitar paginación en todos los componentes necesarios de UI
 -   [ ] Mejorar el aspecto del carrito de compra
 -   [x] Al editar un usuario, si la contraseña no es asignada, esta no debe ser modificada
--   [ ] Mejorar la generación de código QR (necesita márgenes blancos para facilitar su lectura por la cámara)
+-   [x] Mejorar la generación de código QR (necesita márgenes blancos para facilitar su lectura por la cámara)
 -   [x] Habilitar la posibilidad de subir imágenes para los productos creados
 -   [x] Mostrar imágenes de los productos al visualizarlos en la web
 -   [ ] Al ingresar el RUT, el usuario podría estar registrado en otra tienda y podría generar conflicto por las IDs únicas de RUT (se necesita mejorar)

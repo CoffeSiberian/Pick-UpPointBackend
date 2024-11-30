@@ -18,17 +18,23 @@ export default class Users extends Model<UsersTypes> {
         defaultValue: DataType.UUIDV4,
         primaryKey: true,
         allowNull: false,
-        unique: true,
     })
     declare id: string;
 
-    @Column({ type: DataType.STRING(15), allowNull: false, unique: true })
+    @Column({ type: DataType.STRING(15), allowNull: false, unique: "rut" })
     declare rut: string;
 
     @Column({ type: DataType.STRING(256), allowNull: false })
     declare name: string;
 
-    @Column({ type: DataType.STRING(256), allowNull: false, unique: true })
+    @Column({
+        type: DataType.STRING(256),
+        allowNull: false,
+        unique: "email",
+        validate: {
+            isEmail: true,
+        },
+    })
     declare email: string;
 
     @Column({ type: DataType.STRING(500), allowNull: false })

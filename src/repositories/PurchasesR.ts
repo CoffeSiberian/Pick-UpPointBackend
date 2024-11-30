@@ -62,6 +62,7 @@ export const getPurchasesByOnlyId = async (
                         model: Products,
                         include: [
                             {
+                                as: "primary_image",
                                 model: Images_Products,
                             },
                         ],

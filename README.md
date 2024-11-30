@@ -50,8 +50,8 @@ Being inside the folder so that it takes the .env
 -   [ ] Mejorar el aspecto del carrito de compra
 -   [x] Al editar un usuario, si la contraseña no es asignada, esta no debe ser modificada
 -   [ ] Mejorar la generación de código QR (necesita márgenes blancos para facilitar su lectura por la cámara)
--   [ ] Habilitar la posibilidad de subir imágenes para los productos creados
--   [ ] Mostrar imágenes de los productos al visualizarlos en la web
+-   [x] Habilitar la posibilidad de subir imágenes para los productos creados
+-   [x] Mostrar imágenes de los productos al visualizarlos en la web
 -   [ ] Al ingresar el RUT, el usuario podría estar registrado en otra tienda y podría generar conflicto por las IDs únicas de RUT (se necesita mejorar)
 -   [ ] Habilitar estadísticas de forma dinámica según los datos generados por el comercio
 -   [ ] Poder modificar las credenciales de FLOW.CL desde la tienda y la UI de esta

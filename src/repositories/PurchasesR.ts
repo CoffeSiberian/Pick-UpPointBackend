@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 // models
 import Products from "../models/Products";
@@ -97,6 +97,37 @@ export const getAllStorePurchases = async (
         where: { fk_store },
         limit: limit_end,
         offset: limit_start,
+    });
+};
+
+export const getTotalStorePurchases = async (
+    fk_store: string,
+    date_start: string,
+    date_end: string
+): Promise<{ totalMoney: number | null; totalCount: number }> => {
+    const totalMoney = await Purchases.sum("total", {
+        where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
+    });
+
+    const totalCount = await Purchases.count({
+        where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
+    });
+
+    return { totalMoney, totalCount };
+};
+
+export const getTotalStorePurchasesBetweenDate = async (
+    fk_store: string,
+    date_start: string,
+    date_end: string
+): Promise<Purchases[]> => {
+    return await Purchases.findAll({
+        where: {
+            fk_store,
+            date: {
+                [Op.between]: [date_start, date_end],
+            },
+        },
     });
 };
 

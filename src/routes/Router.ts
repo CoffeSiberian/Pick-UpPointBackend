@@ -10,6 +10,7 @@ import CategoriesRoutes from "./Routes/Categories";
 import UsersRoutes from "./Routes/Users";
 import ProductsRoutes from "./Routes/Products";
 import PurchasesRoutes from "./Routes/Purchases";
+import ChartsRoutes from "./Routes/Charts";
 
 export default function (app: Express) {
     // middlewares
@@ -21,6 +22,7 @@ export default function (app: Express) {
     UsersRoutes(app);
     ProductsRoutes(app);
     PurchasesRoutes(app);
+    ChartsRoutes(app);
 
     // middlewares
     app.use(logResponsesMiddleware);

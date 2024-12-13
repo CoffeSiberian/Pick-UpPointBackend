@@ -9,7 +9,7 @@ import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 
 // GET
 import { getTotalPurchased } from "../get/getTotalPurchased";
-import { getTotalStorePurchasesMoth } from "../get/getTotalStorePurchasesBetween";
+import { getTotalStorePurchasesMonth } from "../get/getTotalStorePurchasesMonth";
 
 // POST
 
@@ -23,7 +23,7 @@ const ChartsRoutes = (app: Express) => {
         getTotalPurchased(req, res as ResponseJwt, next);
     });
     app.get("/purchases/total/moth", authMiddlewareAdmin, (req, res, next) => {
-        getTotalStorePurchasesMoth(req, res as ResponseJwt, next);
+        getTotalStorePurchasesMonth(req, res as ResponseJwt, next);
     });
 
     // POST

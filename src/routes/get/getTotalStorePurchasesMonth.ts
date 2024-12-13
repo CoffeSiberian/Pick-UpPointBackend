@@ -3,7 +3,7 @@ import { ResponseJwt } from "../../types/ResponseExtends";
 import { getTotalStorePurchasesBetweenLast30Days } from "../../repositories/PurchasesR";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
-export const getTotalStorePurchasesMoth = async (
+export const getTotalStorePurchasesMonth = async (
     req: Request,
     res: ResponseJwt,
     next: NextFunction

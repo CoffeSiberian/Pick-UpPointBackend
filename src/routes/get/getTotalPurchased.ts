@@ -33,7 +33,7 @@ export const getTotalPurchased = async (
             date_end
         );
 
-        if (!purchases || purchases.totalMoney === null) {
+        if (!purchases || purchases.total_money === null) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }

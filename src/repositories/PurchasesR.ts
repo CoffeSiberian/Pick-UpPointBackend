@@ -1,4 +1,4 @@
-import { Op, Transaction } from "sequelize";
+import { Op, Transaction, fn, col, literal } from "sequelize";
 
 // models
 import Products from "../models/Products";
@@ -104,31 +104,40 @@ export const getTotalStorePurchases = async (
     fk_store: string,
     date_start: string,
     date_end: string
-): Promise<{ totalMoney: number | null; totalCount: number }> => {
-    const totalMoney = await Purchases.sum("total", {
+): Promise<{ total_money: number | null; total_count: number }> => {
+    const total_money = await Purchases.sum("total", {
         where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
     });
 
-    const totalCount = await Purchases.count({
+    const total_count = await Purchases.count({
         where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
     });
 
-    return { totalMoney, totalCount };
+    return { total_money, total_count };
 };
 
-export const getTotalStorePurchasesBetweenDate = async (
-    fk_store: string,
-    date_start: string,
-    date_end: string
-): Promise<Purchases[]> => {
-    return await Purchases.findAll({
+export const getTotalStorePurchasesBetweenLast30Days = async (
+    fk_store: string
+): Promise<{ date: string; total_ventas: number }[]> => {
+    const resultados = await Purchases.findAll({
+        attributes: [
+            [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
+            [fn("COUNT", "*"), "totalCompras"], // Counts rows grouped by day
+        ],
         where: {
             fk_store,
             date: {
-                [Op.between]: [date_start, date_end],
+                [Op.gte]: literal("DATE_SUB(CURDATE(), INTERVAL 30 DAY)"), // Only purchases in the last 30 days
             },
         },
+        group: [fn("DATE", col("date"))], // Group by day
+        order: [[fn("DATE", col("date")), "ASC"]], // Sort dates in ascending order
     });
+
+    return resultados.map((row) => ({
+        date: row.get("date_sort") as string,
+        total_ventas: parseInt(row.get("totalCompras") as string, 10),
+    }));
 };
 
 // POST

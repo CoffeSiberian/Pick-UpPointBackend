@@ -140,6 +140,30 @@ export const getTotalStorePurchasesBetweenLast30Days = async (
     }));
 };
 
+export const getTotalStorePurchasesBetweenLast7Days = async (
+    fk_store: string
+): Promise<{ date: string; total_ventas: number }[]> => {
+    const resultados = await Purchases.findAll({
+        attributes: [
+            [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
+            [fn("COUNT", "*"), "totalCompras"], // Counts rows grouped by day
+        ],
+        where: {
+            fk_store,
+            date: {
+                [Op.gte]: literal("DATE_SUB(CURDATE(), INTERVAL 7 DAY)"), // Only purchases in the last 30 days
+            },
+        },
+        group: [fn("DATE", col("date"))], // Group by day
+        order: [[fn("DATE", col("date")), "ASC"]], // Sort dates in ascending order
+    });
+
+    return resultados.map((row) => ({
+        date: row.get("date_sort") as string,
+        total_ventas: parseInt(row.get("totalCompras") as string, 10),
+    }));
+};
+
 // POST
 export const createPurchasesWithTransaction = async (
     purchases: PurchasesTypes,

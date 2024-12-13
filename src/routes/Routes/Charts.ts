@@ -1,7 +1,3 @@
-// Grafico de barras o lineal para las ventas
-// Grafico de linea para el total vendido en la semana
-// total de venta del periodo
-// 7 y 30 dias
 import { Express } from "express";
 import { ResponseJwt } from "../../types/ResponseExtends";
 
@@ -10,20 +6,18 @@ import { authMiddlewareAdmin } from "../../middlewares/authMiddleware";
 // GET
 import { getTotalPurchased } from "../get/getTotalPurchased";
 import { getTotalStorePurchasesMonth } from "../get/getTotalStorePurchasesMonth";
-
-// POST
-
-// PUT
-
-// DELETE
+import { getTotalStorePurchasesWeek } from "../get/getTotalStorePurchasesWeek";
 
 const ChartsRoutes = (app: Express) => {
     // GET
     app.get("/purchases/total", authMiddlewareAdmin, (req, res, next) => {
         getTotalPurchased(req, res as ResponseJwt, next);
     });
-    app.get("/purchases/total/moth", authMiddlewareAdmin, (req, res, next) => {
+    app.get("/purchases/total/month", authMiddlewareAdmin, (req, res, next) => {
         getTotalStorePurchasesMonth(req, res as ResponseJwt, next);
+    });
+    app.get("/purchases/total/week", authMiddlewareAdmin, (req, res, next) => {
+        getTotalStorePurchasesWeek(req, res as ResponseJwt, next);
     });
 
     // POST

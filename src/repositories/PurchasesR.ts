@@ -104,21 +104,21 @@ export const getTotalStorePurchases = async (
     fk_store: string,
     date_start: string,
     date_end: string
-): Promise<{ total_money: number | null; total_count: number }> => {
+): Promise<{ total_money: number | null; total_sales: number }> => {
     const total_money = await Purchases.sum("total", {
         where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
     });
 
-    const total_count = await Purchases.count({
+    const total_sales = await Purchases.count({
         where: { fk_store, date: { [Op.between]: [date_start, date_end] } },
     });
 
-    return { total_money, total_count };
+    return { total_money, total_sales };
 };
 
 export const getTotalStorePurchasesBetweenLast30Days = async (
     fk_store: string
-): Promise<{ date: string; total_ventas: number }[]> => {
+): Promise<{ date: string; total_sales: number }[]> => {
     const resultados = await Purchases.findAll({
         attributes: [
             [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
@@ -136,13 +136,13 @@ export const getTotalStorePurchasesBetweenLast30Days = async (
 
     return resultados.map((row) => ({
         date: row.get("date_sort") as string,
-        total_ventas: parseInt(row.get("totalCompras") as string, 10),
+        total_sales: parseInt(row.get("totalCompras") as string, 10),
     }));
 };
 
 export const getTotalStorePurchasesBetweenLast7Days = async (
     fk_store: string
-): Promise<{ date: string; total_ventas: number }[]> => {
+): Promise<{ date: string; total_sales: number }[]> => {
     const resultados = await Purchases.findAll({
         attributes: [
             [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
@@ -160,7 +160,7 @@ export const getTotalStorePurchasesBetweenLast7Days = async (
 
     return resultados.map((row) => ({
         date: row.get("date_sort") as string,
-        total_ventas: parseInt(row.get("totalCompras") as string, 10),
+        total_sales: parseInt(row.get("totalCompras") as string, 10),
     }));
 };
 

@@ -118,11 +118,12 @@ export const getTotalStorePurchases = async (
 
 export const getTotalStorePurchasesBetweenLast30Days = async (
     fk_store: string
-): Promise<{ date: string; total_sales: number }[]> => {
+): Promise<{ date: string; total_sales: number; total_money: number }[]> => {
     const resultados = await Purchases.findAll({
         attributes: [
             [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
-            [fn("COUNT", "*"), "totalCompras"], // Counts rows grouped by day
+            [fn("COUNT", "*"), "total_sales"], // Counts rows grouped by day
+            [fn("SUM", col("total")), "total_money"], // Sums the total earnings grouped by day
         ],
         where: {
             fk_store,
@@ -136,17 +137,19 @@ export const getTotalStorePurchasesBetweenLast30Days = async (
 
     return resultados.map((row) => ({
         date: row.get("date_sort") as string,
-        total_sales: parseInt(row.get("totalCompras") as string, 10),
+        total_sales: parseInt(row.get("total_sales") as string, 10),
+        total_money: parseInt(row.get("total_money") as string, 10),
     }));
 };
 
 export const getTotalStorePurchasesBetweenLast7Days = async (
     fk_store: string
-): Promise<{ date: string; total_sales: number }[]> => {
+): Promise<{ date: string; total_sales: number; total_money: number }[]> => {
     const resultados = await Purchases.findAll({
         attributes: [
             [fn("DATE", col("date")), "date_sort"], // Extracts only the date part (without time)
-            [fn("COUNT", "*"), "totalCompras"], // Counts rows grouped by day
+            [fn("COUNT", "*"), "total_sales"], // Counts rows grouped by day
+            [fn("SUM", col("total")), "total_money"], // Sums the total earnings grouped by day
         ],
         where: {
             fk_store,
@@ -160,7 +163,8 @@ export const getTotalStorePurchasesBetweenLast7Days = async (
 
     return resultados.map((row) => ({
         date: row.get("date_sort") as string,
-        total_sales: parseInt(row.get("totalCompras") as string, 10),
+        total_sales: parseInt(row.get("total_sales") as string, 10),
+        total_money: parseInt(row.get("total_money") as string, 10),
     }));
 };
 

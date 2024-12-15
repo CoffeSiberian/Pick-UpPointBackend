@@ -1,9 +1,9 @@
 import { Request, NextFunction } from "express";
+import Joi from "joi";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { getTotalStorePurchases } from "../../repositories/PurchasesR";
-import { InfoResponse } from "../../utils/InfoResponse";
 import { dbErrors } from "../../middlewares/errorMiddleware";
-import Joi from "joi";
+import { InfoResponse } from "../../utils/InfoResponse";
 
 const totalPurchaseSchema = Joi.object({
     date_start: Joi.date().required(),
@@ -33,14 +33,10 @@ export const getTotalPurchased = async (
             date_end
         );
 
-        if (!purchases || purchases.total_money === null) {
-            res.status(404).json(InfoResponse(404, "Not Found"));
-            return next();
-        }
-
-        res.json({ purchases });
+        res.json(purchases);
         return next();
     } catch (err: any) {
+        console.log(err);
         dbErrors(err, res);
         next();
     }

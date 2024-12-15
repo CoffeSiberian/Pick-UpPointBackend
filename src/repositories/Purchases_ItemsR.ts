@@ -4,6 +4,7 @@ import Products from "../models/Products";
 import Categories from "../models/Categories";
 import { Purchases_Items as Purchases_ItemsTypes } from "../types/db/model";
 import Images_Products from "../models/ImagesProducts";
+import { fn, Op } from "sequelize";
 
 // GET
 export const getPurchases_Items = async (
@@ -42,6 +43,36 @@ export const getAllItemsPurchased = async (
             },
             { model: Purchases, where: { fk_store }, attributes: [] },
         ],
+    });
+};
+
+export const getMostPurchasedItems = async (
+    fk_store: string,
+    date_start: string,
+    date_end: string
+): Promise<Purchases_Items[]> => {
+    return await Purchases_Items.findAll({
+        attributes: ["fk_product", [fn("COUNT", "fk_product"), "total"]],
+        include: [
+            {
+                model: Purchases,
+                where: {
+                    fk_store,
+                    date: {
+                        [Op.between]: [date_start, date_end],
+                    },
+                },
+                attributes: [],
+            },
+            {
+                model: Products,
+                attributes: {
+                    exclude: ["fk_category", "createdAt", "updatedAt"],
+                },
+            },
+        ],
+        group: ["fk_product"],
+        order: [[fn("COUNT", "fk_product"), "DESC"]],
     });
 };
 

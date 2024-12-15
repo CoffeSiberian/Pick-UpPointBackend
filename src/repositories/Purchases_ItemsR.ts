@@ -67,8 +67,19 @@ export const getMostPurchasedItems = async (
             {
                 model: Products,
                 attributes: {
-                    exclude: ["fk_category", "createdAt", "updatedAt"],
+                    exclude: [
+                        "fk_category",
+                        "createdAt",
+                        "updatedAt",
+                        "is_active",
+                    ],
                 },
+                include: [
+                    {
+                        as: "primary_image",
+                        model: Images_Products,
+                    },
+                ],
             },
         ],
         group: ["fk_product"],

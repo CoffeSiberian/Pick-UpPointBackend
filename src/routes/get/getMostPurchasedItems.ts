@@ -39,7 +39,7 @@ export const getMostPurchasedItems = async (
         }
 
         res.json({
-            most_purchased_item: items.slice(0, 5),
+            most_purchased_items: items.slice(0, 5),
         });
         return next();
     } catch (err: any) {

@@ -98,7 +98,12 @@ export const updateUserWhitoutPassword = async (
     user: UsersWithoutPassword
 ): Promise<number> => {
     const rows = await Users.update(
-        { name: user.name, email: user.email },
+        {
+            rut: user.rut,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+        },
         { where: { id: user.id, fk_store: user.fk_store } }
     );
     return rows[0];

@@ -12,7 +12,8 @@ import { getUser } from "../get/getUser";
 import { getListUsers } from "../get/getListUsers";
 import { getUserPurchase } from "../get/getUserPurchase";
 import { getUserPurchases } from "../get/getUserPurchases";
-import { getAllUserInfo } from "../get/getAllUserInfo";
+import { getAllUserInfoAdmin } from "../get/getAllUserInfoAdmin";
+import { getAllUserInfoProfile } from "../get/getAllUserInfoProfile";
 
 // POST
 import { postUser } from "../post/postUser";
@@ -41,7 +42,10 @@ const UsersRoutes = (app: Express) => {
         getUserPurchases(req, res as ResponseJwt, next);
     });
     app.get("/user/info", authMiddlewareAdmin, (req, res, next) => {
-        getAllUserInfo(req, res as ResponseJwt, next);
+        getAllUserInfoAdmin(req, res as ResponseJwt, next);
+    });
+    app.get("/user/info/profile", authMiddlewareUser, (req, res, next) => {
+        getAllUserInfoProfile(req, res as ResponseJwt, next);
     });
 
     // POST

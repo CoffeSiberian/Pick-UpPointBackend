@@ -8,26 +8,22 @@ import { ResponseJwt } from "../../types/ResponseExtends";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
-export const getAllUserInfo = async (
+export const getAllUserInfoProfile = async (
     req: Request,
     res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
-    const id = req.query.id;
-
-    if (!id || typeof id !== "string") {
-        res.status(400).json(InfoResponse(400, "Bad Request"));
-        return next();
-    }
-
     try {
-        const user = await getAllUserInfoR(id, res.jwtPayload.fk_store);
+        const user = await getAllUserInfoR(
+            res.jwtPayload.id,
+            res.jwtPayload.fk_store
+        );
         if (!user) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();
         }
-        const totalPurchases = await getTotalPurchasesByUser(id);
-        const totalSpent = await getTotalAmountSpentByUser(id);
+        const totalPurchases = await getTotalPurchasesByUser(res.jwtPayload.id);
+        const totalSpent = await getTotalAmountSpentByUser(res.jwtPayload.id);
 
         res.json({
             user,

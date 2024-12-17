@@ -24,7 +24,7 @@ export const getPurchases_ItemsById = async (
     });
 };
 
-export const getAllItemsPurchased = async (
+export const getAllItemsPurchasedAdmin = async (
     fk_purchase: string,
     fk_store: string
 ): Promise<Purchases_Items[]> => {
@@ -42,6 +42,29 @@ export const getAllItemsPurchased = async (
                 ],
             },
             { model: Purchases, where: { fk_store }, attributes: [] },
+        ],
+    });
+};
+
+export const getAllItemsPurchasedProfile = async (
+    fk_purchase: string,
+    fk_store: string,
+    fk_user: string
+): Promise<Purchases_Items[]> => {
+    return await Purchases_Items.findAll({
+        where: { fk_purchase },
+        include: [
+            {
+                model: Products,
+                include: [
+                    { model: Categories, attributes: ["name"] },
+                    {
+                        as: "primary_image",
+                        model: Images_Products,
+                    },
+                ],
+            },
+            { model: Purchases, where: { fk_store, fk_user }, attributes: [] },
         ],
     });
 };

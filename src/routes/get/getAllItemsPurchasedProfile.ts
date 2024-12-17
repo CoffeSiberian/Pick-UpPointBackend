@@ -1,10 +1,10 @@
 import { Request, NextFunction } from "express";
-import { getAllItemsPurchased as getAllItemsPurchasedR } from "../../repositories/Purchases_ItemsR";
+import { getAllItemsPurchasedProfile as getAllItemsPurchasedR } from "../../repositories/Purchases_ItemsR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { ResponseJwt } from "../../types/ResponseExtends";
 import { dbErrors } from "../../middlewares/errorMiddleware";
 
-export const getAllItemsPurchased = async (
+export const getAllItemsPurchasedProfile = async (
     req: Request,
     res: ResponseJwt,
     next: NextFunction
@@ -18,7 +18,8 @@ export const getAllItemsPurchased = async (
     try {
         const itemsPurchased = await getAllItemsPurchasedR(
             id,
-            res.jwtPayload.fk_store
+            res.jwtPayload.fk_store,
+            res.jwtPayload.id
         );
         if (!itemsPurchased) {
             res.status(404).json(InfoResponse(404, "Not Found"));

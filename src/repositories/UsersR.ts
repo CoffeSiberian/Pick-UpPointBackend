@@ -72,6 +72,28 @@ export const updateUser = async (user: UsersTypes): Promise<number> => {
     return rows[0];
 };
 
+export const updateUserProfile = async (
+    id: string,
+    name: string,
+    email: string,
+    password: string
+): Promise<number> => {
+    const rows = await Users.update(
+        { name, email, password },
+        { where: { id } }
+    );
+    return rows[0];
+};
+
+export const updateUserProfileWhitoutPassword = async (
+    id: string,
+    name: string,
+    email: string
+): Promise<number> => {
+    const rows = await Users.update({ name, email }, { where: { id } });
+    return rows[0];
+};
+
 export const updateUserWhitoutPassword = async (
     user: UsersWithoutPassword
 ): Promise<number> => {

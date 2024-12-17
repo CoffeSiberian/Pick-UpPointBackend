@@ -5,6 +5,15 @@ interface UserPost {
     password: string;
 }
 
+interface UserPostProfile {
+    name: string;
+    email: string;
+    password: string;
+}
+
+type UserPostProfileOptionalPassword = Omit<UserPostProfile, "password"> &
+    Partial<Pick<UserPost, "password">>;
+
 type UserPostOptionalPassword = Omit<UserPost, "password"> &
     Partial<Pick<UserPost, "password">>;
 

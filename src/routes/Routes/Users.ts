@@ -20,6 +20,7 @@ import { postUser } from "../post/postUser";
 
 // PUT
 import { putUser } from "../put/putUser";
+import { putUserProfile } from "../put/putUserProfile";
 import { putUserPassword } from "../put/putUserPassword";
 import { putUserEmail } from "../put/putUserEmail";
 import { putUserName } from "../put/putUserName";
@@ -56,6 +57,9 @@ const UsersRoutes = (app: Express) => {
     // PUT
     app.put("/user", authMiddlewareAdmin, (req, res, next) => {
         putUser(req, res as ResponseJwt, next);
+    });
+    app.put("/user/profile", authMiddlewareUser, (req, res, next) => {
+        putUserProfile(req, res as ResponseJwt, next);
     });
     app.put("/user/password", authMiddlewareUser, (req, res, next) => {
         putUserPassword(req, res as ResponseJwt, next);

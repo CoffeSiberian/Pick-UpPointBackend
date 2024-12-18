@@ -5,8 +5,8 @@
     "main": "server.js",
     "scripts": {
         "build": "npx tsc",
-        "start": "node ./build/server.js",
-        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/server.js\"",
+        "start": "node ./build/src/server.js",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/src/server.js\"",
         "test": "jest"
     },
     "repository": {

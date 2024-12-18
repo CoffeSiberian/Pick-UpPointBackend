@@ -37,3 +37,11 @@ export const JWT_TIMEOUT_TOKEN = process.env.JWT_TIMEOUT_TOKEN;
 
 export const SERVER_CRT_SSL = process.env.SERVER_CRT_SSL;
 export const SERVER_KEY_SSL = process.env.SERVER_KEY_SSL;
+
+////////////////////////////////////////////////////////////////////////////////////
+
+export const TEST_USER_EMAIL = process.env.TEST_USER_EMAIL;
+export const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD;
+export const TEST_FK_STORE = process.env.TEST_FK_STORE;
+export const TEST_PURCHASE_ID = process.env.TEST_PURCHASE_ID;
+export const TEST_PRODUCT_ID = process.env.TEST_PRODUCT_ID;

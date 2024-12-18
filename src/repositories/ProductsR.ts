@@ -88,6 +88,7 @@ export const getCategoriesProducts = async (
                     },
                 ],
                 limit: limit_end,
+                // @ts-ignore
                 offset: limit_start, // https://github.com/sequelize/sequelize/issues/12969
             },
         ],

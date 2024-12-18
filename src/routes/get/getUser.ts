@@ -9,14 +9,8 @@ export const getUser = async (
     res: ResponseJwt,
     next: NextFunction
 ): Promise<any> => {
-    const id = req.query.id;
-    if (!id || typeof id !== "string") {
-        res.status(400).json(InfoResponse(400, "Bad Request"));
-        return next();
-    }
-
     try {
-        const user = await getUserR(id, res.jwtPayload.fk_store);
+        const user = await getUserR(res.jwtPayload.id, res.jwtPayload.fk_store);
         if (!user) {
             res.status(404).json(InfoResponse(404, "Not Found"));
             return next();

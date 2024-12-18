@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { getAllStoreProducts as getAllStoreProductsR } from "../../repositories/ProductsR";
+import { getAllStoreProductsCount } from "../../repositories/ProductsR";
 import { InfoResponse } from "../../utils/InfoResponse";
 import { validateQueryPagination } from "../../utils/queryValidations";
 import { dbErrors } from "../../middlewares/errorMiddleware";
@@ -36,7 +37,9 @@ export const getProducts = async (
             return next();
         }
 
-        res.json({ products });
+        const total_products = await getAllStoreProductsCount(storeId);
+
+        res.json({ products, total_products });
         return next();
     } catch (err: any) {
         dbErrors(err, res);

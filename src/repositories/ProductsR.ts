@@ -29,6 +29,19 @@ export const getProduct = async (id: string): Promise<Products | null> => {
     });
 };
 
+export const getAllStoreProductsCount = async (
+    fk_store: string
+): Promise<number> => {
+    return await Products.count({
+        include: [
+            {
+                model: Categories,
+                where: { fk_store },
+            },
+        ],
+    });
+};
+
 export const getAllStoreProducts = async (
     fk_store: string,
     limit_start: number,

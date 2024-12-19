@@ -7,6 +7,7 @@ export const getImagesProducts = async (
 ): Promise<Images_Products[]> => {
     return await Images_Products.findAll({
         where: { fk_products },
+        order: [["createdAt", "DESC"]],
     });
 };
 

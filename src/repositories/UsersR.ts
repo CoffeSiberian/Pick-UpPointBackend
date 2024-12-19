@@ -30,6 +30,7 @@ export const getListUsers = async (
         attributes: { exclude: ["password"] },
         offset: limit_start,
         limit: limit_end,
+        order: [["createdAt", "DESC"]],
     });
 };
 

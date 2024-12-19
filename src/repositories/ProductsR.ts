@@ -64,6 +64,7 @@ export const getAllStoreProducts = async (
         attributes: { exclude: ["is_active"] },
         limit: limit_end,
         offset: limit_start,
+        order: [["createdAt", "DESC"]],
     });
 };
 
@@ -105,6 +106,7 @@ export const getManyProducts = async (
                 model: Stocks,
             },
         ],
+        order: [["createdAt", "DESC"]],
     });
 };
 

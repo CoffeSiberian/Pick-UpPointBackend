@@ -18,6 +18,7 @@ export const getCategories = async (
         where: { fk_store },
         limit: limit_end,
         offset: limit_start,
+        order: [["createdAt", "DESC"]],
     });
 };
 
@@ -27,6 +28,7 @@ export const getAllCategories = async (
     return await Categories.findAll({
         where: { fk_store },
         attributes: { exclude: ["fk_store", "createdAt", "updatedAt"] },
+        order: [["createdAt", "DESC"]],
     });
 };
 

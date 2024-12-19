@@ -22,6 +22,7 @@ export const getPurchases = async (
         where: { fk_user },
         limit: limit_end,
         offset: limit_start,
+        order: [["createdAt", "DESC"]],
     });
 };
 
@@ -97,6 +98,7 @@ export const getAllStorePurchases = async (
         where: { fk_store },
         limit: limit_end,
         offset: limit_start,
+        order: [["createdAt", "DESC"]],
     });
 };
 

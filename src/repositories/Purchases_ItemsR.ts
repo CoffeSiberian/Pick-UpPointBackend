@@ -12,6 +12,7 @@ export const getPurchases_Items = async (
 ): Promise<Purchases_Items[]> => {
     return await Purchases_Items.findAll({
         where: { fk_purchase },
+        order: [["createdAt", "DESC"]],
     });
 };
 
@@ -43,6 +44,7 @@ export const getAllItemsPurchasedAdmin = async (
             },
             { model: Purchases, where: { fk_store }, attributes: [] },
         ],
+        order: [["createdAt", "DESC"]],
     });
 };
 
@@ -66,6 +68,7 @@ export const getAllItemsPurchasedProfile = async (
             },
             { model: Purchases, where: { fk_store, fk_user }, attributes: [] },
         ],
+        order: [["createdAt", "DESC"]],
     });
 };
 

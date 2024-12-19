@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../src/server";
+import app from "../src/server_to_test";
 import {
     TEST_USER_EMAIL,
     TEST_USER_PASSWORD,

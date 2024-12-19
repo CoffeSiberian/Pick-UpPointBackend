@@ -169,6 +169,7 @@ export const createProductImages = async (
 export const updateProduct = async (
     id: string,
     product: ProductPost,
+    stock: number,
     fk_store: string
 ): Promise<number> => {
     const validateStore = await getProduct(id);
@@ -176,6 +177,7 @@ export const updateProduct = async (
     if (validateStore.category.fk_store !== fk_store) return 0;
 
     const rows = await Products.update(product, { where: { id } });
+    await Stocks.update({ quantity: stock }, { where: { fk_product: id } });
     return rows[0];
 };
 

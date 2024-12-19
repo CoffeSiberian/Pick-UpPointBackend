@@ -29,6 +29,7 @@ export const putProduct = async (
         const rows = await updateProduct(
             body.id,
             Product,
+            body.stock,
             res.jwtPayload.fk_store
         );
         if (rows === 0) {
